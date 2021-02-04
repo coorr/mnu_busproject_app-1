@@ -31,6 +31,7 @@ import RouteReserve from './src/RouteReserve';
 import RouteResult from './src/RouteResult';
 import NoticeDetailScreen from './src/NoticeDetailScreen';
 import NoticeScreen from './src/NoticeScreen';
+import alertButton from './src/alertButton';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -40,7 +41,7 @@ class App extends Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="LoginScreen">
+        <Stack.Navigator initialRouteName="RouteReserve">
           <Stack.Screen
             name="Login"
             component={LoginScreen}
@@ -78,6 +79,7 @@ class App extends Component {
               headerTintColor: 'white',
             }}
           />
+          <Stack.Screen name="alertButton" component={alertButton} />
 
           {/* 공지사항 */}
           <Stack.Screen name="NoticeScreen" component={NoticeScreen} />

@@ -15,6 +15,7 @@ import {
   Image,
   Button,
   Linking,
+  Switch,
 } from 'react-native';
 import {
   NavigationContainer,
@@ -22,8 +23,22 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import ToggleSwitch from 'toggle-switch-react-native';
 
 class LoginScreen extends Component {
+  static navigationOptions = {
+    headerShown: false,
+  };
+
+  constructor() {
+    super();
+    this.state = { hidePassword: true };
+  }
+  state = {
+    isOnDefaultToggleSwitch: true,
+    isOnLargeToggleSwitch: false,
+    isOnBlueToggleSwitch: false,
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -31,18 +46,35 @@ class LoginScreen extends Component {
           <TextInput style={styles.TextFrom} placeholder={'학번'} />
         </View>
         <View style={styles.TextFrom2}>
-          <TextInput style={styles.TextFrom} placeholder={'통합 패스워드'} />
+          <TextInput
+            style={styles.TextFrom}
+            placeholder={'통합 패스워드'}
+            secureTextEntry={this.state.hidePassword}
+          />
         </View>
 
         <View style={styles.buttonArea}>
-          <TouchableOpacity style={styles.buttonFrom}>
+          <TouchableOpacity
+            style={styles.buttonFrom}
+            onPress={() => {
+              this.props.navigation.navigate('Main');
+            }}
+          >
             <Text style={styles.buttonText}>로그인</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.autoLoginFrom}>
           <View style={styles.autoLoginArea}>
-            <Text style={styles.autoLoginText}>자동로그인</Text>
+            <ToggleSwitch
+              label="자동로그인"
+              labelStyle={{ color: '#7F7F7F' }}
+              isOn={this.state.isOnDefaultToggleSwitch}
+              onToggle={isOnDefaultToggleSwitch => {
+                this.setState({ isOnDefaultToggleSwitch });
+                this.onToggle(isOnDefaultToggleSwitch);
+              }}
+            />
           </View>
         </View>
       </View>
@@ -74,13 +106,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: '100%',
     paddingBottom: '3%',
-    marginTop: 10,
+    marginTop: '3%',
   },
   buttonArea: {
     width: '100%',
-    height: '8%',
+    height: 50,
     // borderWidth: 0.2,
-    marginTop: 10,
+    marginTop: 12,
   },
   buttonFrom: {
     backgroundColor: '#5C72E1',
@@ -91,15 +123,17 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    // borderWidth: 0.2,
   },
   buttonText: {
     fontWeight: 'bold',
     fontSize: 20,
     color: 'white',
+    // borderWidth: 1,
   },
   autoLoginFrom: {
     width: '100%',
-    height: '8%',
+    height: 40,
     // borderWidth: 0.5,
   },
   autoLoginArea: {
@@ -107,10 +141,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     marginLeft: '60%',
-  },
-  autoLoginText: {
-    color: '#7F7F7F',
-    fontSize: 13,
   },
 });
 

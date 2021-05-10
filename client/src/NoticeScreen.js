@@ -20,10 +20,39 @@ import { color } from 'react-native-reanimated';
 import { useState } from 'react';
 
 class NoticeScreen extends Component {
+  constructor(props) {
+    super(props);
+  }
+  state = {
+    data: [],
+    isLoading: true,
+  };
+
+  fetchData = async () => {
+    const response = await fetch('http://10.0.2.2:5000/api/board');
+    const boards = await response.json();
+    this.setState({ data: boards });
+    console.log(response);
+  };
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.contentbox}>
+        <FlatList
+          data={this.state.data}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.contentbox}>
+              <Text>{item.title}</Text>
+            </View>
+          )}
+        />
+
+        {/* <View style={styles.contentbox}>
           <TouchableOpacity style={styles.touch}>
             <View style={styles.title}>
               <Text style={styles.title_text}>글 제목</Text>
@@ -38,7 +67,7 @@ class NoticeScreen extends Component {
               </View>
             </View>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     );
   }

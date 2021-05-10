@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
 import {
@@ -12,16 +5,9 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
-  Button,
-  Linking,
-  Switch,
+  ActivityIndicator,
 } from 'react-native';
-import {
-  NavigationContainer,
-  DrawerActions,
-  useNavigation,
-} from '@react-navigation/native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ToggleSwitch from 'toggle-switch-react-native';
 
@@ -30,36 +16,130 @@ class LoginScreen extends Component {
     headerShown: false,
   };
 
-  constructor() {
-    super();
-    this.state = { hidePassword: true };
+  constructor(props) {
+    super(props);
+    this.state = {
+      hidePassword: true,
+      username: '',
+      password: '',
+      userData: '',
+      isOnDefaultToggleSwitch: false,
+    };
+    this.getData();
   }
-  state = {
-    isOnDefaultToggleSwitch: true,
-    isOnLargeToggleSwitch: false,
-    isOnBlueToggleSwitch: false,
+
+  // login = async () => {
+  //   if (this.state.username != '' && this.state.password != '') {
+  //     await fetch('http://10.0.2.2:5000/api/users', {
+  //       method: 'POST',
+  //       headers: {
+  //         Accept: 'application/json',
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         username: this.state.username,
+  //         password: this.state.password,
+  //       }),
+  //     })
+  //       .then(response => response.json())
+  //       .then(res => {
+  //         if (res.success == true) {
+  //           const user = JSON.parse(res.user);
+
+  //           if (this.state.isOnDefaultToggleSwitch == true) {
+  //             AsyncStorage.setItem(
+  //               'userData',
+  //               JSON.stringify({
+  //                 userid: this.state.username,
+  //                 userpassword: this.state.password,
+  //               }),
+  //             );
+  //             this.setState({
+  //               username: '',
+  //               password: '',
+  //             });
+  //             this.props.navigation.navigate('mainScreen', {
+  //               uid: user.uid,
+  //               uname: user.uname,
+  //               dept: user.dept,
+  //               stdnum: user.stdnum,
+  //             });
+  //           }
+  //         } else {
+  //           alert(res.message);
+  //         }
+  //       })
+  //       .done();
+  //   } else(e) {
+  //     alert('아디 비번 입력바람');
+  //   }
+  // };
+
+  // getData = async () => {
+  //   await AsyncStorage.getItem('userData', (err, result) => {
+  //     const userInfo = JSON.parse(result); // 저장된 id/password userInfo 객체에 담는다.
+  //     if (userInfo != null) {
+  //       fetch('http://10.0.2.2:5000/api/users', {
+  //         method: 'POST',
+  //         headers: {
+  //           Accept: 'application/json',
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({
+  //           username: userInfo.userid,
+  //           password: userInfo.userpassword,
+  //         }),
+  //       })
+  //         .then(response => response.json())
+  //         .then(res => {
+  //           if (res.success == true) {
+  //             const user = JSON.parse(res.user);
+
+  //             this.props.navigation.navigate('mainScreen', {
+  //               uid: user.uid,
+  //               uname: user.uname,
+  //               dept: user.dept,
+  //               stdnum: user.stdnum,
+  //             });
+  //           } else {
+  //             alert(res.message);
+  //           }
+  //         })
+  //         .done();
+  //     }
+  //   });
+  // };
+
+  ToggleChange = () => {
+    this.setState({
+      isOnDefaultToggleSwitch: !this.state.isOnDefaultToggleSwitch,
+    });
   };
+
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.formArea}>
-          <TextInput style={styles.TextFrom} placeholder={'학번'} />
+          <TextInput
+            style={styles.TextFrom}
+            placeholder={'학번'}
+            underlineColorAndroid="transparent"
+            onChangeText={username => this.setState({ username })}
+            value={this.state.username}
+          />
         </View>
         <View style={styles.TextFrom2}>
           <TextInput
             style={styles.TextFrom}
             placeholder={'통합 패스워드'}
             secureTextEntry={this.state.hidePassword}
+            onChangeText={password => this.setState({ password })}
+            value={this.state.password}
           />
         </View>
 
         <View style={styles.buttonArea}>
-          <TouchableOpacity
-            style={styles.buttonFrom}
-            onPress={() => {
-              this.props.navigation.navigate('Main');
-            }}
-          >
+          <TouchableOpacity style={styles.buttonFrom} onPress={this.login}>
             <Text style={styles.buttonText}>로그인</Text>
           </TouchableOpacity>
         </View>
@@ -70,10 +150,7 @@ class LoginScreen extends Component {
               label="자동로그인"
               labelStyle={{ color: '#7F7F7F' }}
               isOn={this.state.isOnDefaultToggleSwitch}
-              onToggle={isOnDefaultToggleSwitch => {
-                this.setState({ isOnDefaultToggleSwitch });
-                this.onToggle(isOnDefaultToggleSwitch);
-              }}
+              onToggle={this.ToggleChange}
             />
           </View>
         </View>

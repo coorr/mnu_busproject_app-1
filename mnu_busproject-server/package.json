@@ -1,5 +1,5 @@
 {
-  "name": "mnu_bus",
+  "name": "react_navigation_01",
   "version": "1.0.0",
   "scripts": {
     "client": "cd client && npx react-native run-android",
@@ -16,5 +16,4 @@
   "devDependencies": {
     "concurrently": "^6.0.0"
   }
-  
 }

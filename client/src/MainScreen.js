@@ -77,7 +77,12 @@ class Main extends Component {
         </View>
 
         <View style={styles.informationFrom}>
-          <TouchableOpacity style={styles.informationArea}>
+          <TouchableOpacity
+            style={styles.informationArea}
+            onPress={() => {
+              this.props.navigation.navigate('RoadScreen');
+            }}
+          >
             <View style={styles.box}>
               <Text style={styles.circleInformation}>
                 <Image
@@ -101,7 +106,7 @@ class Main extends Component {
             <TouchableOpacity
               style={styles.TabBoxOne}
               onPress={() => {
-                this.props.navigation.navigate('TabQuestion');
+                this.props.navigation.navigate('RoadScreen');
               }}
             >
               <Image source={information} style={styles.TabOneImage} />

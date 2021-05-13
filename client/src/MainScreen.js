@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
 import {
@@ -33,8 +26,10 @@ import notice from '../assets/image/notice.png';
 import information from '../assets/image/information.png';
 import user from '../assets/image/user.png';
 
-class Main extends Component {
+class MainScreen extends Component {
   render() {
+    const { uid, uname, dept, stdnum } = this.props.route.params;
+
     return (
       <View style={styles.container}>
         <View style={styles.reservationFrom}>
@@ -66,7 +61,7 @@ class Main extends Component {
                 <Image source={checkGreen} style={styles.busIcon} />
               </Text>
               <View style={styles.busTextFrom}>
-                <Text style={styles.busText}>예매확인/취소</Text>
+                <Text style={styles.busText}>예약확인/변경</Text>
               </View>
               <Image
                 source={nextButton}
@@ -91,7 +86,7 @@ class Main extends Component {
                 />
               </Text>
               <View style={styles.busTextFrom}>
-                <Text style={styles.busText}>노선운행/정보</Text>
+                <Text style={styles.busText}>노선/운행정보</Text>
               </View>
               <Image
                 source={nextButton}
@@ -106,7 +101,7 @@ class Main extends Component {
             <TouchableOpacity
               style={styles.TabBoxOne}
               onPress={() => {
-                this.props.navigation.navigate('RoadScreen');
+                this.props.navigation.navigate('QuestionsScreen');
               }}
             >
               <Image source={information} style={styles.TabOneImage} />
@@ -130,11 +125,16 @@ class Main extends Component {
             <TouchableOpacity
               style={styles.TabBoxThree}
               onPress={() => {
-                this.props.navigation.navigate('TabMyPage');
+                this.props.navigation.navigate('SettingScreen', {
+                  uid: uid,
+                  uname: uname,
+                  dept: dept,
+                  stdnum: stdnum,
+                });
               }}
             >
               <Image source={user} style={styles.TabThreeImage} />
-              <Text style={styles.TabThreeText}>마이페이지</Text>
+              <Text style={styles.TabThreeText}>내 정보</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   TabOneImage: { width: 60, height: 60, marginLeft: 30, marginTop: 8 },
   TabOneText: {
     marginTop: 3,
-    marginLeft: 10,
+    textAlign: 'center',
     fontSize: 18,
   },
 
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
   TabTwoImage: { width: 60, height: 60, marginLeft: '27%', marginTop: 6 },
   TabTwoText: {
     marginTop: 3,
-    marginLeft: 35,
+    textAlign: 'center',
     fontSize: 18,
   },
 
@@ -228,10 +228,10 @@ const styles = StyleSheet.create({
   TabBoxThree: { width: '100%', height: '100%' },
   TabThreeImage: { width: 60, height: 60, marginLeft: '29%', marginTop: 6 },
   TabThreeText: {
+    textAlign: 'center',
     marginTop: 3,
-    marginLeft: 28,
     fontSize: 18,
   },
 });
 
-export default Main;
+export default MainScreen;

@@ -28,87 +28,87 @@ class LoginScreen extends Component {
     this.getData();
   }
 
-  // login = async () => {
-  //   if (this.state.username != '' && this.state.password != '') {
-  //     await fetch('http://10.0.2.2:5000/api/users', {
-  //       method: 'POST',
-  //       headers: {
-  //         Accept: 'application/json',
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         username: this.state.username,
-  //         password: this.state.password,
-  //       }),
-  //     })
-  //       .then(response => response.json())
-  //       .then(res => {
-  //         if (res.success == true) {
-  //           const user = JSON.parse(res.user);
+  login = async () => {
+    if (this.state.username != '' && this.state.password != '') {
+      await fetch('http://10.0.2.2:5000/api/users', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: this.state.username,
+          password: this.state.password,
+        }),
+      })
+        .then(response => response.json())
+        .then(res => {
+          if (res.success === true) {
+            const user = JSON.parse(res.user);
 
-  //           if (this.state.isOnDefaultToggleSwitch == true) {
-  //             AsyncStorage.setItem(
-  //               'userData',
-  //               JSON.stringify({
-  //                 userid: this.state.username,
-  //                 userpassword: this.state.password,
-  //               }),
-  //             );
-  //             this.setState({
-  //               username: '',
-  //               password: '',
-  //             });
-  //             this.props.navigation.navigate('mainScreen', {
-  //               uid: user.uid,
-  //               uname: user.uname,
-  //               dept: user.dept,
-  //               stdnum: user.stdnum,
-  //             });
-  //           }
-  //         } else {
-  //           alert(res.message);
-  //         }
-  //       })
-  //       .done();
-  //   } else(e) {
-  //     alert('아디 비번 입력바람');
-  //   }
-  // };
+            this.setState({
+              username: '',
+              password: '',
+            });
+            this.props.navigation.navigate('MainScreenView', {
+              uid: user.uid,
+              uname: user.uname,
+              dept: user.dept,
+              stdnum: user.stdnum,
+            });
+            if (this.state.isOnDefaultToggleSwitch === true) {
+              AsyncStorage.setItem(
+                'userData',
+                JSON.stringify({
+                  userid: this.state.username,
+                  userpassword: this.state.password,
+                }),
+              );
+            }
+          } else {
+            alert(res.message);
+          }
+        })
+        .done();
+    } else {
+      alert('아디 비번 입력바람');
+    }
+  };
 
-  // getData = async () => {
-  //   await AsyncStorage.getItem('userData', (err, result) => {
-  //     const userInfo = JSON.parse(result); // 저장된 id/password userInfo 객체에 담는다.
-  //     if (userInfo != null) {
-  //       fetch('http://10.0.2.2:5000/api/users', {
-  //         method: 'POST',
-  //         headers: {
-  //           Accept: 'application/json',
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify({
-  //           username: userInfo.userid,
-  //           password: userInfo.userpassword,
-  //         }),
-  //       })
-  //         .then(response => response.json())
-  //         .then(res => {
-  //           if (res.success == true) {
-  //             const user = JSON.parse(res.user);
+  getData = async () => {
+    await AsyncStorage.getItem('userData', (err, result) => {
+      const userInfo = JSON.parse(result); // 저장된 id/password userInfo 객체에 담는다.
+      if (userInfo != null) {
+        fetch('http://10.0.2.2:5000/api/users', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: userInfo.userid,
+            password: userInfo.userpassword,
+          }),
+        })
+          .then(response => response.json())
+          .then(res => {
+            if (res.success == true) {
+              const user = JSON.parse(res.user);
 
-  //             this.props.navigation.navigate('mainScreen', {
-  //               uid: user.uid,
-  //               uname: user.uname,
-  //               dept: user.dept,
-  //               stdnum: user.stdnum,
-  //             });
-  //           } else {
-  //             alert(res.message);
-  //           }
-  //         })
-  //         .done();
-  //     }
-  //   });
-  // };
+              this.props.navigation.navigate('MainScreenView', {
+                uid: user.uid,
+                uname: user.uname,
+                dept: user.dept,
+                stdnum: user.stdnum,
+              });
+            } else {
+              this.props.navigation.navigate('Login');
+            }
+          })
+          .done();
+      }
+    });
+  };
 
   ToggleChange = () => {
     this.setState({

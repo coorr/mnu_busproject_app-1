@@ -29,10 +29,10 @@ async function asyncFunction() {
   
       conn = await connection.getConnection();
 
-      const rows = await conn.query("SELECT * FROM user");
-      app.get('/api/user',(req,res)=>{
-          res.send(rows)
-      })
+      // const rows = await conn.query("SELECT * FROM user");
+      // app.get('/api/user',(req,res)=>{
+      //     res.send(rows)
+      // })
 
       const rows1 = await conn.query("SELECT * FROM  board");
       app.get('/api/board',(req,res)=>{
@@ -66,22 +66,62 @@ async function asyncFunction() {
 
 
 
-      app.post('/api/users',async(req,res)=> {
-        var username= req.body.username;
-        var password= req.body.password;
+      // app.post('/api/users',async(req,res)=> {
+      //   var username= req.body.username;
+      //   var password= req.body.password;
 
-        const re = await conn.query(
-          "SELECT * from users WHERE username =? AND password = ?", 
-          [username,password] 
-        );
+      //   const re = await conn.query(
+      //     "SELECT * from users WHERE username =? AND password = ?", 
+      //     [username,password] 
+      //   );
 
-        if(re.length > 0) {
-          res.send({'success': true, 'user': JSON.stringify(re[0])});
-        } else {
-          res.send({'success': false, 'message': 'User not found'});
-        }
+      //   if(re.length > 0) {
+      //     res.send({'success': true, 'user': JSON.stringify(re[0])});
+      //   } else {
+      //     res.send({'success': false, 'message': 'User not found'});
+      //   }
       
-      })
+      // })
+
+      app.post('/api/users',async(req,res) => {
+
+        var username = req.body.username;
+        var password = req.body.password;
+        
+      const re = await conn.query(
+          "SELECT uid,uname,dept,stdnum FROM user WHERE uid = ? AND upw = ?",
+          [username,password]
+          );
+          
+          if(re.length>0) {
+              res.send({'success':true,'user':JSON.stringify(re[0])});
+          }
+          else {
+          res.send({'success':false,'message': 'User Not Found'});
+          }
+
+    })
+
+    const rows3 = await conn.query("SELECT local FROM  route group by local");
+    app.get('/api/route_local',(req,res)=>{
+        res.send(rows3)
+    })
+
+    app.post('/api/routes',async(req,res) => {
+      var local = req.body.local;
+      var rows3 = await conn.query(
+        "SELECT * FROM  route WHERE local = ? order by start_point",
+        [local]
+        );
+        if(rows3.length>0){
+          res.send({'success':true,'route':JSON.stringify(rows3)});
+        }
+        else {
+          res.send({'success':false,'route':'network error'});
+        }
+
+    })
+
       
 
     } catch (err) {

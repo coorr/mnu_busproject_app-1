@@ -18,6 +18,7 @@ import {
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { color } from 'react-native-reanimated';
 import { useState } from 'react';
+import NoticeDetailScreen from './NoticeDetailScreen';
 
 class NoticeScreen extends Component {
   constructor(props) {
@@ -32,7 +33,6 @@ class NoticeScreen extends Component {
     const response = await fetch('http://10.0.2.2:5000/api/board');
     const boards = await response.json();
     this.setState({ data: boards });
-    console.log(response);
   };
 
   componentDidMount() {
@@ -41,95 +41,61 @@ class NoticeScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <FlatList
-          data={this.state.data}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.contentbox}>
-              <Text>{item.title}</Text>
-            </View>
-          )}
-        />
-
-        {/* <View style={styles.contentbox}>
-          <TouchableOpacity style={styles.touch}>
-            <View style={styles.title}>
-              <Text style={styles.title_text}>글 제목</Text>
-            </View>
-
-            <View style={styles.infobox}>
-              <View style={styles.infoleft}>
-                <Text style={styles.info_text}>작성자</Text>
-              </View>
-              <View style={styles.inforight}>
-                <Text style={styles.info_text}>작성일</Text>
-              </View>
+      <FlatList
+        data={this.state.data}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate('NoticeDetailScreen', {
+                pid: item.pid,
+                title: item.title,
+                writer: item.writer,
+                udate: item.udate,
+                content: item.content,
+              });
+            }}
+          >
+            <View style={styles.box}>
+              <Text style={styles.pid}>No.{item.pid}</Text>
+              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.writer}>작성자 : {item.writer}</Text>
+              <Text style={styles.udate}>{item.udate}</Text>
             </View>
           </TouchableOpacity>
-        </View> */}
-      </View>
+        )}
+      />
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  box: {
+    flexDirection: 'column',
+    paddingLeft: 3,
     marginTop: 10,
-    marginBottom: 10,
-    backgroundColor: 'white',
-    paddingLeft: '6%',
-    paddingRight: '6%',
-    flexDirection: 'column',
-  },
-  touch: {
-    width: '100%',
-    height: '100%',
-    alignItems: 'flex-start',
     justifyContent: 'center',
-  },
-  contentbox: {
-    marginTop: 5,
-    marginBottom: 5,
-    borderRadius: 5,
-    flexDirection: 'column',
-    width: '100%',
-    height: '15%',
+    marginLeft: 10,
+    marginRight: 10,
     borderWidth: 2,
-    borderColor: 'black',
+    borderRadius: 15,
+    borderColor: '#A4A4A4',
+  },
+  pid: {
+    paddingLeft: 5,
+    paddingTop: 5,
   },
   title: {
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    width: '100%',
-    height: '65%',
-    paddingLeft: 10,
-  },
-
-  title_text: {
-    fontSize: 15,
+    margin: 3,
+    fontSize: 20,
     fontWeight: 'bold',
   },
-
-  infobox: {
-    paddingLeft: 10,
-    flex: 1,
-    width: '100%',
-    height: '30%',
-    flexDirection: 'row',
+  writer: {
+    margin: 3,
+    textAlign: 'right',
   },
-
-  infoleft: {
-    flex: 1,
-  },
-
-  inforight: {
-    flex: 1,
-  },
-
-  info_text: {
-    fontSize: 11,
+  udate: {
+    margin: 3,
     textAlign: 'right',
   },
 });

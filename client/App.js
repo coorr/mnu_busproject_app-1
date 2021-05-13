@@ -19,14 +19,16 @@ import {
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import LoginScreen from './src/LoginScreen';
-import Main from './src/MainScreen';
+import MainScreenView from './src/MainScreen';
 import RouteReserve from './src/RouteReserve';
 import RouteResult from './src/RouteResult';
 import NoticeDetailScreen from './src/NoticeDetailScreen';
 import NoticeScreen from './src/NoticeScreen';
-import Register from './src/register';
 import RoadScreen from './src/RoadScreen';
 import RoadDetail from './src/RoadDetail';
+import Wait from './src/Wait';
+import SettingScreen from './src/SettingScreen';
+import QuestionsScreen from './src/QuestionsScreen';
 
 // import { Provider } from 'react-redux';
 // import { applyMiddleware, createStore } from 'redux';
@@ -40,7 +42,7 @@ const Tab = createBottomTabNavigator();
 
 // const createStoreWithMiddleware = applyMiddleware(
 //   promiseMiddleware,
-//   ReduxThunk,
+//   ReduxThunk,Wait
 // )(createStore);
 
 class App extends Component {
@@ -48,8 +50,8 @@ class App extends Component {
     return (
       // <Provider store={createStoreWithMiddleware(Reducer)}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Main">
-          <Stack.Screen
+        <Stack.Navigator initialRouteName="Login">
+          {/* <Stack.Screen
             name="Register"
             component={Register}
             options={{
@@ -58,7 +60,7 @@ class App extends Component {
               },
               headerTintColor: 'white',
             }}
-          />
+          /> */}
           <Stack.Screen
             name="Login"
             component={LoginScreen}
@@ -70,8 +72,8 @@ class App extends Component {
             }}
           />
           <Stack.Screen
-            name="Main"
-            component={Main}
+            name="MainScreenView"
+            component={MainScreenView}
             options={{ headerShown: false }}
           />
 
@@ -113,12 +115,58 @@ class App extends Component {
             component={RoadDetail}
             options={{ headerShown: false }}
           />
+          <Stack.Screen
+            name="QuestionsScreen"
+            component={QuestionsScreen}
+            options={{
+              headerStyle: {
+                backgroundColor: '#5B79ED',
+              },
+              headerTitle: '이용문의/안내',
+              headerTintColor: 'white',
+            }}
+          />
 
           {/* 공지사항 */}
-          <Stack.Screen name="NoticeScreen" component={NoticeScreen} />
+          <Stack.Screen
+            name="NoticeScreen"
+            component={NoticeScreen}
+            options={{
+              headerStyle: {
+                backgroundColor: '#5B79ED',
+              },
+              headerTintColor: 'white',
+              headerTitle: '공지사항',
+            }}
+          />
+
           <Stack.Screen
             name="NoticeDetailScreen"
             component={NoticeDetailScreen}
+            options={{
+              headerStyle: {
+                backgroundColor: '#5B79ED',
+              },
+              headerTintColor: 'white',
+              headerTitle: '공지내용',
+            }}
+          />
+
+          <Stack.Screen
+            name="Wait"
+            component={Wait}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SettingScreen"
+            component={SettingScreen}
+            options={{
+              headerStyle: {
+                backgroundColor: '#5B79ED',
+              },
+              headerTintColor: 'white',
+              headerTitle: '내 정보',
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>

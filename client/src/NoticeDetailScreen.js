@@ -17,26 +17,33 @@ import {
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { color } from 'react-native-reanimated';
 import { useState } from 'react';
+import NoticeScreen from './NoticeScreen';
 
 class NoticeDetailScreen extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
+    const { title, writer, udate, content } = this.props.route.params;
+
     return (
       <View style={styles.container}>
         <View style={styles.title}>
-          <Text style={styles.title_text}>공지사항 제목은 ~입니다.</Text>
+          <Text style={styles.title_text}>{title}</Text>
         </View>
 
         <View style={styles.info}>
           <View style={styles.info_left}>
-            <Text style={styles.info_text}>write_date</Text>
+            <Text style={styles.info_text}>작성자:{writer}</Text>
           </View>
           <View style={styles.info_right}>
-            <Text style={styles.info_text}>writer_info</Text>
+            <Text style={styles.info_text}>{udate}</Text>
           </View>
         </View>
 
         <View style={styles.body}>
-          <Text style={styles.body_text}>내용확인 중입니다.</Text>
+          <Text style={styles.body_text}>{content}</Text>
         </View>
       </View>
     );

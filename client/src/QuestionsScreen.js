@@ -23,7 +23,7 @@ class QuestionsScreen extends Component {
         <View style={styles.contentbox}>
           <Text style={styles.title}>통학버스 담당부서 (학생지원과)</Text>
           <Text style={styles.content}>
-            담당자 xxx : 061-450-2032 / 061-450-2033
+            담당자 전화번호: 061-450-2032 / 061-450-2033
           </Text>
         </View>
       </View>
@@ -49,11 +49,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   title: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: 'bold',
   },
   content: {
-    fontSize: 15,
+    fontSize: 18,
     fontWeight: '400',
   },
 });

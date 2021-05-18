@@ -16,9 +16,9 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { color } from 'react-native-reanimated';
-import { useState } from 'react';
-import NoticeDetailScreen from './NoticeDetailScreen';
+import moment from 'moment';
+// 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
+import 'moment/locale/ko';
 
 class NoticeScreen extends Component {
   constructor(props) {
@@ -28,6 +28,11 @@ class NoticeScreen extends Component {
     data: [],
     isLoading: true,
   };
+
+  dateParse = (notice_date) =>{   // 날짜 파싱하는 함수
+    let ndate =moment(notice_date).format('YYYY-MM-DD') 
+    return ndate
+  }
 
   fetchData = async () => {
     const response = await fetch('http://10.0.2.2:5000/api/board');
@@ -47,11 +52,12 @@ class NoticeScreen extends Component {
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => {
+               
               this.props.navigation.navigate('NoticeDetailScreen', {
                 pid: item.pid,
                 title: item.title,
                 writer: item.writer,
-                udate: item.udate,
+                udate: this.dateParse(item.udate),
                 content: item.content,
               });
             }}
@@ -60,7 +66,7 @@ class NoticeScreen extends Component {
               <Text style={styles.pid}>No.{item.pid}</Text>
               <Text style={styles.title}>{item.title}</Text>
               <Text style={styles.writer}>작성자 : {item.writer}</Text>
-              <Text style={styles.udate}>{item.udate}</Text>
+              <Text style={styles.udate}>{this.dateParse(item.udate)}</Text>
             </View>
           </TouchableOpacity>
         )}

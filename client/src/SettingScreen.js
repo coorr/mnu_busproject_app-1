@@ -4,10 +4,7 @@ import { StyleSheet, View, Text, Image, Button, Linking } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 import man_logo2 from '../assets/image/man_logo2.png';
-import magnifier_logo from '../assets/image/magnifier_logo.png';
-import bus_logo from '../assets/image/bus_logo.png';
-import check_logo from '../assets/image/check_logo.png';
-import user from '../assets/image/user.png';
+
 
 class SettingScreen extends Component {
   constructor(props) {
@@ -78,44 +75,6 @@ class SettingScreen extends Component {
             <Text style={styles.buttonText}>로그아웃</Text>
           </TouchableOpacity>
         </View>
-
-        <View style={styles.bottom_menu}>
-          <TouchableOpacity style={styles.bottom_touch}>
-            <View style={styles.bottom_menubox}>
-              <Image style={styles.bottom_image} source={bus_logo} />
-              <View style={styles.bottom_menu_textbox}>
-                <Text style={styles.bottom_menu_text}>예약</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.bottom_touch}>
-            <View style={styles.bottom_menubox}>
-              <Image style={styles.bottom_image} source={check_logo} />
-              <View style={styles.bottom_menu_textbox}>
-                <Text style={styles.bottom_menu_text}>예약 확인</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.bottom_touch}>
-            <View style={styles.bottom_menubox}>
-              <Image style={styles.bottom_image} source={magnifier_logo} />
-              <View style={styles.bottom_menu_textbox}>
-                <Text style={styles.bottom_menu_text}>시간표 조회</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.bottom_touch}>
-            <View style={styles.bottom_menubox}>
-              <Image style={styles.bottom_image} source={user} />
-              <View style={styles.bottom_menu_textbox}>
-                <Text style={styles.bottom_menu_text}>내 정보</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
       </View>
     );
   }
@@ -130,7 +89,7 @@ const styles = StyleSheet.create({
   },
   userbox: {
     borderColor: '#848484',
-    marginTop: '3%',
+    marginTop: '5%',
     paddingLeft: '5%',
     borderRadius: 15,
     borderWidth: 1,
@@ -166,6 +125,7 @@ const styles = StyleSheet.create({
   },
 
   listbox: {
+    marginTop:"5%",
     borderColor: '#848484',
     borderRadius: 15,
     borderWidth: 1,
@@ -196,15 +156,19 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   buttonform: {
+    position:'absolute',
+    bottom:0,
     height: '10%',
     width: '95%',
     backgroundColor: '#5B79ED',
+    borderRadius:15
   },
   buttonArea: {
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
     height: '100%',
+    
   },
   buttonText: {
     color: 'white',

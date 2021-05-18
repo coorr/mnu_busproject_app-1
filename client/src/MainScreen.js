@@ -7,10 +7,10 @@ import {
   Text,
   Image,
   Button,
-  Linking,
+  Linking, 
   Switch,
 } from 'react-native';
-import {
+import { 
   NavigationContainer,
   DrawerActions,
   useNavigation,

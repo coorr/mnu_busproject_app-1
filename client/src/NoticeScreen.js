@@ -5,16 +5,10 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
   Button,
-  Linking,
   FlatList,
 } from 'react-native';
-import {
-  NavigationContainer,
-  DrawerActions,
-  useNavigation,
-} from '@react-navigation/native';
+
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import

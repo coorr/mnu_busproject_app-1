@@ -35,7 +35,14 @@ class SettingScreen extends Component {
         <View style={styles.listbox}>
           <Text style={styles.listboxtitle}>내역 조회</Text>
           <View style={styles.list_box_area}>
-            <TouchableOpacity style={styles.list_touch_box}>
+            <TouchableOpacity style={styles.list_touch_box} onPress={()=>{
+                this.props.navigation.navigate('RhistoryScreen', { // 필요한것만 select 
+                  uid: uid,
+                  uname: uname,
+                  dept: dept,
+                  stdnum: stdnum,
+                });
+            }}>
               <View style={styles.textbox}>
                 <Text style={styles.listboxtext}>예약 내역 확인</Text>
               </View>
@@ -43,7 +50,14 @@ class SettingScreen extends Component {
           </View>
 
           <View style={styles.list_box_area}>
-            <TouchableOpacity style={styles.list_touch_box}>
+            <TouchableOpacity style={styles.list_touch_box} onPress={()=>{
+                this.props.navigation.navigate('PhistoryScreen', { // 필요한것만 select 
+                  uid: uid,
+                  uname: uname,
+                  dept: dept,
+                  stdnum: stdnum,
+                });
+            }}>
               <View style={styles.textbox}>
                 <Text style={styles.listboxtext}>페널티 내역 확인</Text>
               </View>
@@ -54,7 +68,9 @@ class SettingScreen extends Component {
         <View style={styles.listbox}>
           <Text style={styles.listboxtitle}>알림</Text>
           <View style={styles.list_box_area}>
-            <TouchableOpacity style={styles.list_touch_box}>
+            <TouchableOpacity style={styles.list_touch_box} onPress={()=>{
+                this.props.navigation.navigate('NoticeScreen');
+            }}>
               <View style={styles.textbox}>
                 <Text style={styles.listboxtext}>공지사항</Text>
               </View>
@@ -62,7 +78,9 @@ class SettingScreen extends Component {
           </View>
 
           <View style={styles.list_box_area}>
-            <TouchableOpacity style={styles.list_touch_box}>
+            <TouchableOpacity style={styles.list_touch_box} onPress={()=>{
+                this.props.navigation.navigate('PolicyScreen');
+            }}>
               <View style={styles.textbox}>
                 <Text style={styles.listboxtext}>이용안내</Text>
               </View>

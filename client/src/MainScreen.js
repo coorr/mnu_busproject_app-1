@@ -10,12 +10,6 @@ import {
   Linking, 
   Switch,
 } from 'react-native';
-import { 
-  NavigationContainer,
-  DrawerActions,
-  useNavigation,
-} from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import busIcon from '../assets/image/bus.png';
@@ -36,7 +30,12 @@ class MainScreen extends Component {
           <TouchableOpacity
             style={styles.reservationArea}
             onPress={() => {
-              this.props.navigation.navigate('RouteReserve');
+              this.props.navigation.navigate('RouteReserve', {
+                uid: uid,
+                uname: uname,
+                dept: dept,
+                stdnum: stdnum,
+              });
             }}
           >
             <View style={styles.box}>

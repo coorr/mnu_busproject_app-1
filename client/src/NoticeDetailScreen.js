@@ -7,16 +7,10 @@ import {
   Text,
   Image,
   Button,
-  Linking,
 } from 'react-native';
-import {
-  NavigationContainer,
-  DrawerActions,
-  useNavigation,
-} from '@react-navigation/native';
+
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { color } from 'react-native-reanimated';
-import { useState } from 'react';
+
 import NoticeScreen from './NoticeScreen';
 
 class NoticeDetailScreen extends Component {

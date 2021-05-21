@@ -29,7 +29,9 @@ import RoadDetail from './src/RoadDetail';
 import Wait from './src/Wait';
 import SettingScreen from './src/SettingScreen';
 import QuestionsScreen from './src/QuestionsScreen';
-
+import PolicyScreen from './src/PolicyScreen';
+import PhistoryScreen from './src/PhistoryScreen';
+import RhistoryScreen from './src/RhistoryScreen';
 // import { Provider } from 'react-redux';
 // import { applyMiddleware, createStore } from 'redux';
 // import promiseMiddleware from 'redux-promise';
@@ -50,7 +52,7 @@ class App extends Component {
     return (
       // <Provider store={createStoreWithMiddleware(Reducer)}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="login">
           {/* <Stack.Screen
             name="Register"
             component={Register}
@@ -95,8 +97,8 @@ class App extends Component {
               headerStyle: {
                 backgroundColor: '#5B79ED',
               },
-              headerTitle: '조회결과',
               headerTintColor: 'white',
+              headerTitle: '좌석선택',
             }}
           />
           <Stack.Screen
@@ -166,6 +168,39 @@ class App extends Component {
               },
               headerTintColor: 'white',
               headerTitle: '내 정보',
+            }}
+          /> 
+          <Stack.Screen
+            name="PolicyScreen"
+            component={PolicyScreen}
+            options={{
+              headerStyle: {
+                backgroundColor: '#5B79ED',
+              },
+              headerTintColor: 'white',
+              headerTitle: '이용정책',
+            }}
+          />
+          <Stack.Screen
+            name="RhistoryScreen"
+            component={RhistoryScreen}
+            options={{
+              headerStyle: {
+                backgroundColor: '#5B79ED',
+              },
+              headerTintColor: 'white',
+              headerTitle: '이용내역 확인',
+            }}
+          />
+          <Stack.Screen
+            name="PhistoryScreen"
+            component={PhistoryScreen}
+            options={{
+              headerStyle: {
+                backgroundColor: '#5B79ED',
+              },
+              headerTintColor: 'white',
+              headerTitle: '페널티 내역 확인',
             }}
           />
         </Stack.Navigator>

@@ -7,13 +7,8 @@ import {
   Text,
   Image,
   Button,
-  Linking,
 } from 'react-native';
-import {
-  NavigationContainer,
-  DrawerActions,
-  useNavigation,
-} from '@react-navigation/native';
+
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class QuestionsScreen extends Component {

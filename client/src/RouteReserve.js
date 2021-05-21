@@ -16,6 +16,7 @@ import moment from 'moment';
 import 'moment/locale/ko';
 
 class RouteReserve extends Component {
+    
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +28,6 @@ class RouteReserve extends Component {
       Rdata: [], // 왼쪽 리스트 값 저장.
       Ldata: [], //  오른쪽 리스트 값 저장.
       selectedStartDate: '',
-      daydata: '',
       dateclick: false,
     };
     this.onDateChange = this.onDateChange.bind(this);
@@ -38,7 +38,7 @@ class RouteReserve extends Component {
       selectedStartDate: date, // utc 표준 형식으로 data 저장
       dateclick: !this.state.dateclick, // 날짜 선택 후 화면전환
     });
-  }
+  } 
 
   fetchDataleft = async () => {
     const response = await fetch('http://10.0.2.2:5000/api/route_local');
@@ -74,6 +74,27 @@ class RouteReserve extends Component {
     }
   };
 
+
+  checkdata =(start,route) => { // 출발지 ,경로,예약날자
+    const { uid, uname, dept, stdnum } = this.props.route.params; // 아이디 , 이름, 학과,학번
+        if(start != '' && route != ''){
+          return (
+            this.props.navigation.navigate('RouteResult', {
+              start_data :start,
+              route_data:route,
+              uid: uid,
+              uname: uname,
+              dept: dept,
+              stdnum: stdnum,
+            })
+          )
+        }else {
+          return (
+            console.log(1) // modal 경고 창 띄우기 
+          )
+        }
+  }
+
   componentDidMount() {
     this.fetchDataleft();
   }
@@ -83,11 +104,12 @@ class RouteReserve extends Component {
   }
 
   render() {
+    
     var d = new Date(); // d 객체생성
     const minDate = moment(d).format('YYYY-MM-DD'); // Today
     const maxDate = moment(d.getTime()).add('7', 'd').format('YYYY-MM-DD'); // d 객체에서 7일 후까지
     const { selectedStartDate } = this.state;
-    const startDate = selectedStartDate
+    const startDate = selectedStartDate!=''
       ? selectedStartDate.format('YYYY - MM - DD (dddd)')
       : '';
 
@@ -276,7 +298,7 @@ class RouteReserve extends Component {
                   <TouchableOpacity
                     style={styles.buttonFrom}
                     onPress={() => {
-                      this.props.navigation.navigate('RouteResult'); // 선택 노선 정보 + 현재시간 + 선택 일 정보
+                      this.checkdata(this.state.scrollleftvalue,this.state.scrollcentervalue,startDate) // 선택 노선 정보 + 현재시간 + 선택 일 정보
                     }}
                   >
                     <Text style={styles.buttonText}>조회하기</Text>
@@ -340,7 +362,7 @@ class RouteReserve extends Component {
                   <TouchableOpacity
                     onPress={() => {
                       this.setState({
-                        scrollrightvalue: item.end_point, // 우측 값 설정.
+                        scrollrightvalue: item.end_point, // 도착지 값 설정 :도림캠퍼스
                         scrollcentervalue: item.start_point, // 경로 명 설정
                         checkbutton: !this.state.checkbutton, //화면 전환
                       });

@@ -22,6 +22,7 @@ import LoginScreen from './src/LoginScreen';
 import MainScreenView from './src/MainScreen';
 import RouteReserve from './src/RouteReserve';
 import RouteResult from './src/RouteResult';
+import ReserveCheckScreen from './src/ReserveCheckScreen';
 import NoticeDetailScreen from './src/NoticeDetailScreen';
 import NoticeScreen from './src/NoticeScreen';
 import RoadScreen from './src/RoadScreen';
@@ -168,6 +169,17 @@ class App extends Component {
               },
               headerTintColor: 'white',
               headerTitle: '내 정보',
+            }}
+          /> 
+          <Stack.Screen
+            name="ReserveCheckScreen"
+            component={ReserveCheckScreen}
+            options={{
+              headerStyle: {
+                backgroundColor: '#5B79ED',
+              },
+              headerTintColor: 'white',
+              headerTitle: '예약 확인',
             }}
           /> 
           <Stack.Screen

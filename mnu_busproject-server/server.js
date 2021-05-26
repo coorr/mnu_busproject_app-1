@@ -97,6 +97,64 @@ async function asyncFunction() {
  
     })
 
+    app.post('/api/reserve',async(req,res) => {
+      var route = req.body.route;
+      var start_date = req.body.start_date;
+      var rows3 = await conn.query(
+        "SELECT reserve_seat,uid FROM  reserve WHERE route = ? and start_date = ? order by reserve_seat",
+        [route,start_date]
+        );
+     
+        
+        if(rows3.length>0){
+          res.send({'success':true,'reserve':rows3});
+        }
+        else {
+          res.send({'success':false,'reserve':'network error'});
+        }
+ 
+    })
+
+    app.post('/api/reserve_input',async(req,res) => {
+      var route = req.body.route;
+      var start_date = req.body.start_date;
+      var reserve_seat = req.body.reserve_seat;
+      var uid = req.body.uid;
+      var rows4 = await conn.query(
+        "INSERT INTO reserve (route,reserve_seat,start_date,uid) VALUES (?,?,?,?)",
+        [route,reserve_seat,start_date,uid,]
+        );
+          
+
+        if((JSON.stringify(rows4)) != '{"affectedRows": 1, "insertId": 0, "warningStatus": 0}'){
+          res.send({'success':true});
+        }
+        else {
+          res.send({'success':false,'reserve':'예매 실패'});
+        }
+ 
+    })
+
+    app.post('/api/reserve_modify',async(req,res) => {
+      var route = req.body.route;
+      var start_date = req.body.start_date;
+      var reserve_seat = req.body.reserve_seat;
+      var uid = req.body.uid;
+      var rows5 = await conn.query(
+        "UPDATE reserve SET reserve_seat = ? WHERE route = ?  AND start_date= ? AND uid= ?; ", // 변경번호 , 경로,예약날, uid
+        [reserve_seat,route,start_date,uid,]
+        );
+          
+        console.log(JSON.stringify(rows5));
+        if(rows5){
+          res.send({'success':true,'reserve':rows5});
+        }
+        else {
+          res.send({'success':false,'reserve':'예매변경 실패'});
+        }
+ 
+    })
+
       
 
     } catch (err) {

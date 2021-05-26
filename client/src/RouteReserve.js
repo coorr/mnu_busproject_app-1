@@ -75,13 +75,15 @@ class RouteReserve extends Component {
   };
 
 
-  checkdata =(start,route) => { // 출발지 ,경로,예약날자
+  checkdata =(start,route,end,date) => { // 출발지 ,경로,예약날자
     const { uid, uname, dept, stdnum } = this.props.route.params; // 아이디 , 이름, 학과,학번
         if(start != '' && route != ''){
           return (
             this.props.navigation.navigate('RouteResult', {
-              start_data :start,
-              route_data:route,
+              start_data :start, // 출발 지역 :광주 , 목포
+              route_data:route, // 선택 노선 정보
+              end_data:end,
+              date:date.format('YYYY-MM-DD'),
               uid: uid,
               uname: uname,
               dept: dept,
@@ -90,7 +92,7 @@ class RouteReserve extends Component {
           )
         }else {
           return (
-            console.log(1) // modal 경고 창 띄우기 
+            alert("항목을 입력하세요") // modal 경고 창 띄우기 
           )
         }
   }
@@ -107,7 +109,7 @@ class RouteReserve extends Component {
     
     var d = new Date(); // d 객체생성
     const minDate = moment(d).format('YYYY-MM-DD'); // Today
-    const maxDate = moment(d.getTime()).add('7', 'd').format('YYYY-MM-DD'); // d 객체에서 7일 후까지
+    const maxDate = moment(d.getTime()).add('10', 'd').format('YYYY-MM-DD'); // d 객체에서 7일 후까지
     const { selectedStartDate } = this.state;
     const startDate = selectedStartDate!=''
       ? selectedStartDate.format('YYYY - MM - DD (dddd)')
@@ -292,13 +294,13 @@ class RouteReserve extends Component {
                       {this.state.scrollcentervalue}
                     </Text>
                   </TouchableOpacity>
-                </View>
+                </View> 
 
                 <View style={styles.buttonArea}>
                   <TouchableOpacity
                     style={styles.buttonFrom}
                     onPress={() => {
-                      this.checkdata(this.state.scrollleftvalue,this.state.scrollcentervalue,startDate) // 선택 노선 정보 + 현재시간 + 선택 일 정보
+                      this.checkdata(this.state.scrollleftvalue,this.state.scrollcentervalue,this.state.scrollrightvalue,selectedStartDate) // 선택 출발지, 선택 경로, 선택 도착지 , 예약일
                     }}
                   >
                     <Text style={styles.buttonText}>조회하기</Text>

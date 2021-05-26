@@ -45,6 +45,16 @@ class LoginScreen extends Component {
         .then(res => {
           if (res.success === true) {
             const user = JSON.parse(res.user);
+            
+            if (this.state.isOnDefaultToggleSwitch === true) {
+              AsyncStorage.setItem(
+                'userData',
+                JSON.stringify({
+                  userid: this.state.username,
+                  userpassword: this.state.password,
+                }),
+              );
+            }
 
             this.setState({
               username: '',
@@ -56,15 +66,7 @@ class LoginScreen extends Component {
               dept: user.dept,
               stdnum: user.stdnum,
             });
-            if (this.state.isOnDefaultToggleSwitch === true) {
-              AsyncStorage.setItem(
-                'userData',
-                JSON.stringify({
-                  userid: this.state.username,
-                  userpassword: this.state.password,
-                }),
-              );
-            }
+            
           } else {
             alert(res.message);
           }
@@ -115,7 +117,6 @@ class LoginScreen extends Component {
       isOnDefaultToggleSwitch: !this.state.isOnDefaultToggleSwitch,
     });
   };
-
   render() {
     return (
       <View style={styles.container}>

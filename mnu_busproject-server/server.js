@@ -35,26 +35,26 @@ async function asyncFunction() {
           res.send(rows1)
       })
 
-      // const rows2 = await conn.query("SELECT * FROM  roadtest");
-      // app.get('/api/roadtest',(req,res)=>{
-      //     res.send(rows2)
-      // })
+      const rows2 = await conn.query("SELECT * FROM  roadtest");
+      app.get('/api/roadtest',(req,res)=>{
+          res.send(rows2)
+      })
       
-      // /
-      // app.post('/api/roaddetail',async(req,res) => {
-      //   var startAreas = req.body.startAreas;
-      //   console.log(startAreas)
-      //   var rows3 = await conn.query(
-      //     "SELECT * FROM  roaddetail WHERE StartArea = ? order by numID",
-      //     [startAreas]
-      //     );
-      //     if(rows3.length>0){
-      //       res.send({'success':true,'startAreas':JSON.stringify(rows3)});
-      //     }
-      //     else {
-      //       res.send({'success':false,'startAreas':'network error'});
-      //     }
-      // })
+      /
+      app.post('/api/roaddetail',async(req,res) => {
+        var startAreas = req.body.startAreas;
+        console.log(startAreas)
+        var rows3 = await conn.query(
+          "SELECT * FROM  roaddetail WHERE StartArea = ? order by numID",
+          [startAreas]
+          );
+          if(rows3.length>0){
+            res.send({'success':true,'startAreas':JSON.stringify(rows3)});
+          }
+          else {
+            res.send({'success':false,'startAreas':'network error'});
+          }
+      })
 
 
 
@@ -110,7 +110,24 @@ async function asyncFunction() {
           res.send({'success':true,'reserve':rows3});
         }
         else {
-          res.send({'success':false,'reserve':'network error'});
+          res.send({'success':false,'message':'network error'});
+        }
+ 
+    })
+
+    app.post('/api/reserve_check',async(req,res) => {
+      var user = req.body.uid
+      var rows6 = await conn.query(
+        "SELECT * FROM reserve WHERE uid = ? AND start_date >= DATE_ADD(NOW(),INTERVAL -7 DAY)", // 지금 현재시간 ~ 7일전까지 범위 검색 uid 리턴 or * 리턴
+        [user]
+        );
+     
+        
+        if(rows6.length>0){
+          res.send({'success':false,'message':'예약 내역이 존재합니다.'}); // 예약테이블에 7일이내 예약기록이 있을 경우, 예약 실패
+        }
+        else {
+          res.send({'success':true}); // 조회 데이터 없을 경우 예약 가능.
         }
  
     })
@@ -125,7 +142,7 @@ async function asyncFunction() {
         [route,reserve_seat,start_date,uid,]
         );
           
-
+        console.log(start_date)
         if((JSON.stringify(rows4)) != '{"affectedRows": 1, "insertId": 0, "warningStatus": 0}'){
           res.send({'success':true});
         }
@@ -145,7 +162,7 @@ async function asyncFunction() {
         [reserve_seat,route,start_date,uid,]
         );
           
-        console.log(JSON.stringify(rows5));
+      
         if(rows5){
           res.send({'success':true,'reserve':rows5});
         }

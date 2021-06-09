@@ -73,22 +73,47 @@ class RouteReserve extends Component {
     } else {
     }
   };
-
+  reserve_check=async(start,route,end,date)=>{     // 예약내역에 유저가 있는지 체크하는 함수.
+      const { uid, uname, dept, stdnum } = this.props.route.params;
+    await fetch('http://10.0.2.2:5000/api/reserve_check', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        uid:uid
+      }),
+    }) 
+      .then(response => response.json())
+      .then(res => {
+        
+        if (res.success === true) {  
+          this.props.navigation.navigate('RouteResult', {
+            start_data :start, // 출발 지역 :광주 , 목포
+            route_data:route, // 선택 노선 정보
+            end_data:end,
+            date:date.format('YYYY-MM-DD'),
+            uid: uid,
+            uname: uname,
+            dept: dept,
+            stdnum: stdnum,
+          })
+         
+          } else {
+           alert ( res.message) // 예약된 내역이 있습니다. 출력
+          } 
+        } 
+ 
+      )
+      .done();
+  }
 
   checkdata =(start,route,end,date) => { // 출발지 ,경로,예약날자
-    const { uid, uname, dept, stdnum } = this.props.route.params; // 아이디 , 이름, 학과,학번
-        if(start != '' && route != ''){
+   // 아이디 , 이름, 학과,학번
+        if(start != '' && route != '' && date !='' && end !=''){
           return (
-            this.props.navigation.navigate('RouteResult', {
-              start_data :start, // 출발 지역 :광주 , 목포
-              route_data:route, // 선택 노선 정보
-              end_data:end,
-              date:date.format('YYYY-MM-DD'),
-              uid: uid,
-              uname: uname,
-              dept: dept,
-              stdnum: stdnum,
-            })
+           this.reserve_check(start,route,end,date)
           )
         }else {
           return (

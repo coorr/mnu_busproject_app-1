@@ -179,7 +179,8 @@ class App extends Component {
                 backgroundColor: '#5B79ED',
               },
               headerTintColor: 'white',
-              headerTitle: '예약 확인',
+              
+              headerTitle: '예약 정보',
             }}
           /> 
           <Stack.Screen

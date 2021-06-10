@@ -53,7 +53,7 @@ class App extends Component {
     return (
       // <Provider store={createStoreWithMiddleware(Reducer)}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="login">
+        <Stack.Navigator initialRouteName="Login">
           {/* <Stack.Screen
             name="Register"
             component={Register}
@@ -170,7 +170,7 @@ class App extends Component {
               headerTintColor: 'white',
               headerTitle: '내 정보',
             }}
-          /> 
+          />
           <Stack.Screen
             name="ReserveCheckScreen"
             component={ReserveCheckScreen}
@@ -179,10 +179,10 @@ class App extends Component {
                 backgroundColor: '#5B79ED',
               },
               headerTintColor: 'white',
-              
+
               headerTitle: '예약 정보',
             }}
-          /> 
+          />
           <Stack.Screen
             name="PolicyScreen"
             component={PolicyScreen}

@@ -1,15 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
-import {
-  TextInput,
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  Button,
-} from 'react-native';
-
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet, View, Text } from 'react-native';
 
 class QuestionsScreen extends Component {
   render() {

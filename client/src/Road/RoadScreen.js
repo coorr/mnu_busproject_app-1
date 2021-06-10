@@ -1,16 +1,16 @@
+/* eslint-disable no-alert */
+/* eslint-disable react-native/no-inline-styles */
 import React, { Component } from 'react';
 import {
   View,
-  Button,
   StyleSheet,
   Text,
   FlatList,
   ActivityIndicator,
 } from 'react-native';
-import { List, ListItem, SearchBar } from 'react-native-elements';
+import { SearchBar } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as hangul from 'hangul-js';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 class RoadScreen extends Component {
   constructor(props) {

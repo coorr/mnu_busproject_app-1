@@ -1,13 +1,8 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable no-alert */
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
-import {
-  TextInput,
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  FlatList,
-} from 'react-native';
+import { StyleSheet, View, Text, Image, FlatList } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import check from '../assets/image/check.png';
 import CalendarPicker from 'react-native-calendar-picker';
@@ -16,7 +11,6 @@ import moment from 'moment';
 import 'moment/locale/ko';
 
 class RouteReserve extends Component {
-    
   constructor(props) {
     super(props);
     this.state = {
@@ -38,7 +32,7 @@ class RouteReserve extends Component {
       selectedStartDate: date, // utc 표준 형식으로 data 저장
       dateclick: !this.state.dateclick, // 날짜 선택 후 화면전환
     });
-  } 
+  }
 
   fetchDataleft = async () => {
     const response = await fetch('http://10.0.2.2:5000/api/route_local');
@@ -61,7 +55,7 @@ class RouteReserve extends Component {
       })
         .then(response => response.json())
         .then(res => {
-          if (res.success == true) {
+          if (res.success === true) {
             var routes = JSON.parse(res.route);
             this.setState({ Rdata: routes });
           } else {
@@ -73,8 +67,9 @@ class RouteReserve extends Component {
     } else {
     }
   };
-  reserve_check=async(start,route,end,date)=>{     // 예약내역에 유저가 있는지 체크하는 함수.
-      const { uid, uname, dept, stdnum } = this.props.route.params;
+  reserve_check = async (start, route, end, date) => {
+    // 예약내역에 유저가 있는지 체크하는 함수.
+    const { uid, uname, dept, stdnum } = this.props.route.params;
     await fetch('http://10.0.2.2:5000/api/reserve_check', {
       method: 'POST',
       headers: {
@@ -82,45 +77,38 @@ class RouteReserve extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        uid:uid
+        uid: uid,
       }),
-    }) 
+    })
       .then(response => response.json())
       .then(res => {
-        
-        if (res.success === true) {  
+        if (res.success === true) {
           this.props.navigation.navigate('RouteResult', {
-            start_data :start, // 출발 지역 :광주 , 목포
-            route_data:route, // 선택 노선 정보
-            end_data:end,
-            date:date.format('YYYY-MM-DD'),
+            start_data: start, // 출발 지역 :광주 , 목포
+            route_data: route, // 선택 노선 정보
+            end_data: end,
+            date: date.format('YYYY-MM-DD'),
             uid: uid,
             uname: uname,
             dept: dept,
             stdnum: stdnum,
-          })
-         
-          } else {
-           alert ( res.message) // 예약된 내역이 있습니다. 출력
-          } 
-        } 
- 
-      )
-      .done();
-  }
-
-  checkdata =(start,route,end,date) => { // 출발지 ,경로,예약날자
-   // 아이디 , 이름, 학과,학번
-        if(start != '' && route != '' && date !='' && end !=''){
-          return (
-           this.reserve_check(start,route,end,date)
-          )
-        }else {
-          return (
-            alert("항목을 입력하세요") // modal 경고 창 띄우기 
-          )
+          });
+        } else {
+          alert(res.message); // 예약된 내역이 있습니다. 출력
         }
-  }
+      })
+      .done();
+  };
+
+  checkdata = (start, route, end, date) => {
+    // 출발지 ,경로,예약날자
+    // 아이디 , 이름, 학과,학번
+    if (start !== '' && route !== '' && date !== '' && end !== '') {
+      return this.reserve_check(start, route, end, date);
+    } else {
+      return alert('항목을 입력하세요'); // modal 경고 창 띄우기
+    }
+  };
 
   componentDidMount() {
     this.fetchDataleft();
@@ -131,14 +119,14 @@ class RouteReserve extends Component {
   }
 
   render() {
-    
     var d = new Date(); // d 객체생성
     const minDate = moment(d).format('YYYY-MM-DD'); // Today
     const maxDate = moment(d.getTime()).add('10', 'd').format('YYYY-MM-DD'); // d 객체에서 7일 후까지
     const { selectedStartDate } = this.state;
-    const startDate = selectedStartDate!=''
-      ? selectedStartDate.format('YYYY - MM - DD (dddd)')
-      : '';
+    const startDate =
+      selectedStartDate !== ''
+        ? selectedStartDate.format('YYYY - MM - DD (dddd)')
+        : '';
 
     const customDayHeaderStylesCallback = ({ dayOfWeek, month, year }) => {
       // 년/월/주 헤더 타이틀 스타일
@@ -204,28 +192,6 @@ class RouteReserve extends Component {
           };
       }
     };
-    // 아래 코드 :  day 부분 스타일
-    // const customDatesStylesCallback = date => {
-    //   switch(date.isoWeekday()) {
-    //     case 1: // Monday
-    //       return {
-    //         style:{
-    //           backgroundColor: '#909',
-    //         },
-    //         textStyle: {
-    //           color: '#0f0',
-    //           fontWeight: 'bold',
-    //         }
-    //       };
-    //     case 7: // Sunday
-    //       return {
-    //         textStyle: {
-    //           color: 'red',
-    //         }
-    //       };
-    //   }
-
-    // }
 
     return (
       <View style={styles.Container}>
@@ -240,7 +206,7 @@ class RouteReserve extends Component {
               }}
             >
               <Text style={styles.StartButtonText}>출발지</Text>
-              {this.state.scrollleftvalue != '' ? (
+              {this.state.scrollleftvalue !== '' ? (
                 <Text style={styles.StartButtonInputchange}>
                   {this.state.scrollleftvalue}
                 </Text>
@@ -253,7 +219,7 @@ class RouteReserve extends Component {
           <View style={styles.StartButtonArea}>
             <TouchableOpacity style={styles.StartTouchButton}>
               <Text style={styles.StartButtonText}>도착지</Text>
-              {this.state.scrollrightvalue != '' ? (
+              {this.state.scrollrightvalue !== '' ? (
                 <Text style={styles.StartButtonInputchange}>
                   {this.state.scrollrightvalue}
                 </Text>
@@ -264,7 +230,7 @@ class RouteReserve extends Component {
           </View>
         </View>
 
-        {this.state.checkbutton == false ? (
+        {this.state.checkbutton === false ? (
           <View style={styles.updown}>
             <View style={styles.dateContatiner}>
               <TouchableOpacity
@@ -280,7 +246,7 @@ class RouteReserve extends Component {
               </TouchableOpacity>
             </View>
 
-            {this.state.dateclick == true ? (
+            {this.state.dateclick === true ? (
               <View>
                 <ScrollView style={styles.CalendarContainer}>
                   <CalendarPicker
@@ -319,13 +285,18 @@ class RouteReserve extends Component {
                       {this.state.scrollcentervalue}
                     </Text>
                   </TouchableOpacity>
-                </View> 
+                </View>
 
                 <View style={styles.buttonArea}>
                   <TouchableOpacity
                     style={styles.buttonFrom}
                     onPress={() => {
-                      this.checkdata(this.state.scrollleftvalue,this.state.scrollcentervalue,this.state.scrollrightvalue,selectedStartDate) // 선택 출발지, 선택 경로, 선택 도착지 , 예약일
+                      this.checkdata(
+                        this.state.scrollleftvalue,
+                        this.state.scrollcentervalue,
+                        this.state.scrollrightvalue,
+                        selectedStartDate,
+                      ); // 선택 출발지, 선택 경로, 선택 도착지 , 예약일
                     }}
                   >
                     <Text style={styles.buttonText}>조회하기</Text>
@@ -354,7 +325,7 @@ class RouteReserve extends Component {
                   <TouchableOpacity
                     onPress={() => {
                       this.setState({ scrollrightvalue: '' });
-                      if (this.state.scrollleftvalue == item.local) {
+                      if (this.state.scrollleftvalue === item.local) {
                         //기존 지역 설정 값 있을 시에
                         this.setState({
                           scrollleftvalue: '', //왼쪽 지역 설정 값 초기화
@@ -371,7 +342,7 @@ class RouteReserve extends Component {
                   >
                     <View style={styles.boxl}>
                       <Text style={styles.lefttext}>{item.local}</Text>
-                      {this.state.scrollleftvalue == item.local ? (
+                      {this.state.scrollleftvalue === item.local ? (
                         <Image source={check} style={styles.checklogo} />
                       ) : (
                         <View style={styles.backcolor} />
@@ -395,7 +366,7 @@ class RouteReserve extends Component {
                       });
                     }}
                   >
-                    {this.state.scrollleftvalue == '' ? (
+                    {this.state.scrollleftvalue === '' ? (
                       <View style={styles.Container} />
                     ) : (
                       <View style={styles.boxr}>

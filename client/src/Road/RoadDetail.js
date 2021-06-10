@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { Component } from 'react';
 import {
   View,
@@ -36,7 +37,7 @@ class RoadDetail extends Component {
     })
       .then(response => response.json())
       .then(res => {
-        if (res.success == true) {
+        if (res.success === true) {
           var startAreas = JSON.parse(res.startAreas);
           this.setState({ data: startAreas });
         } else {
@@ -171,7 +172,6 @@ const styles = StyleSheet.create({
 
   bodys: { height: '100%', width: '100%' },
 
-  
   navBar: {
     justifyContent: 'space-between',
     alignItems: 'center',

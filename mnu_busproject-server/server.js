@@ -124,7 +124,7 @@ async function asyncFunction() {
      
         
         if(rows6.length>0){
-          res.send({'success':false,'message':'예약 내역이 존재합니다.'}); // 예약테이블에 7일이내 예약기록이 있을 경우, 예약 실패
+          res.send({'success':false,'message':'예약 내역이 존재합니다.','reserve':JSON.stringify(rows6)}); // 예약테이블에 7일이내 예약기록이 있을 경우, 예약 실패
         }
         else {
           res.send({'success':true}); // 조회 데이터 없을 경우 예약 가능.

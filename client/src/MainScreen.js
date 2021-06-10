@@ -1,15 +1,7 @@
+/* eslint-disable react-native/no-inline-styles */
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
-import {
-  TextInput,
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  Button,
-  Linking, 
-  Switch,
-} from 'react-native';
+import { StyleSheet, View, Text, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import busIcon from '../assets/image/bus.png';
@@ -54,7 +46,17 @@ class MainScreen extends Component {
         </View>
 
         <View style={styles.cancelForm}>
-          <TouchableOpacity style={styles.cancelArea}>
+          <TouchableOpacity
+            style={styles.cancelArea}
+            onPress={() => {
+              this.props.navigation.navigate('RouteReserve', {
+                uid: uid,
+                uname: uname,
+                dept: dept,
+                stdnum: stdnum,
+              });
+            }}
+          >
             <View style={styles.box}>
               <Text style={styles.circle}>
                 <Image source={checkGreen} style={styles.busIcon} />

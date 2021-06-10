@@ -1,13 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
-import {
-  TextInput,
-  StyleSheet,
-  View,
-  Text,
-  Button,
-  FlatList,
-} from 'react-native';
+import { StyleSheet, View, Text, FlatList } from 'react-native';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import moment from 'moment';
@@ -23,10 +16,11 @@ class NoticeScreen extends Component {
     isLoading: true,
   };
 
-  dateParse = (notice_date) =>{   // 날짜 파싱하는 함수
-    let ndate =moment(notice_date).format('YYYY-MM-DD') 
-    return ndate
-  }
+  dateParse = notice_date => {
+    // 날짜 파싱하는 함수
+    let ndate = moment(notice_date).format('YYYY-MM-DD');
+    return ndate;
+  };
 
   fetchData = async () => {
     const response = await fetch('http://10.0.2.2:5000/api/board');
@@ -46,7 +40,6 @@ class NoticeScreen extends Component {
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => {
-               
               this.props.navigation.navigate('NoticeDetailScreen', {
                 pid: item.pid,
                 title: item.title,

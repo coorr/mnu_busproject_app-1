@@ -49,7 +49,7 @@ class MainScreen extends Component {
           <TouchableOpacity
             style={styles.cancelArea}
             onPress={() => {
-              this.props.navigation.navigate('RouteReserve', {
+              this.props.navigation.navigate('ConfirmScreen', {
                 uid: uid,
                 uname: uname,
                 dept: dept,

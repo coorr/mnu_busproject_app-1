@@ -20,6 +20,7 @@ import NoticeScreen from './src/Board/NoticeScreen';
 import RoadScreen from './src/Road/RoadScreen';
 import RoadDetail from './src/Road/RoadDetail';
 import Wait from './src/Wait';
+import ConfirmScreen from './src/Confirm/ConfirmScreen';
 
 import SettingScreen from './src/User/SettingScreen';
 import PolicyScreen from './src/User/PolicyScreen';
@@ -206,6 +207,18 @@ class App extends Component {
               headerTitle: '페널티 내역 확인',
             }}
           />
+          <Stack.Screen
+            name="ConfirmScreen"
+            component={ConfirmScreen}
+            options={{
+              headerStyle: {
+                backgroundColor: '#5B79ED',
+              },
+              headerTintColor: 'white',
+              headerTitle: '예매 확인',
+            }}
+          />
+          
         </Stack.Navigator>
       </NavigationContainer>
     );

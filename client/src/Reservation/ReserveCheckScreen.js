@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
   },
 
   boxlist: {
-    marginTop: '20%',
+    marginTop: '15%',
     width: '90%',
     height: '70%',
     borderRadius: 20,
@@ -206,18 +206,19 @@ const styles = StyleSheet.create({
   },
   topboxtexttiny: {
     paddingTop: 10,
-    paddingBottom: 20,
-    fontSize: 15,
-    fontWeight: '200',
+    paddingBottom: 10,
+    fontSize: 20,
+    fontWeight: '700',
   },
   topboxtext: {
-    fontSize: 25,
-    fontWeight: '500',
+    fontSize: 20,
+    fontWeight: '300',
   },
   middlebox: {
     width: '100%',
-    height: '50%',
-
+    flex: 1,
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
     //marginBottom:'1%',
   },
   box_area: {
@@ -234,16 +235,14 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   middleboxtexttiny: {
-    fontSize: 15,
-    fontWeight: '500',
+    fontSize: 20,
+    fontWeight: '400',
   },
   boxuser_area: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderBottomWidth: 1,
-    borderColor: '#dbdbdb',
   },
   middleboxusertext: {
     flex: 1,

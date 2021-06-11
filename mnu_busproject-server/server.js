@@ -77,19 +77,19 @@ async function asyncFunction() {
 
     })
 
-    const rows3 = await conn.query("SELECT local FROM  route group by local");
+    const rows7 = await conn.query("SELECT local FROM  route group by local");
     app.get('/api/route_local',(req,res)=>{
-        res.send(rows3)
+        res.send(rows7)
     })
 
     app.post('/api/routes',async(req,res) => {
       var local = req.body.local;
-      var rows3 = await conn.query(
+      var rows8 = await conn.query(
         "SELECT * FROM  route WHERE local = ? order by start_point",
         [local]
         );
-        if(rows3.length>0){
-          res.send({'success':true,'route':JSON.stringify(rows3)});
+        if(rows8.length>0){
+          res.send({'success':true,'route':JSON.stringify(rows8)});
         }
         else {
           res.send({'success':false,'route':'network error'});
@@ -100,14 +100,14 @@ async function asyncFunction() {
     app.post('/api/reserve',async(req,res) => {
       var route = req.body.route;
       var start_date = req.body.start_date;
-      var rows3 = await conn.query(
+      var rows9 = await conn.query(
         "SELECT reserve_seat,uid FROM  reserve WHERE route = ? and start_date = ? order by reserve_seat",
         [route,start_date]
         );
      
         
-        if(rows3.length>0){
-          res.send({'success':true,'reserve':rows3});
+        if(rows9.length>0){
+          res.send({'success':true,'reserve':rows9});
         }
         else {
           res.send({'success':false,'message':'network error'});

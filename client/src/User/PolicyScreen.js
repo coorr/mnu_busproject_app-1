@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
-import {
-  TextInput,
-  StyleSheet,
-  View,
-  Text,
-} from 'react-native';
+import { TextInput, StyleSheet, View, Text } from 'react-native';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
-
 
 class PolicyScreen extends Component {
   constructor(props) {
@@ -16,11 +9,9 @@ class PolicyScreen extends Component {
   }
 
   render() {
-    
-
     return (
-        <View style={styles.container}>
-          <Text>123</Text>
+      <View style={styles.container}>
+        <Text>123</Text>
       </View>
     );
   }
@@ -29,8 +20,7 @@ class PolicyScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
-  }
+  },
 });
 
 export default PolicyScreen;

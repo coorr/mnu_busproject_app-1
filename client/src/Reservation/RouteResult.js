@@ -80,72 +80,80 @@ class RouteResult extends Component {
   }
 
   getSeatData = async () => {
-    const { route_data, date, uid } = this.props.route.params;
+    try {
+      const { route_data, date, uid } = this.props.route.params;
 
-    await fetch('http://10.0.2.2:5000/api/reserve', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        route: route_data,
-        start_date: date,
-      }),
-    })
-      .then(response => response.json())
-      .then(res => {
-        if (res.success === true) {
-          for (let index = 0; index < res.reserve.length; index++) {
-            // let형은 재선언 불가능:메모리 재배치 불가능  , 재할당 : 메모리에 다른 값 덮어쓰기 가능.
+      await fetch('http://10.0.2.2:5000/api/reserve', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          route: route_data,
+          start_date: date,
+        }),
+      })
+        .then(response => response.json())
+        .then(res => {
+          if (res.success === true) {
+            for (let index = 0; index < res.reserve.length; index++) {
+              // let형은 재선언 불가능:메모리 재배치 불가능  , 재할당 : 메모리에 다른 값 덮어쓰기 가능.
 
-            if (uid === res.reserve[index].uid) {
-              // 기존의 회원과 같을 경우.
-              this.setState({
-                seat_number: res.reserve[index].reserve_seat,
-                usercheck: true,
-              });
-            } else {
-              seats[
-                seats.findIndex(x => x.id === res.reserve[index].reserve_seat)
-              ].user = res.reserve[index].uid;
-              // findIndex에서 db와 일치하는 정보만 찾아서 let 형태의 seats 배열에 저장.
+              if (uid === res.reserve[index].uid) {
+                // 기존의 회원과 같을 경우.
+                this.setState({
+                  seat_number: res.reserve[index].reserve_seat,
+                  usercheck: true,
+                });
+              } else {
+                seats[
+                  seats.findIndex(x => x.id === res.reserve[index].reserve_seat)
+                ].user = res.reserve[index].uid;
+                // findIndex에서 db와 일치하는 정보만 찾아서 let 형태의 seats 배열에 저장.
+              }
             }
           }
-        }
-      })
-      .done();
+        })
+        .done();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   sendSeatData = async () => {
-    // RouteCheckScreen 으로 전송
+    try {
+      // RouteCheckScreen 으로 전송
 
-    const {
-      start_data,
-      route_data,
-      end_data,
-      date,
-      uid,
-      uname,
-      dept,
-      stdnum,
-    } = this.props.route.params;
+      const {
+        start_data,
+        route_data,
+        end_data,
+        date,
+        uid,
+        uname,
+        dept,
+        stdnum,
+      } = this.props.route.params;
 
-    this.props.navigation.navigate('ReserveCheckScreen', {
-      //예약정보
-      start_data: start_data, // 출발 지역 :광주 , 목포
-      route_data: route_data, // 선택 노선 정보
-      end_data: end_data,
-      date: date,
-      seat_number: this.state.seat_number,
-      //예약자 정보
-      uid: uid,
-      uname: uname,
-      dept: dept,
-      stdnum: stdnum,
-      //예약상태 정보
-      usercheck: this.state.usercheck,
-    });
+      this.props.navigation.navigate('ReserveCheckScreen', {
+        //예약정보
+        start_data: start_data, // 출발 지역 :광주 , 목포
+        route_data: route_data, // 선택 노선 정보
+        end_data: end_data,
+        date: date,
+        seat_number: this.state.seat_number,
+        //예약자 정보
+        uid: uid,
+        uname: uname,
+        dept: dept,
+        stdnum: stdnum,
+        //예약상태 정보
+        usercheck: this.state.usercheck,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   getItemLayout(data, index) {

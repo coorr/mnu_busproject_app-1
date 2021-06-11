@@ -14,27 +14,31 @@ class ConfirmScreen extends Component {
   }
 
   reserve_check = async (start, route, end, date) => {
-    // 예약내역에 유저가 있는지 체크하는 함수.
-    const { uid, uname, dept, stdnum } = this.props.route.params;
-    await fetch('http://10.0.2.2:5000/api/reserve_check', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        uid: uid,
-      }),
-    })
-      .then(response => response.json())
-      .then(res => {
-        if (res.success === true) {
-          this.setState({
-            usercheck: !this.state.usercheck, // 예매 없음 true으로 변환
-          });
-        }
+    try {
+      // 예약내역에 유저가 있는지 체크하는 함수.
+      const { uid, uname, dept, stdnum } = this.props.route.params;
+      await fetch('http://10.0.2.2:5000/api/reserve_check', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          uid: uid,
+        }),
       })
-      .done();
+        .then(response => response.json())
+        .then(res => {
+          if (res.success === true) {
+            this.setState({
+              usercheck: !this.state.usercheck, // 예매 없음 true으로 변환
+            });
+          }
+        })
+        .done();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   render() {

@@ -35,9 +35,13 @@ class RouteReserve extends Component {
   }
 
   fetchDataleft = async () => {
-    const response = await fetch('http://10.0.2.2:5000/api/route_local');
-    const Ldata = await response.json();
-    this.setState({ data: Ldata });
+    try {
+      const response = await fetch('http://10.0.2.2:5000/api/route_local');
+      const Ldata = await response.json();
+      this.setState({ data: Ldata });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   fetchDataright = async () => {
@@ -68,36 +72,40 @@ class RouteReserve extends Component {
     }
   };
   reserve_check = async (start, route, end, date) => {
-    // 예약내역에 유저가 있는지 체크하는 함수.
-    const { uid, uname, dept, stdnum } = this.props.route.params;
-    await fetch('http://10.0.2.2:5000/api/reserve_check', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        uid: uid,
-      }),
-    })
-      .then(response => response.json())
-      .then(res => {
-        if (res.success === true) {
-          this.props.navigation.navigate('RouteResult', {
-            start_data: start, // 출발 지역 :광주 , 목포
-            route_data: route, // 선택 노선 정보
-            end_data: end,
-            date: date.format('YYYY-MM-DD'),
-            uid: uid,
-            uname: uname,
-            dept: dept,
-            stdnum: stdnum,
-          });
-        } else {
-          alert(res.message); // 예약된 내역이 있습니다. 출력
-        }
+    try {
+      // 예약내역에 유저가 있는지 체크하는 함수.
+      const { uid, uname, dept, stdnum } = this.props.route.params;
+      await fetch('http://10.0.2.2:5000/api/reserve_check', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          uid: uid,
+        }),
       })
-      .done();
+        .then(response => response.json())
+        .then(res => {
+          if (res.success === true) {
+            this.props.navigation.navigate('RouteResult', {
+              start_data: start, // 출발 지역 :광주 , 목포
+              route_data: route, // 선택 노선 정보
+              end_data: end,
+              date: date.format('YYYY-MM-DD'),
+              uid: uid,
+              uname: uname,
+              dept: dept,
+              stdnum: stdnum,
+            });
+          } else {
+            alert(res.message); // 예약된 내역이 있습니다. 출력
+          }
+        })
+        .done();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   checkdata = (start, route, end, date) => {

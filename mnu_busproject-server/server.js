@@ -43,7 +43,6 @@ async function asyncFunction() {
       /
       app.post('/api/roaddetail',async(req,res) => {
         var startAreas = req.body.startAreas;
-        console.log(startAreas)
         var rows3 = await conn.query(
           "SELECT * FROM  roaddetail WHERE StartArea = ? order by numID",
           [startAreas]
@@ -142,7 +141,6 @@ async function asyncFunction() {
         [route,reserve_seat,start_date,uid,]
         );
           
-        console.log(start_date)
         if((JSON.stringify(rows4)) != '{"affectedRows": 1, "insertId": 0, "warningStatus": 0}'){
           res.send({'success':true});
         }

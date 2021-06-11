@@ -10,99 +10,93 @@ class ReserveCheckScreen extends Component {
   }
 
   sendSeatData = async () => {
-    const {
-      route_data,
-      date,
-      seat_number,
-      uid,
-      uname,
-      dept,
-      stdnum,
-    } = this.props.route.params;
+    try {
+      const { route_data, date, seat_number, uid, uname, dept, stdnum } =
+        this.props.route.params;
 
-    await fetch('http://10.0.2.2:5000/api/reserve_input', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        reserve_seat: seat_number,
-        route: route_data,
-        start_date: date,
-        uid: uid,
-      }),
-    })
-      .then(response => response.json())
-      .then(res => {
-        if (res.success === true) {
-          this.props.navigation.reset({
-            routes: [
-              {
-                name: 'MainScreenView',
-                params: {
-                  uid: uid,
-                  uname: uname,
-                  dept: dept,
-                  stdnum: stdnum,
-                },
-              },
-            ],
-          });
-        } else {
-          alert(res.message);
-        }
+      await fetch('http://10.0.2.2:5000/api/reserve_input', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          reserve_seat: seat_number,
+          route: route_data,
+          start_date: date,
+          uid: uid,
+        }),
       })
+        .then(response => response.json())
+        .then(res => {
+          if (res.success === true) {
+            this.props.navigation.reset({
+              routes: [
+                {
+                  name: 'MainScreenView',
+                  params: {
+                    uid: uid,
+                    uname: uname,
+                    dept: dept,
+                    stdnum: stdnum,
+                  },
+                },
+              ],
+            });
+          } else {
+            alert(res.message);
+          }
+        })
 
-      .done();
+        .done();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   ModifySeatData = async () => {
-    const {
-      route_data,
-      date,
-      seat_number,
-      uid,
-      uname,
-      dept,
-      stdnum,
-    } = this.props.route.params;
+    try {
+      const { route_data, date, seat_number, uid, uname, dept, stdnum } =
+        this.props.route.params;
 
-    await fetch('http://10.0.2.2:5000/api/reserve_modify', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        reserve_seat: seat_number,
-        route: route_data,
-        start_date: date,
-        uid: uid,
-      }),
-    })
-      .then(response => response.json())
-      .then(res => {
-        if (res.success === true) {
-          this.props.navigation.reset({
-            routes: [
-              {
-                name: 'MainScreenView',
-                params: {
-                  uid: uid,
-                  uname: uname,
-                  dept: dept,
-                  stdnum: stdnum,
-                },
-              },
-            ],
-          });
-        } else {
-          alert(res.message);
-        }
+      await fetch('http://10.0.2.2:5000/api/reserve_modify', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          reserve_seat: seat_number,
+          route: route_data,
+          start_date: date,
+          uid: uid,
+        }),
       })
+        .then(response => response.json())
+        .then(res => {
+          if (res.success === true) {
+            this.props.navigation.reset({
+              routes: [
+                {
+                  name: 'MainScreenView',
+                  params: {
+                    uid: uid,
+                    uname: uname,
+                    dept: dept,
+                    stdnum: stdnum,
+                  },
+                },
+              ],
+            });
+          } else {
+            alert(res.message);
+          }
+        })
 
-      .done();
+        .done();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   render() {

@@ -4,7 +4,7 @@ import 'react-native-gesture-handler';
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image, FlatList } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import check from '../assets/image/check.png';
+import check from '../../assets/image/check.png';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
@@ -121,7 +121,7 @@ class RouteReserve extends Component {
   render() {
     var d = new Date(); // d 객체생성
     const minDate = moment(d).format('YYYY-MM-DD'); // Today
-    const maxDate = moment(d.getTime()).add('10', 'd').format('YYYY-MM-DD'); // d 객체에서 7일 후까지
+    const maxDate = moment(d.getTime()).add('7', 'd').format('YYYY-MM-DD'); // d 객체에서 7일 후까지
     const { selectedStartDate } = this.state;
     const startDate =
       selectedStartDate !== ''

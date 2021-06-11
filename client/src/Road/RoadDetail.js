@@ -9,8 +9,8 @@ import {
   StatusBar,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import ArrowIcon from '../assets/image/arrow.png';
-import BackArrow from '../assets/image/backicon.png';
+import ArrowIcon from '../../assets/image/arrow.png';
+import BackArrow from '../../assets/image/backicon.png';
 import ReactNativeParallaxHeader from 'react-native-parallax-header';
 
 class RoadDetail extends Component {

@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
@@ -8,6 +9,88 @@ class ReserveCheckScreen extends Component {
     super(props);
   }
 
+  sendSeatData = async () => {
+    const { route_data, date, seat_number, uid, uname, dept, stdnum } =
+      this.props.route.params;
+
+    await fetch('http://10.0.2.2:5000/api/reserve_input', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        reserve_seat: seat_number,
+        route: route_data,
+        start_date: date,
+        uid: uid,
+      }),
+    })
+      .then(response => response.json())
+      .then(res => {
+        if (res.success === true) {
+          this.props.navigation.reset({
+            routes: [
+              {
+                name: 'MainScreenView',
+                params: {
+                  uid: uid,
+                  uname: uname,
+                  dept: dept,
+                  stdnum: stdnum,
+                },
+              },
+            ],
+          });
+        } else {
+          alert(res.message);
+        }
+      })
+
+      .done();
+  };
+
+  ModifySeatData = async () => {
+    const { route_data, date, seat_number, uid, uname, dept, stdnum } =
+      this.props.route.params;
+
+    await fetch('http://10.0.2.2:5000/api/reserve_modify', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        reserve_seat: seat_number,
+        route: route_data,
+        start_date: date,
+        uid: uid,
+      }),
+    })
+      .then(response => response.json())
+      .then(res => {
+        if (res.success === true) {
+          this.props.navigation.reset({
+            routes: [
+              {
+                name: 'MainScreenView',
+                params: {
+                  uid: uid,
+                  uname: uname,
+                  dept: dept,
+                  stdnum: stdnum,
+                },
+              },
+            ],
+          });
+        } else {
+          alert(res.message);
+        }
+      })
+
+      .done();
+  };
+
   render() {
     const {
       start_data,
@@ -15,7 +98,6 @@ class ReserveCheckScreen extends Component {
       end_data,
       date,
       seat_number,
-      uid,
       uname,
       dept,
       stdnum,
@@ -57,28 +139,22 @@ class ReserveCheckScreen extends Component {
             </View>
           </View>
         </View>
-
-        <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.reset({
-              routes: [
-                {
-                  name: 'MainScreenView',
-                  params: {
-                    uid: uid,
-                    uname: uname,
-                    dept: dept,
-                    stdnum: stdnum,
-                  },
-                },
-              ],
-            });
-          }}
-        >
-          <View style={styles.checkbutton}>
-            <Text style={styles.checktext}>확인</Text>
-          </View>
-        </TouchableOpacity>
+        <View style={styles.checkbutton}>
+          <TouchableOpacity
+            style={styles.checkarea}
+            onPress={() => {
+              //처음 예약이면 예약하기 sql insert 시행
+              if (this.props.route.params.usercheck === false) {
+                this.sendSeatData();
+              } else {
+                //예약상태가 true일 경우에 시행.
+                this.ModifySeatData();
+              }
+            }}
+          >
+            <Text style={styles.checktext}>예약하기</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -172,6 +248,24 @@ const styles = StyleSheet.create({
   middleboxusertext: {
     flex: 1,
     textAlign: 'center',
+  },
+  checkbutton: {
+    position: 'absolute',
+    bottom: 0,
+    height: '10%',
+    width: '90%',
+    backgroundColor: '#5B79ED',
+    borderRadius: 15,
+  },
+  checkarea: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+  },
+  checktext: {
+    color: 'white',
+    fontSize: 20,
   },
 });
 

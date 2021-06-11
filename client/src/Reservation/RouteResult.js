@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
 
 import { TouchableOpacity, FlatList } from 'react-native-gesture-handler';
-import seat from '../assets/image/seat.png';
-import seat_gray from '../assets/image/seat_gray.png';
-import seat_green from '../assets/image/seat_green.png';
-import bus_door from '../assets/image/bus_door.png';
-import steering_wheel_icon from '../assets/image/steering_wheel_icon.png';
-import seat_background from '../assets/image/seat_background.png';
+import seat from '../../assets/image/seat.png';
+import seat_gray from '../../assets/image/seat_gray.png';
+import seat_green from '../../assets/image/seat_green.png';
+import bus_door from '../../assets/image/bus_door.png';
+import steering_wheel_icon from '../../assets/image/steering_wheel_icon.png';
+import seat_background from '../../assets/image/seat_background.png';
 
 let seats = [
   { id: 1, user: '' },
@@ -135,6 +135,8 @@ class RouteResult extends Component {
       uname: uname,
       dept: dept,
       stdnum: stdnum,
+      //예약상태 정보
+      usercheck: this.state.usercheck,
     });
   };
 

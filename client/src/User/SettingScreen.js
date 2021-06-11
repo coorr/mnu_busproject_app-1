@@ -1,10 +1,9 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image, Button, Linking } from 'react-native';
+import { StyleSheet, View, Text, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
-import man_logo2 from '../assets/image/man_logo2.png';
-
+import man_logo2 from '../../assets/image/man_logo2.png';
 
 class SettingScreen extends Component {
   constructor(props) {
@@ -35,14 +34,18 @@ class SettingScreen extends Component {
         <View style={styles.listbox}>
           <Text style={styles.listboxtitle}>내역 조회</Text>
           <View style={styles.list_box_area}>
-            <TouchableOpacity style={styles.list_touch_box} onPress={()=>{
-                this.props.navigation.navigate('RhistoryScreen', { // 필요한것만 select 
+            <TouchableOpacity
+              style={styles.list_touch_box}
+              onPress={() => {
+                this.props.navigation.navigate('RhistoryScreen', {
+                  // 필요한것만 select
                   uid: uid,
                   uname: uname,
                   dept: dept,
                   stdnum: stdnum,
                 });
-            }}>
+              }}
+            >
               <View style={styles.textbox}>
                 <Text style={styles.listboxtext}>예약 내역 확인</Text>
               </View>
@@ -50,14 +53,18 @@ class SettingScreen extends Component {
           </View>
 
           <View style={styles.list_box_area}>
-            <TouchableOpacity style={styles.list_touch_box} onPress={()=>{
-                this.props.navigation.navigate('PhistoryScreen', { // 필요한것만 select 
+            <TouchableOpacity
+              style={styles.list_touch_box}
+              onPress={() => {
+                this.props.navigation.navigate('PhistoryScreen', {
+                  // 필요한것만 select
                   uid: uid,
                   uname: uname,
                   dept: dept,
                   stdnum: stdnum,
                 });
-            }}>
+              }}
+            >
               <View style={styles.textbox}>
                 <Text style={styles.listboxtext}>페널티 내역 확인</Text>
               </View>
@@ -68,9 +75,12 @@ class SettingScreen extends Component {
         <View style={styles.listbox}>
           <Text style={styles.listboxtitle}>알림</Text>
           <View style={styles.list_box_area}>
-            <TouchableOpacity style={styles.list_touch_box} onPress={()=>{
+            <TouchableOpacity
+              style={styles.list_touch_box}
+              onPress={() => {
                 this.props.navigation.navigate('NoticeScreen');
-            }}>
+              }}
+            >
               <View style={styles.textbox}>
                 <Text style={styles.listboxtext}>공지사항</Text>
               </View>
@@ -78,9 +88,12 @@ class SettingScreen extends Component {
           </View>
 
           <View style={styles.list_box_area}>
-            <TouchableOpacity style={styles.list_touch_box} onPress={()=>{
+            <TouchableOpacity
+              style={styles.list_touch_box}
+              onPress={() => {
                 this.props.navigation.navigate('PolicyScreen');
-            }}>
+              }}
+            >
               <View style={styles.textbox}>
                 <Text style={styles.listboxtext}>이용안내</Text>
               </View>
@@ -143,7 +156,7 @@ const styles = StyleSheet.create({
   },
 
   listbox: {
-    marginTop:"5%",
+    marginTop: '5%',
     borderColor: '#848484',
     borderRadius: 15,
     borderWidth: 1,
@@ -174,19 +187,18 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   buttonform: {
-    position:'absolute',
-    bottom:0,
+    position: 'absolute',
+    bottom: 0,
     height: '10%',
     width: '95%',
     backgroundColor: '#5B79ED',
-    borderRadius:15
+    borderRadius: 15,
   },
   buttonArea: {
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
     height: '100%',
-    
   },
   buttonText: {
     color: 'white',

@@ -10,8 +10,15 @@ class ReserveCheckScreen extends Component {
   }
 
   sendSeatData = async () => {
-    const { route_data, date, seat_number, uid, uname, dept, stdnum } =
-      this.props.route.params;
+    const {
+      route_data,
+      date,
+      seat_number,
+      uid,
+      uname,
+      dept,
+      stdnum,
+    } = this.props.route.params;
 
     await fetch('http://10.0.2.2:5000/api/reserve_input', {
       method: 'POST',
@@ -51,8 +58,15 @@ class ReserveCheckScreen extends Component {
   };
 
   ModifySeatData = async () => {
-    const { route_data, date, seat_number, uid, uname, dept, stdnum } =
-      this.props.route.params;
+    const {
+      route_data,
+      date,
+      seat_number,
+      uid,
+      uname,
+      dept,
+      stdnum,
+    } = this.props.route.params;
 
     await fetch('http://10.0.2.2:5000/api/reserve_modify', {
       method: 'POST',

@@ -11,8 +11,18 @@ class ReserveCheckScreen extends Component {
 
   sendSeatData = async () => {
     try {
-      const { route_data, date, seat_number, uid, uname, dept, stdnum } =
-        this.props.route.params;
+      const {
+        start_data,
+        route_data,
+        end_data,
+        start_time,
+        date,
+        seat_number,
+        uid,
+        uname,
+        dept,
+        stdnum,
+      } = this.props.route.params;
 
       await fetch('http://10.0.2.2:5000/api/reserve_input', {
         method: 'POST',
@@ -21,8 +31,11 @@ class ReserveCheckScreen extends Component {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          start: start_data,
+          end: end_data,
           reserve_seat: seat_number,
           route: route_data,
+          start_time: start_time,
           start_date: date,
           uid: uid,
         }),

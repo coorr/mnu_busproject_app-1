@@ -218,7 +218,6 @@ class App extends Component {
               headerTitle: '예매 확인',
             }}
           />
-          
         </Stack.Navigator>
       </NavigationContainer>
     );

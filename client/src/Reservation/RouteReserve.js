@@ -23,6 +23,7 @@ class RouteReserve extends Component {
       Ldata: [], //  오른쪽 리스트 값 저장.
       selectedStartDate: '',
       dateclick: false,
+      start_time: '',
     };
     this.onDateChange = this.onDateChange.bind(this);
   }
@@ -89,10 +90,13 @@ class RouteReserve extends Component {
         .then(res => {
           if (res.success === true) {
             this.props.navigation.navigate('RouteResult', {
+              //예매정보 전달
               start_data: start, // 출발 지역 :광주 , 목포
               route_data: route, // 선택 노선 정보
-              end_data: end,
+              end_data: end, //도착 목적지 정보
+              start_time: this.state.start_time,
               date: date.format('YYYY-MM-DD'),
+              //유저정보 전달
               uid: uid,
               uname: uname,
               dept: dept,
@@ -114,7 +118,7 @@ class RouteReserve extends Component {
     if (start !== '' && route !== '' && date !== '' && end !== '') {
       return this.reserve_check(start, route, end, date);
     } else {
-      return alert('항목을 입력하세요'); // modal 경고 창 띄우기
+      return alert('모든 항목을 선택해 주세요.'); //  경고 창 띄우기
     }
   };
 
@@ -370,6 +374,7 @@ class RouteReserve extends Component {
                       this.setState({
                         scrollrightvalue: item.end_point, // 도착지 값 설정 :도림캠퍼스
                         scrollcentervalue: item.start_point, // 경로 명 설정
+                        start_time: item.start_time,
                         checkbutton: !this.state.checkbutton, //화면 전환
                       });
                     }}

@@ -129,6 +129,7 @@ class RouteResult extends Component {
         start_data,
         route_data,
         end_data,
+        start_time,
         date,
         uid,
         uname,
@@ -141,6 +142,7 @@ class RouteResult extends Component {
         start_data: start_data, // 출발 지역 :광주 , 목포
         route_data: route_data, // 선택 노선 정보
         end_data: end_data,
+        start_time: start_time,
         date: date,
         seat_number: this.state.seat_number,
         //예약자 정보

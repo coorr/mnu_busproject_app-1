@@ -11,7 +11,13 @@ class SettingScreen extends Component {
   }
   remove = () => {
     AsyncStorage.removeItem('userData');
-    this.props.navigation.navigate('Login');
+    this.props.navigation.reset({
+      routes: [
+        {
+          name: 'Login',
+        },
+      ],
+    });
   };
   render() {
     const { uid, uname, dept, stdnum } = this.props.route.params; // 아이디 , 이름, 학과,학번

@@ -100,7 +100,7 @@ async function asyncFunction() {
       var route = req.body.route;
       var start_date = req.body.start_date;
       var rows9 = await conn.query(
-        "SELECT reserve_seat,uid FROM  reserve WHERE route = ? and start_date = ? order by reserve_seat",
+        "SELECT reserve_seat,uid FROM  reserve WHERE local = ? and start_date = ? order by reserve_seat",
         [route,start_date]
         );
      
@@ -123,22 +123,25 @@ async function asyncFunction() {
      
         
         if(rows6.length>0){
-          res.send({'success':false,'message':'예약 내역이 존재합니다.','reserve':JSON.stringify(rows6)}); // 예약테이블에 7일이내 예약기록이 있을 경우, 예약 실패
+          res.send({'success':false,'message':'예약 내역이 존재합니다.'}); // 예약테이블에 7일이내 예약기록이 있을 경우, 예약 실패
         }
         else {
-          res.send({'success':true}); // 조회 데이터 없을 경우 예약 가능.
+          res.send({'success':true ,'reserve':JSON.stringify(rows6)}); // 조회 데이터 없을 경우 예약 가능.
         }
  
     })
 
     app.post('/api/reserve_input',async(req,res) => {
+      var start =req.body.start;
+      var end = req.body.end;
+      var start_time = req.body.start_time;
       var route = req.body.route;
       var start_date = req.body.start_date;
       var reserve_seat = req.body.reserve_seat;
       var uid = req.body.uid;
       var rows4 = await conn.query(
-        "INSERT INTO reserve (route,reserve_seat,start_date,uid) VALUES (?,?,?,?)",
-        [route,reserve_seat,start_date,uid,]
+        "INSERT INTO reserve (local,start_point,end_point,start_time,reserve_seat,start_date,uid) VALUES (?,?,?,?,?,?,?)",
+        [start,route,end,start_time,reserve_seat,start_date,uid,]
         );
           
         if((JSON.stringify(rows4)) != '{"affectedRows": 1, "insertId": 0, "warningStatus": 0}'){

@@ -341,4 +341,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RouteResult; // memorization
+export default React.memo(RouteResult); // memorization

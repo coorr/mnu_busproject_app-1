@@ -26,6 +26,7 @@ class RouteReserve extends Component {
       start_time: '',
     };
     this.onDateChange = this.onDateChange.bind(this);
+    this.fetchDataleft();
   }
 
   onDateChange(date) {
@@ -46,33 +47,36 @@ class RouteReserve extends Component {
   };
 
   fetchDataright = async () => {
-    if (this.state.scrollleftvalue !== '') {
-      //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-      await fetch('http://10.0.2.2:5000/api/routes', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: JSON.stringify({
-          local: this.state.scrollleftvalue,
-        }),
-      })
-        .then(response => response.json())
-        .then(res => {
-          if (res.success === true) {
-            var routes = JSON.parse(res.route);
-            this.setState({ Rdata: routes });
-          } else {
-            alert(res.route);
-          }
+    try {
+      if (this.state.scrollleftvalue !== '') {
+        //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
+        await fetch('http://10.0.2.2:5000/api/routes', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: JSON.stringify({
+            local: this.state.scrollleftvalue,
+          }),
         })
+          .then(response => response.json())
+          .then(res => {
+            if (res.success === true) {
+              var routes = JSON.parse(res.route);
+              this.setState({ Rdata: routes });
+            } else {
+              alert(res.route);
+            }
+          })
 
-        .done();
-    } else {
+          .done();
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
-  reserve_check = async (start, route, end, date) => {
+  reserve_check = async (start, route, end, date, today, ctime) => {
     try {
       // 예약내역에 유저가 있는지 체크하는 함수.
       const { uid, uname, dept, stdnum } = this.props.route.params;
@@ -112,19 +116,15 @@ class RouteReserve extends Component {
     }
   };
 
-  checkdata = (start, route, end, date) => {
+  checkdata = (start, route, end, date, today, ctime) => {
     // 출발지 ,경로,예약날자
     // 아이디 , 이름, 학과,학번
     if (start !== '' && route !== '' && date !== '' && end !== '') {
-      return this.reserve_check(start, route, end, date);
+      return this.reserve_check(start, route, end, date, today, ctime);
     } else {
       return alert('모든 항목을 선택해 주세요.'); //  경고 창 띄우기
     }
   };
-
-  componentDidMount() {
-    this.fetchDataleft();
-  }
 
   componentDidUpdate() {
     this.fetchDataright();
@@ -132,6 +132,7 @@ class RouteReserve extends Component {
 
   render() {
     var d = new Date(); // d 객체생성
+    const ctime = moment(d).format('HH:mm:ss');
     const minDate = moment(d).format('YYYY-MM-DD'); // Today
     const maxDate = moment(d.getTime()).add('7', 'd').format('YYYY-MM-DD'); // d 객체에서 7일 후까지
     const { selectedStartDate } = this.state;
@@ -308,6 +309,8 @@ class RouteReserve extends Component {
                         this.state.scrollcentervalue,
                         this.state.scrollrightvalue,
                         selectedStartDate,
+                        minDate,
+                        ctime,
                       ); // 선택 출발지, 선택 경로, 선택 도착지 , 예약일
                     }}
                   >

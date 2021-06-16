@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import QRCode from 'react-native-qrcode-svg';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
@@ -7,7 +6,6 @@ import 'moment/locale/ko';
 import QRCode from 'react-native-qrcode-svg';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import QuestionMark from '../../assets/image/question-mark.png';
-import qrcode from '../../assets/image/qrcode.png';
 
 class ConfirmScreen extends Component {
   constructor(props) {
@@ -44,9 +42,23 @@ class ConfirmScreen extends Component {
             this.setState({
               usercheck: !this.state.usercheck, // 예매 없음 true으로 변환
             });
+          } else if (res.success === false) {
+            var reserve = JSON.parse(res.reserve);
+            this.setState({ data: reserve[0] });
           }
         })
+
         .done();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  reserve_delete = async () => {
+    try {
+      await fetch('http://10.0.2.2:5000/api/reserve_delete', {
+        method: 'DELETE',
+      });
     } catch (err) {
       console.log(err);
     }
@@ -54,11 +66,12 @@ class ConfirmScreen extends Component {
 
   componentDidMount() {
     this.reserve_check();
+    this.reserve_delete();
   }
 
   render() {
-    console.log(this.state.usercheck);
-
+    this.state.data.start_date = this.dateParse(this.state.data.start_date); // 날짜변경 하여 저장.
+    const pardata = JSON.stringify(this.state.data); //날짜 변경하여 저장.
     return (
       <View style={styles.contain}>
         {this.state.usercheck === true ? (
@@ -109,16 +122,13 @@ class ConfirmScreen extends Component {
               </View>
 
               <View style={styles.qrcodeContainer}>
-                <TouchableOpacity style={styles.qrcodeArea}>
-                  <View style={styles.qrcodeHeader}>
-                    <Text style={styles.qrcodeText}>모바일 예매</Text>
-                  </View>
-                  <View style={styles.qrcodeView}>
-                    <QRCode value="유저 정보 + 예약정보 + key" logo={qrcode} />
-
-                    {/* <Image source={qrcode} style={styles.qrcode} /> */}
-                  </View>
-                </TouchableOpacity>
+                <View style={styles.qrcodeHeader}>
+                  <Text style={styles.qrcodeText}>모바일 예매</Text>
+                </View>
+                <View style={styles.qrcodeView}>
+                  <QRCode value={pardata} />
+                  {/* <Image source={qrcode} style={styles.qrcode} /> */}
+                </View>
               </View>
             </View>
 
@@ -137,7 +147,12 @@ class ConfirmScreen extends Component {
 
             <View style={styles.BtnContainer}>
               <View style={styles.BtnCancelArea}>
-                <TouchableOpacity style={styles.TouchBtnCancel}>
+                <TouchableOpacity
+                  style={styles.TouchBtnCancel}
+                  onPress={() => {
+                    this.reserve_delete;
+                  }}
+                >
                   <View style={styles.BtnCancelBox}>
                     <Text style={styles.BtnCancleText}>예매 취소</Text>
                   </View>

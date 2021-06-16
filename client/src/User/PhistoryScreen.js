@@ -4,7 +4,7 @@ import { TextInput, StyleSheet, View, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class PhistoryScreen extends Component {
-  constructor(props) {
+  constructor(props) {             
     super(props);
   }
 
@@ -14,7 +14,7 @@ class PhistoryScreen extends Component {
     return (
       <View style={styles.container}>
         <Text>123</Text>
-      </View>
+      </View>  
     );
   }
 }

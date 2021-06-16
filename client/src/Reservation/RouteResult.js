@@ -120,16 +120,8 @@ class RouteResult extends Component {
   sendSeatData = async () => {
     // RouteCheckScreen 으로 전송
 
-    const {
-      start_data,
-      route_data,
-      end_data,
-      date,
-      uid,
-      uname,
-      dept,
-      stdnum,
-    } = this.props.route.params;
+    const { start_data, route_data, end_data, date, uid, uname, dept, stdnum } =
+      this.props.route.params;
 
     this.props.navigation.navigate('ReserveCheckScreen', {
       //예약정보

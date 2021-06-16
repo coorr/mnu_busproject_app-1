@@ -141,6 +141,7 @@ const styles = StyleSheet.create({
     height: '100%',
     margin: 0,
     padding: 0,
+    borderWidth: 2,
   },
   InputFoamBox: {
     width: '100%',

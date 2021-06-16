@@ -25,56 +25,60 @@ class LoginScreen extends Component {
   }
 
   login = async () => {
-    if (this.state.username !== '' && this.state.password !== '') {
-      await fetch('http://10.0.2.2:5000/api/users', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: this.state.username,
-          password: this.state.password,
-        }),
-      })
-        .then(response => response.json())
-        .then(res => {
-          if (res.success === true) {
-            const user = JSON.parse(res.user);
-            if (this.state.isOnDefaultToggleSwitch === true) {
-              AsyncStorage.setItem(
-                'userData',
-                JSON.stringify({
-                  userid: this.state.username,
-                  userpassword: this.state.password,
-                }),
-              );
-            }
-
-            this.setState({
-              username: '',
-              password: '',
-            });
-            this.props.navigation.reset({
-              routes: [
-                {
-                  name: 'MainScreenView',
-                  params: {
-                    uid: user.uid,
-                    uname: user.uname,
-                    dept: user.dept,
-                    stdnum: user.stdnum,
-                  },
-                },
-              ],
-            });
-          } else {
-            alert(res.message);
-          }
+    try {
+      if (this.state.username !== '' && this.state.password !== '') {
+        await fetch('http://10.0.2.2:5000/api/users', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: this.state.username,
+            password: this.state.password,
+          }),
         })
-        .done();
-    } else {
-      alert('아디 비번 입력바람');
+          .then(response => response.json())
+          .then(res => {
+            if (res.success === true) {
+              const user = JSON.parse(res.user);
+              if (this.state.isOnDefaultToggleSwitch === true) {
+                AsyncStorage.setItem(
+                  'userData',
+                  JSON.stringify({
+                    userid: this.state.username,
+                    userpassword: this.state.password,
+                  }),
+                );
+              }
+
+              this.setState({
+                username: '',
+                password: '',
+              });
+              this.props.navigation.reset({
+                routes: [
+                  {
+                    name: 'MainScreenView',
+                    params: {
+                      uid: user.uid,
+                      uname: user.uname,
+                      dept: user.dept,
+                      stdnum: user.stdnum,
+                    },
+                  },
+                ],
+              });
+            } else {
+              alert(res.message);
+            }
+          })
+          .done();
+      } else {
+        alert('아디 비번 입력바람');
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 

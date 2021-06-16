@@ -35,11 +35,13 @@ async function asyncFunction() {
       const rows1 = await conn.query("SELECT * FROM  board");
       app.get('/api/board',(req,res)=>{
           res.send(rows1)
+          conn.release(); //release to pool
       })
 
       const rows2 = await conn.query("SELECT * FROM  roadtest");
       app.get('/api/roadtest',(req,res)=>{
           res.send(rows2)
+          conn.release(); //release to pool
       })
       
       /
@@ -52,9 +54,11 @@ async function asyncFunction() {
           );
           if(rows3.length>0){
             res.send({'success':true,'startAreas':JSON.stringify(rows3)});
+            conn.release(); //release to pool
           }
           else {
             res.send({'success':false,'startAreas':'network error'});
+            conn.release(); //release to pool
           }
         } catch(err) {
           console.log(err);
@@ -75,9 +79,11 @@ async function asyncFunction() {
           
           if(re.length>0) {
               res.send({'success':true,'user':JSON.stringify(re[0])});
+              conn.release(); //release to pool
           }
           else {
           res.send({'success':false,'message': 'User Not Found'});
+          conn.release(); //release to pool
           }
         } catch (err) {
           console.log(err);
@@ -87,6 +93,7 @@ async function asyncFunction() {
     const rows7 = await conn.query("SELECT local FROM  route group by local");
     app.get('/api/route_local',(req,res)=>{
         res.send(rows7)
+        conn.release(); //release to pool
     })
 
     app.post('/api/routes',async(req,res) => {
@@ -98,9 +105,11 @@ async function asyncFunction() {
         );
         if(rows8.length>0){
           res.send({'success':true,'route':JSON.stringify(rows8)});
+          conn.release(); //release to pool
         }
         else {
           res.send({'success':false,'route':'network error'});
+          conn.release(); //release to pool
         }
       } catch(err) {
         console.log(err);
@@ -120,9 +129,11 @@ async function asyncFunction() {
         
         if(rows9.length>0){
           res.send({'success':true,'reserve':rows9});
+          conn.release(); //release to pool
         }
         else {
           res.send({'success':false,'message':'network error'});
+          conn.release(); //release to pool
         }
       } catch(err) {
         console.log(err);
@@ -140,16 +151,15 @@ async function asyncFunction() {
         
         if(rows6.length>0){
           res.send({'success':false,'message':'예약 내역이 존재합니다.', 'reserve':JSON.stringify(rows6)}); // 예약테이블에 7일이내 예약기록이 있을 경우, 예약 실패
+          conn.release(); //release to pool
         }
         else {
           res.send({'success':true }); // 조회 데이터 없을 경우 예약 가능.
+          conn.release(); //release to pool
         }
-<<<<<<< HEAD
-=======
       } catch(err) {
         console.log(err);
       }
->>>>>>> 5a9ec8076bcfa4f46a3e8ff07b1a2c96b99e377c
     })
 
 
@@ -171,9 +181,11 @@ async function asyncFunction() {
           
         if((JSON.stringify(rows4)) != '{"affectedRows": 1, "insertId": 0, "warningStatus": 0}'){
           res.send({'success':true});
+          conn.release(); //release to pool
         }
         else {
           res.send({'success':false,'reserve':'예매 실패'});
+          conn.release(); //release to pool
         }
       } catch(err) {
         console.log(err);
@@ -194,9 +206,11 @@ async function asyncFunction() {
       
         if(rows5){
           res.send({'success':true,'reserve':rows5});
+          conn.release(); //release to pool
         }
         else {
           res.send({'success':false,'reserve':'예매변경 실패'});
+          conn.release(); //release to pool
         }
       } catch(err) {
         console.log(err);
@@ -214,9 +228,11 @@ async function asyncFunction() {
         
         if(rows10.length>0){
           res.send({'success':true,'penalty':JSON.stringify(rows10)});
+          conn.release(); //release to pool
         }
         else {
           res.send({'success':false,'message':'페널티 내역이 없습니다.'});
+          conn.release(); //release to pool
         }
       } catch(err) {
         console.log(err);
@@ -231,9 +247,11 @@ async function asyncFunction() {
         );
         if(rows11.length>0){
           res.send({'success':true,'reserve':JSON.stringify(rows11)});
+          conn.release(); //release to pool
         }
         else {
           res.send({'success':false,'message':'이용 내역이 없습니다.'});
+          conn.release(); //release to pool
         }
       } catch(err) {  //handle query error
         console.log(err);
@@ -241,12 +259,12 @@ async function asyncFunction() {
     })
     console.log(12345);
     
-    } catch (err) { //handle connection error
+    } catch (err) { //handle connection errorzz
       console.log(err);
       throw(err);
     } finally {
       console.log(56789);
-      conn.release(); //release to pool
+     
       //asyncFunction();
     }
   }

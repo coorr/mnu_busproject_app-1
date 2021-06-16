@@ -1,20 +1,13 @@
 import React, { Component } from 'react';
-import {
-  TextInput,
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  FlatList,
-} from 'react-native';
+//import QRCode from 'react-native-qrcode-svg';
+import { StyleSheet, View, Text, Image } from 'react-native';
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 import 'moment/locale/ko';
-
+import QRCode from 'react-native-qrcode-svg';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import QuestionMark from '../../assets/image/question-mark.png';
 import qrcode from '../../assets/image/qrcode.png';
-import { timesSeries } from 'async';
 
 class ConfirmScreen extends Component {
   constructor(props) {
@@ -34,7 +27,7 @@ class ConfirmScreen extends Component {
   reserve_check = async (start, route, end, date) => {
     try {
       // 예약내역에 유저가 있는지 체크하는 함수.
-      const { uid, uname, dept, stdnum } = this.props.route.params;
+      const { uid } = this.props.route.params;
       await fetch('http://10.0.2.2:5000/api/reserve_check', {
         method: 'POST',
         headers: {
@@ -121,7 +114,9 @@ class ConfirmScreen extends Component {
                     <Text style={styles.qrcodeText}>모바일 예매</Text>
                   </View>
                   <View style={styles.qrcodeView}>
-                    <Image source={qrcode} style={styles.qrcode} />
+                    <QRCode value="유저 정보 + 예약정보 + key" logo={qrcode} />
+
+                    {/* <Image source={qrcode} style={styles.qrcode} /> */}
                   </View>
                 </TouchableOpacity>
               </View>

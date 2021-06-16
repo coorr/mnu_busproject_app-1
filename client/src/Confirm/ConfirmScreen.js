@@ -11,11 +11,9 @@ import {
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 import 'moment/locale/ko';
-
+import QRCode from 'react-native-qrcode-svg';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import QuestionMark from '../../assets/image/question-mark.png';
-import qrcode from '../../assets/image/qrcode.png';
-import { timesSeries } from 'async';
 
 class ConfirmScreen extends Component {
   constructor(props) {
@@ -35,7 +33,7 @@ class ConfirmScreen extends Component {
   reserve_check = async (start, route, end, date) => {
     try {
       // 예약내역에 유저가 있는지 체크하는 함수.
-      const { uid, uname, dept, stdnum } = this.props.route.params;
+      const { uid } = this.props.route.params;
       await fetch('http://10.0.2.2:5000/api/reserve_check', {
         method: 'POST',
         headers: {
@@ -91,6 +89,16 @@ class ConfirmScreen extends Component {
     }
   };
 
+  reserve_delete = async () => {
+    try {
+      await fetch('http://10.0.2.2:5000/api/reserve_delete', {
+        method: 'DELETE',
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   componentDidMount() {
     this.reserve_check();
     // this.reserve_delete();
@@ -119,10 +127,10 @@ class ConfirmScreen extends Component {
   };
 
   render() {
-    console.log(this.state.usercheck);
-    // console.log(this.reserve_delete);
     const { uid, uname, dept, stdnum } = this.props.route.params;
 
+    this.state.data.start_date = this.dateParse(this.state.data.start_date); // 날짜변경 하여 저장.
+    const pardata = JSON.stringify(this.state.data); //날짜 변경하여 저장.
     return (
       <View style={styles.contain}>
         {this.state.usercheck === true ? (
@@ -173,14 +181,13 @@ class ConfirmScreen extends Component {
               </View>
 
               <View style={styles.qrcodeContainer}>
-                <TouchableOpacity style={styles.qrcodeArea}>
-                  <View style={styles.qrcodeHeader}>
-                    <Text style={styles.qrcodeText}>모바일 예매</Text>
-                  </View>
-                  <View style={styles.qrcodeView}>
-                    <Image source={qrcode} style={styles.qrcode} />
-                  </View>
-                </TouchableOpacity>
+                <View style={styles.qrcodeHeader}>
+                  <Text style={styles.qrcodeText}>모바일 예매</Text>
+                </View>
+                <View style={styles.qrcodeView}>
+                  <QRCode value={pardata} />
+                  {/* <Image source={qrcode} style={styles.qrcode} /> */}
+                </View>
               </View>
             </View>
 

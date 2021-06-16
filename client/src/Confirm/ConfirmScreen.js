@@ -6,6 +6,7 @@ import {
   Text,
   Image,
   FlatList,
+  Alert,
 } from 'react-native';
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
@@ -27,7 +28,7 @@ class ConfirmScreen extends Component {
   }
   dateParse = start_date => {
     // 날짜 파싱하는 함수
-    let ndate = moment(start_date).format('YYYY-MM-DD(dd) ');
+    let ndate = moment(start_date).format('YYYY-MM-DD');
     return ndate;
   };
 
@@ -51,8 +52,39 @@ class ConfirmScreen extends Component {
             this.setState({
               usercheck: !this.state.usercheck, // 예매 없음 true으로 변환
             });
+          } else if (res.success === false) {
+            var reserve = JSON.parse(res.reserve);
+            this.setState({ data: reserve[0] });
           }
         })
+
+        .done();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  reserve_delete = async () => {
+    try {
+      const { uid } = this.props.route.params;
+      console.log(uid);
+      await fetch('http://10.0.2.2:5000/api/reserve_delete', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          uid: uid,
+        }),
+      })
+        .then(response => response.json())
+        .then(res => {
+          if (res.success === false) {
+            this.props.navigation.navigate('MainScreenView');
+          }
+        })
+
         .done();
     } catch (err) {
       console.log(err);
@@ -61,15 +93,40 @@ class ConfirmScreen extends Component {
 
   componentDidMount() {
     this.reserve_check();
+    // this.reserve_delete();
   }
+
+  goAlert = () => {
+    Alert.alert(
+      '취소하시겠습니까?',
+      '  ',
+      [
+        {
+          text: '아니요', // 버튼 제목
+          onPress: () => console.log('아니라는데'), //onPress 이벤트시 콘솔창에 로그를 찍는다
+          style: 'cancel',
+        },
+        {
+          text: '네',
+          onPress: () => {
+            this.reserve_delete();
+          },
+        }, //버튼 제목
+        // 이벤트 발생시 로그를 찍는다
+      ],
+      { cancelable: false },
+    );
+  };
 
   render() {
     console.log(this.state.usercheck);
+    // console.log(this.reserve_delete);
+    const { uid, uname, dept, stdnum } = this.props.route.params;
 
     return (
       <View style={styles.contain}>
         {this.state.usercheck === true ? (
-          <View style={styles.container}>
+          <View style={styles.containers}>
             <View style={styles.ImageArea}>
               <Image source={QuestionMark} style={styles.QuestionMark} />
             </View>
@@ -142,7 +199,12 @@ class ConfirmScreen extends Component {
 
             <View style={styles.BtnContainer}>
               <View style={styles.BtnCancelArea}>
-                <TouchableOpacity style={styles.TouchBtnCancel}>
+                <TouchableOpacity
+                  style={styles.TouchBtnCancel}
+                  onPress={() => {
+                    this.goAlert();
+                  }}
+                >
                   <View style={styles.BtnCancelBox}>
                     <Text style={styles.BtnCancleText}>예매 취소</Text>
                   </View>
@@ -150,7 +212,24 @@ class ConfirmScreen extends Component {
               </View>
 
               <View style={styles.BtnCancelArea}>
-                <TouchableOpacity style={styles.TouchBtnCancel}>
+                <TouchableOpacity
+                  style={styles.TouchBtnCancel}
+                  onPress={() => {
+                    this.props.navigation.navigate('RouteResult', {
+                      //예매정보 전달
+                      start_data: this.state.data.local, // 출발 지역 :광주 , 목포
+                      route_data: this.state.data.start_point, // 선택 노선 정보
+                      end_data: this.state.data.end_point, //도착 목적지 정보
+                      start_time: this.state.data.start_time,
+                      date: this.dateParse(this.state.data.start_date),
+                      //유저정보 전달
+                      uid: uid,
+                      uname: uname,
+                      dept: dept,
+                      stdnum: stdnum,
+                    });
+                  }}
+                >
                   <View style={styles.BtnCancelBox}>
                     <Text style={styles.BtnCancleText}>예매 변경</Text>
                   </View>
@@ -166,7 +245,8 @@ class ConfirmScreen extends Component {
 
 const styles = StyleSheet.create({
   contain: { flex: 1, width: '100%', height: '100%' },
-  container: { width: '100%', height: '100%' },
+  container: { flex: 1, justifyContent: 'space-around', alignItems: 'center' },
+  containers: { width: '100%', height: '100%' },
   ImageArea: { width: '100%', height: '60%' },
   QuestionMark: {
     width: '60%',
@@ -268,6 +348,8 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#6495ED',
     marginRight: '4%',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   TouchBtnCancel: {
     width: '100%',

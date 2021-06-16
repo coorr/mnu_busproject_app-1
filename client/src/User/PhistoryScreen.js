@@ -6,7 +6,7 @@ import moment from 'moment';
 import 'moment/locale/ko';
 
 class PhistoryScreen extends Component {
-  constructor(props) {             
+  constructor(props) {
     super(props);
     this.penaltyfetchdata();
   }
@@ -52,10 +52,6 @@ class PhistoryScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-<<<<<<< HEAD
-        <Text>123</Text>
-      </View>  
-=======
         <View style={styles.titleheader}>
           <View style={styles.textbox1}>
             <Text style={styles.titleheadertext}>벌점</Text>
@@ -87,7 +83,6 @@ class PhistoryScreen extends Component {
           )}
         />
       </View>
->>>>>>> 5a9ec8076bcfa4f46a3e8ff07b1a2c96b99e377c
     );
   }
 }

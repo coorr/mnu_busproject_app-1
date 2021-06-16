@@ -131,7 +131,7 @@ async function asyncFunction() {
 
     app.post('/api/reserve_check',async(req,res) => {
       try{
-      var user = req.body.uid
+      var user = req.body.uid;
       var rows6 = await conn.query(
         "SELECT * FROM reserve WHERE uid = ? AND start_date >= DATE_ADD(NOW(),INTERVAL -7 DAY) AND STATUS = 0", // 지금 현재시간 ~ 7일전까지 범위 검색 uid 리턴 or * 리턴
         [user]
@@ -144,15 +144,32 @@ async function asyncFunction() {
         else {
           res.send({'success':true }); // 조회 데이터 없을 경우 예약 가능.
         }
-<<<<<<< HEAD
-=======
       } catch(err) {
         console.log(err);
       }
->>>>>>> 5a9ec8076bcfa4f46a3e8ff07b1a2c96b99e377c
     })
 
 
+
+    app.post('/api/reserve_delete', async(req,res) => {
+      try{
+        var user = req.body.uid;
+        console.log(user);
+        var rows6 = await conn.query(
+          "DELETE FROM reserve WHERE uid = ? ",
+          [user]
+          );
+
+          if(rows6.length>0){
+            res.send({'success':true,'message':'지워졌습니다.', 'reserve':JSON.stringify(rows6)}); // 예약테이블에 7일이내 예약기록이 있을 경우, 예약 실패
+          }
+          else {
+            res.send({'success':false }); // 조회 데이터 없을 경우 예약 가능.
+          }
+        } catch(err) {
+          console.log(err);
+        }
+      })
     
 
     app.post('/api/reserve_input',async(req,res) => {
@@ -182,21 +199,22 @@ async function asyncFunction() {
 
     app.post('/api/reserve_modify',async(req,res) => {
       try{
-      var route = req.body.route;
+      var route = req.body.route; // 노선정보
       var start_date = req.body.start_date;
       var reserve_seat = req.body.reserve_seat;
       var uid = req.body.uid;
+      console.log(route,start_date,reserve_seat,uid);
       var rows5 = await conn.query(
-        "UPDATE reserve SET reserve_seat = ? WHERE route = ?  AND start_date= ? AND uid= ?; ", // 변경번호 , 경로,예약날, uid
-        [reserve_seat,route,start_date,uid,]
+        "UPDATE reserve SET reserve_seat = ? WHERE start_point = ?  AND start_date= ? AND uid= ? ", // 변경번호 , 경로,예약날, uid
+        [reserve_seat,route,start_date,uid]
         );
           
-      
+        
         if(rows5){
           res.send({'success':true,'reserve':rows5});
         }
         else {
-          res.send({'success':false,'reserve':'예매변경 실패'});
+          res.send({'success':false,'reserve':'예매변경 실패'});  
         }
       } catch(err) {
         console.log(err);
@@ -210,8 +228,6 @@ async function asyncFunction() {
         "SELECT * FROM penalty WHERE uid = ?",
         [uid]
         );
-     
-        
         if(rows10.length>0){
           res.send({'success':true,'penalty':JSON.stringify(rows10)});
         }
@@ -239,15 +255,19 @@ async function asyncFunction() {
         console.log(err);
       }
     })
+
+
     console.log(12345);
     
     } catch (err) { //handle connection error
       console.log(err);
       throw(err);
-    } finally {
-      console.log(56789);
-      conn.release(); //release to pool
-      //asyncFunction();
+    }
+    // } 
+    finally {
+    //   console.log(56789);
+      // conn.release(); //release to pool
+    //   //asyncFunction();
     }
   }
 asyncFunction();

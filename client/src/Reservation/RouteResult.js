@@ -110,7 +110,7 @@ class RouteResult extends Component {
               if (uid === res.reserve[index].uid) {
                 // 기존의 회원과 같을 경우.
                 this.setState({
-                  seat_number: res.reserve[index].reserve_seat,
+                  seat_number: res.reserve[index].reserve_seat, // 선택한 자리
                   usercheck: true,
                 });
               } else {

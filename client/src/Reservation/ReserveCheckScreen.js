@@ -71,6 +71,7 @@ class ReserveCheckScreen extends Component {
     try {
       const { route_data, date, seat_number, uid, uname, dept, stdnum } =
         this.props.route.params;
+      console.log(11);
 
       await fetch('http://10.0.2.2:5000/api/reserve_modify', {
         method: 'POST',
@@ -80,7 +81,7 @@ class ReserveCheckScreen extends Component {
         },
         body: JSON.stringify({
           reserve_seat: seat_number,
-          route: route_data,
+          route: route_data, // 노선정보
           start_date: date,
           uid: uid,
         }),
@@ -88,6 +89,7 @@ class ReserveCheckScreen extends Component {
         .then(response => response.json())
         .then(res => {
           if (res.success === true) {
+            console.log(1111);
             this.props.navigation.reset({
               routes: [
                 {
@@ -102,7 +104,7 @@ class ReserveCheckScreen extends Component {
               ],
             });
           } else {
-            alert(res.message);
+            alert(res.reserve);
           }
         })
 

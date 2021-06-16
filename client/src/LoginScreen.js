@@ -83,46 +83,50 @@ class LoginScreen extends Component {
   };
 
   getData = async () => {
-    // eslint-disable-next-line handle-callback-err
-    await AsyncStorage.getItem('userData', (err, result) => {
-      const userInfo = JSON.parse(result); // 저장된 id/password userInfo 객체에 담는다.
-      if (userInfo != null) {
-        fetch('http://10.0.2.2:5000/api/users', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            username: userInfo.userid,
-            password: userInfo.userpassword,
-          }),
-        })
-          .then(response => response.json())
-          .then(res => {
-            if (res.success === true) {
-              const user = JSON.parse(res.user);
-
-              this.props.navigation.reset({
-                routes: [
-                  {
-                    name: 'MainScreenView',
-                    params: {
-                      uid: user.uid,
-                      uname: user.uname,
-                      dept: user.dept,
-                      stdnum: user.stdnum,
-                    },
-                  },
-                ],
-              });
-            } else {
-              this.props.navigation.navigate('Login');
-            }
+    try {
+      // eslint-disable-next-line handle-callback-err
+      await AsyncStorage.getItem('userData', (err, result) => {
+        const userInfo = JSON.parse(result); // 저장된 id/password userInfo 객체에 담는다.
+        if (userInfo != null) {
+          fetch('http://10.0.2.2:5000/api/users', {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              username: userInfo.userid,
+              password: userInfo.userpassword,
+            }),
           })
-          .done();
-      }
-    });
+            .then(response => response.json())
+            .then(res => {
+              if (res.success === true) {
+                const user = JSON.parse(res.user);
+
+                this.props.navigation.reset({
+                  routes: [
+                    {
+                      name: 'MainScreenView',
+                      params: {
+                        uid: user.uid,
+                        uname: user.uname,
+                        dept: user.dept,
+                        stdnum: user.stdnum,
+                      },
+                    },
+                  ],
+                });
+              } else {
+                this.props.navigation.navigate('Login');
+              }
+            })
+            .done();
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   ToggleChange = () => {

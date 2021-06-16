@@ -29,16 +29,20 @@ class RoadScreen extends Component {
   };
 
   RoadList = async () => {
-    const apiURL = 'http://10.0.2.2:5000/api/roadtest';
-    fetch(apiURL)
-      .then(response => response.json())
-      .then(responseJson => {
-        this.setState({ data: responseJson });
-        this.setState({ fullData: responseJson });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    try {
+      const apiURL = 'http://10.0.2.2:5000/api/roadtest';
+      fetch(apiURL)
+        .then(response => response.json())
+        .then(responseJson => {
+          this.setState({ data: responseJson });
+          this.setState({ fullData: responseJson });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   searchFilter = text => {

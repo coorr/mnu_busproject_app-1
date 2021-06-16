@@ -11,7 +11,13 @@ class SettingScreen extends Component {
   }
   remove = () => {
     AsyncStorage.removeItem('userData');
-    this.props.navigation.navigate('Login');
+    this.props.navigation.reset({
+      routes: [
+        {
+          name: 'Login',
+        },
+      ],
+    });
   };
   render() {
     const { uid, uname, dept, stdnum } = this.props.route.params; // 아이디 , 이름, 학과,학번
@@ -95,7 +101,7 @@ class SettingScreen extends Component {
               }}
             >
               <View style={styles.textbox}>
-                <Text style={styles.listboxtext}>이용안내</Text>
+                <Text style={styles.listboxtext}>자주 묻는 질문</Text>
               </View>
             </TouchableOpacity>
           </View>

@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { ActivityIndicator, StyleSheet, View, Text, Image } from 'react-native';
 
 import { TouchableOpacity, FlatList } from 'react-native-gesture-handler';
 import seat from '../../assets/image/seat.png';
@@ -10,134 +10,161 @@ import bus_door from '../../assets/image/bus_door.png';
 import steering_wheel_icon from '../../assets/image/steering_wheel_icon.png';
 import seat_background from '../../assets/image/seat_background.png';
 
-let seats = [
-  { id: 1, user: '' },
-  { id: 2, user: '' },
-  { id: 0, user: '' },
-  { id: 3, user: '' },
-  { id: 4, user: '' },
-  { id: 5, user: '' },
-  { id: 6, user: '' },
-  { id: 0, user: '' },
-  { id: 7, user: '' },
-  { id: 8, user: '' },
-  { id: 9, user: '' },
-  { id: 10, user: '' },
-  { id: 0, user: '' },
-  { id: 11, user: '' },
-  { id: 12, user: '' },
-  { id: 13, user: '' },
-  { id: 14, user: '' },
-  { id: 0, user: '' },
-  { id: 15, user: '' },
-  { id: 16, user: '' },
-  { id: 17, user: '' },
-  { id: 18, user: '' },
-  { id: 0, user: '' },
-  { id: 19, user: '' },
-  { id: 20, user: '' },
-  { id: 21, user: '' },
-  { id: 22, user: '' },
-  { id: 0, user: '' },
-  { id: 23, user: '' },
-  { id: 24, user: '' },
-  { id: 25, user: '' },
-  { id: 26, user: '' },
-  { id: 0, user: '' },
-  { id: 27, user: '' },
-  { id: 28, user: '' },
-  { id: 29, user: '' },
-  { id: 30, user: '' },
-  { id: 0, user: '' },
-  { id: 31, user: '' },
-  { id: 32, user: '' },
-  { id: 33, user: '' },
-  { id: 34, user: '' },
-  { id: 0, user: '' },
-  { id: 35, user: '' },
-  { id: 36, user: '' },
-  { id: 37, user: '' },
-  { id: 38, user: '' },
-  { id: 0, user: '' },
-  { id: 39, user: '' },
-  { id: 40, user: '' },
-  { id: 41, user: '' },
-  { id: 42, user: '' },
-  { id: 43, user: '' },
-  { id: 44, user: '' },
-  { id: 45, user: '' },
-];
-
 class RouteResult extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      // seat 데이터 설정 0 : seat_background 출력 아니면 숫자 출력
-      seat_number: -1, // 선택한 좌석 번호 저장
-      usercheck: false, // false : 예약하기 / true : 변경하기
-    };
   }
+  state = {
+    animating: true,
+    // seat 데이터 설정 0 : seat_background 출력 아니면 숫자 출력
+    seat_number: -1, // 선택한 좌석 번호 저장
+    usercheck: false, // false : 예약하기 / true : 변경하기
+    seats: [
+      { id: 1, user: '' },
+      { id: 2, user: '' },
+      { id: 0, user: '' },
+      { id: 3, user: '' },
+      { id: 4, user: '' },
+      { id: 5, user: '' },
+      { id: 6, user: '' },
+      { id: 0, user: '' },
+      { id: 7, user: '' },
+      { id: 8, user: '' },
+      { id: 9, user: '' },
+      { id: 10, user: '' },
+      { id: 0, user: '' },
+      { id: 11, user: '' },
+      { id: 12, user: '' },
+      { id: 13, user: '' },
+      { id: 14, user: '' },
+      { id: 0, user: '' },
+      { id: 15, user: '' },
+      { id: 16, user: '' },
+      { id: 17, user: '' },
+      { id: 18, user: '' },
+      { id: 0, user: '' },
+      { id: 19, user: '' },
+      { id: 20, user: '' },
+      { id: 21, user: '' },
+      { id: 22, user: '' },
+      { id: 0, user: '' },
+      { id: 23, user: '' },
+      { id: 24, user: '' },
+      { id: 25, user: '' },
+      { id: 26, user: '' },
+      { id: 0, user: '' },
+      { id: 27, user: '' },
+      { id: 28, user: '' },
+      { id: 29, user: '' },
+      { id: 30, user: '' },
+      { id: 0, user: '' },
+      { id: 31, user: '' },
+      { id: 32, user: '' },
+      { id: 33, user: '' },
+      { id: 34, user: '' },
+      { id: 0, user: '' },
+      { id: 35, user: '' },
+      { id: 36, user: '' },
+      { id: 37, user: '' },
+      { id: 38, user: '' },
+      { id: 0, user: '' },
+      { id: 39, user: '' },
+      { id: 40, user: '' },
+      { id: 41, user: '' },
+      { id: 42, user: '' },
+      { id: 43, user: '' },
+      { id: 44, user: '' },
+      { id: 45, user: '' },
+    ],
+  };
+
+  closeActivityIndicator = () =>
+    setTimeout(
+      () =>
+        this.setState({
+          animating: false,
+        }),
+      1000, //1초 로딩바
+    );
 
   getSeatData = async () => {
-    const { route_data, date, uid } = this.props.route.params;
+    try {
+      const { route_data, date, uid } = this.props.route.params;
+      await fetch('http://10.0.2.2:5000/api/reserve', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          route: route_data,
+          start_date: date,
+        }),
+      })
+        .then(response => response.json())
+        .then(res => {
+          if (res.success === true) {
+            for (let index = 0; index < res.reserve.length; index++) {
+              // let형은 재선언 불가능:메모리 재배치 불가능  , 재할당 : 메모리에 다른 값 덮어쓰기 가능.
 
-    await fetch('http://10.0.2.2:5000/api/reserve', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        route: route_data,
-        start_date: date,
-      }),
-    })
-      .then(response => response.json())
-      .then(res => {
-        if (res.success === true) {
-          for (let index = 0; index < res.reserve.length; index++) {
-            // let형은 재선언 불가능:메모리 재배치 불가능  , 재할당 : 메모리에 다른 값 덮어쓰기 가능.
-
-            if (uid === res.reserve[index].uid) {
-              // 기존의 회원과 같을 경우.
-              this.setState({
-                seat_number: res.reserve[index].reserve_seat,
-                usercheck: true,
-              });
-            } else {
-              seats[
-                seats.findIndex(x => x.id === res.reserve[index].reserve_seat)
-              ].user = res.reserve[index].uid;
-              // findIndex에서 db와 일치하는 정보만 찾아서 let 형태의 seats 배열에 저장.
+              if (uid === res.reserve[index].uid) {
+                // 기존의 회원과 같을 경우.
+                this.setState({
+                  seat_number: res.reserve[index].reserve_seat,
+                  usercheck: true,
+                });
+              } else {
+                this.state.seats[
+                  this.state.seats.findIndex(
+                    x => x.id === res.reserve[index].reserve_seat,
+                  )
+                ].user = res.reserve[index].uid;
+                // findIndex에서 db와 일치하는 정보만 찾아서 let 형태의 seats 배열에 저장.
+              }
             }
           }
-        }
-      })
-      .done();
+        })
+        .done();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   sendSeatData = async () => {
-    // RouteCheckScreen 으로 전송
+    try {
+      // RouteCheckScreen 으로 전송
 
-    const { start_data, route_data, end_data, date, uid, uname, dept, stdnum } =
-      this.props.route.params;
+      const {
+        start_data,
+        route_data,
+        end_data,
+        start_time,
+        date,
+        uid,
+        uname,
+        dept,
+        stdnum,
+      } = this.props.route.params;
 
-    this.props.navigation.navigate('ReserveCheckScreen', {
-      //예약정보
-      start_data: start_data, // 출발 지역 :광주 , 목포
-      route_data: route_data, // 선택 노선 정보
-      end_data: end_data,
-      date: date,
-      seat_number: this.state.seat_number,
-      //예약자 정보
-      uid: uid,
-      uname: uname,
-      dept: dept,
-      stdnum: stdnum,
-      //예약상태 정보
-      usercheck: this.state.usercheck,
-    });
+      this.props.navigation.navigate('ReserveCheckScreen', {
+        //예약정보
+        start_data: start_data, // 출발 지역 :광주 , 목포
+        route_data: route_data, // 선택 노선 정보
+        end_data: end_data,
+        start_time: start_time,
+        date: date,
+        seat_number: this.state.seat_number,
+        //예약자 정보
+        uid: uid,
+        uname: uname,
+        dept: dept,
+        stdnum: stdnum,
+        //예약상태 정보
+        usercheck: this.state.usercheck,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   getItemLayout(data, index) {
@@ -156,13 +183,24 @@ class RouteResult extends Component {
       </View>
     );
   };
-
-  render() {
+  componentDidMount = () => {
     this.getSeatData();
+    this.closeActivityIndicator();
+  };
+  render() {
     const { route_data } = this.props.route.params;
+    const animating = this.state.animating;
 
     return (
       <View style={styles.Container}>
+        <ActivityIndicator
+          pointerEvents={'none'} // 로딩시 터치금지
+          animating={animating}
+          color="#bc2b78"
+          size="large"
+          style={styles.activityIndicator}
+        />
+
         <View style={styles.topbox}>
           <Text style={styles.start_point_text}>{route_data}</Text>
         </View>
@@ -172,7 +210,7 @@ class RouteResult extends Component {
           <FlatList
             numColumns={5} // 배열 5줄 가운데 공백 출력
             keyExtractor={item => item.id}
-            data={seats}
+            data={this.state.seats}
             renderItem={({ item }) => {
               if (item.user !== '') {
                 // user 정보가 있을 경우 회색 리턴
@@ -249,6 +287,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flexDirection: 'column',
   },
+  activityIndicator: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    zIndex: 10,
+    bottom: '50%',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    height: 80,
+  },
   //윗 부분(titlebox))
   topbox: {
     width: '100%',
@@ -323,4 +373,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RouteResult; // memorization
+export default React.memo(RouteResult); // memorization

@@ -23,27 +23,31 @@ class RoadDetail extends Component {
   }
 
   DetailList = async () => {
-    const { startArea } = this.props.route.params;
-    await fetch('http://10.0.2.2:5000/api/roaddetail', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
+    try {
+      const { startArea } = this.props.route.params;
+      await fetch('http://10.0.2.2:5000/api/roaddetail', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
 
-      body: JSON.stringify({
-        startAreas: startArea,
-      }),
-    })
-      .then(response => response.json())
-      .then(res => {
-        if (res.success === true) {
-          var startAreas = JSON.parse(res.startAreas);
-          this.setState({ data: startAreas });
-        } else {
-          alert(res.startAreas);
-        }
-      });
+        body: JSON.stringify({
+          startAreas: startArea,
+        }),
+      })
+        .then(response => response.json())
+        .then(res => {
+          if (res.success === true) {
+            var startAreas = JSON.parse(res.startAreas);
+            this.setState({ data: startAreas });
+          } else {
+            alert(res.startAreas);
+          }
+        });
+    } catch (err) {
+      console.log(err);
+    }
   };
   componentDidMount() {
     this.DetailList();

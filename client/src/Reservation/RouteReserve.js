@@ -23,8 +23,10 @@ class RouteReserve extends Component {
       Ldata: [], //  오른쪽 리스트 값 저장.
       selectedStartDate: '',
       dateclick: false,
+      start_time: '',
     };
     this.onDateChange = this.onDateChange.bind(this);
+    this.fetchDataleft();
   }
 
   onDateChange(date) {
@@ -35,84 +37,94 @@ class RouteReserve extends Component {
   }
 
   fetchDataleft = async () => {
-    const response = await fetch('http://10.0.2.2:5000/api/route_local');
-    const Ldata = await response.json();
-    this.setState({ data: Ldata });
+    try {
+      const response = await fetch('http://10.0.2.2:5000/api/route_local');
+      const Ldata = await response.json();
+      this.setState({ data: Ldata });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   fetchDataright = async () => {
-    if (this.state.scrollleftvalue !== '') {
-      //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-      await fetch('http://10.0.2.2:5000/api/routes', {
+    try {
+      if (this.state.scrollleftvalue !== '') {
+        //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
+        await fetch('http://10.0.2.2:5000/api/routes', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: JSON.stringify({
+            local: this.state.scrollleftvalue,
+          }),
+        })
+          .then(response => response.json())
+          .then(res => {
+            if (res.success === true) {
+              var routes = JSON.parse(res.route);
+              this.setState({ Rdata: routes });
+            } else {
+              alert(res.route);
+            }
+          })
+
+          .done();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  reserve_check = async (start, route, end, date, today, ctime) => {
+    try {
+      // 예약내역에 유저가 있는지 체크하는 함수.
+      const { uid, uname, dept, stdnum } = this.props.route.params;
+      await fetch('http://10.0.2.2:5000/api/reserve_check', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json; charset=UTF-8',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          local: this.state.scrollleftvalue,
+          uid: uid,
         }),
       })
         .then(response => response.json())
         .then(res => {
           if (res.success === true) {
-            var routes = JSON.parse(res.route);
-            this.setState({ Rdata: routes });
+            this.props.navigation.navigate('RouteResult', {
+              //예매정보 전달
+              start_data: start, // 출발 지역 :광주 , 목포
+              route_data: route, // 선택 노선 정보
+              end_data: end, //도착 목적지 정보
+              start_time: this.state.start_time,
+              date: date.format('YYYY-MM-DD'),
+              //유저정보 전달
+              uid: uid,
+              uname: uname,
+              dept: dept,
+              stdnum: stdnum,
+            });
           } else {
-            alert(res.route);
+            alert(res.message); // 예약된 내역이 있습니다. 출력
           }
         })
-
         .done();
-    } else {
+    } catch (err) {
+      console.log(err);
     }
   };
-  reserve_check = async (start, route, end, date) => {
-    // 예약내역에 유저가 있는지 체크하는 함수.
-    const { uid, uname, dept, stdnum } = this.props.route.params;
-    await fetch('http://10.0.2.2:5000/api/reserve_check', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        uid: uid,
-      }),
-    })
-      .then(response => response.json())
-      .then(res => {
-        if (res.success === true) {
-          this.props.navigation.navigate('RouteResult', {
-            start_data: start, // 출발 지역 :광주 , 목포
-            route_data: route, // 선택 노선 정보
-            end_data: end,
-            date: date.format('YYYY-MM-DD'),
-            uid: uid,
-            uname: uname,
-            dept: dept,
-            stdnum: stdnum,
-          });
-        } else {
-          alert(res.message); // 예약된 내역이 있습니다. 출력
-        }
-      })
-      .done();
-  };
 
-  checkdata = (start, route, end, date) => {
+  checkdata = (start, route, end, date, today, ctime) => {
     // 출발지 ,경로,예약날자
     // 아이디 , 이름, 학과,학번
     if (start !== '' && route !== '' && date !== '' && end !== '') {
-      return this.reserve_check(start, route, end, date);
+      return this.reserve_check(start, route, end, date, today, ctime);
     } else {
-      return alert('항목을 입력하세요'); // modal 경고 창 띄우기
+      return alert('모든 항목을 선택해 주세요.'); //  경고 창 띄우기
     }
   };
-
-  componentDidMount() {
-    this.fetchDataleft();
-  }
 
   componentDidUpdate() {
     this.fetchDataright();
@@ -120,6 +132,7 @@ class RouteReserve extends Component {
 
   render() {
     var d = new Date(); // d 객체생성
+    const ctime = moment(d).format('HH:mm:ss');
     const minDate = moment(d).format('YYYY-MM-DD'); // Today
     const maxDate = moment(d.getTime()).add('7', 'd').format('YYYY-MM-DD'); // d 객체에서 7일 후까지
     const { selectedStartDate } = this.state;
@@ -296,6 +309,8 @@ class RouteReserve extends Component {
                         this.state.scrollcentervalue,
                         this.state.scrollrightvalue,
                         selectedStartDate,
+                        minDate,
+                        ctime,
                       ); // 선택 출발지, 선택 경로, 선택 도착지 , 예약일
                     }}
                   >
@@ -362,6 +377,7 @@ class RouteReserve extends Component {
                       this.setState({
                         scrollrightvalue: item.end_point, // 도착지 값 설정 :도림캠퍼스
                         scrollcentervalue: item.start_point, // 경로 명 설정
+                        start_time: item.start_time,
                         checkbutton: !this.state.checkbutton, //화면 전환
                       });
                     }}

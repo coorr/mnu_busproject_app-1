@@ -23,9 +23,13 @@ class NoticeScreen extends Component {
   };
 
   fetchData = async () => {
-    const response = await fetch('http://10.0.2.2:5000/api/board');
-    const boards = await response.json();
-    this.setState({ data: boards });
+    try {
+      const response = await fetch('http://10.0.2.2:5000/api/board');
+      const boards = await response.json();
+      this.setState({ data: boards });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   componentDidMount() {

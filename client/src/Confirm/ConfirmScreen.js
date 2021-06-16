@@ -129,6 +129,10 @@ class ConfirmScreen extends Component {
   render() {
     const { uid, uname, dept, stdnum } = this.props.route.params;
 
+    let changeDate = moment(this.state.data.start_date).format(
+      'YYYY-MM-DD (dd) ',
+    );
+
     this.state.data.start_date = this.dateParse(this.state.data.start_date); // 날짜변경 하여 저장.
     const pardata = JSON.stringify(this.state.data); //날짜 변경하여 저장.
     return (
@@ -150,7 +154,7 @@ class ConfirmScreen extends Component {
             <View style={styles.start_date_Area}>
               <View style={styles.start_date_Box}>
                 <Text style={styles.start_date_text}>
-                  {this.dateParse(this.state.data.start_date)}
+                  {changeDate}
                   {this.state.data.start_time}
                 </Text>
               </View>

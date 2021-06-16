@@ -233,11 +233,15 @@ async function asyncFunction() {
         console.log(err);
       }
     })
-
+    console.log(12345);
+    
     } catch (err) { //handle connection error
-      conn.rollback();
+      console.log(err);
+      throw(err);
     } finally {
-       conn.release(); //release to pool
+      console.log(56789);
+      conn.release(); //release to pool
+      //asyncFunction();
     }
   }
 asyncFunction();

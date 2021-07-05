@@ -65,7 +65,7 @@ class ConfirmScreen extends Component {
   reserve_delete = async () => {
     try {
       const { uid } = this.props.route.params;
-      console.log(uid);
+
       await fetch('http://10.0.2.2:5000/api/reserve_delete', {
         method: 'POST',
         headers: {
@@ -84,16 +84,6 @@ class ConfirmScreen extends Component {
         })
 
         .done();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  reserve_delete = async () => {
-    try {
-      await fetch('http://10.0.2.2:5000/api/reserve_delete', {
-        method: 'DELETE',
-      });
     } catch (err) {
       console.log(err);
     }
@@ -128,7 +118,6 @@ class ConfirmScreen extends Component {
 
   render() {
     const { uid, uname, dept, stdnum } = this.props.route.params;
-
     let changeDate = moment(this.state.data.start_date).format(
       'YYYY-MM-DD (dd) ',
     );
@@ -211,7 +200,7 @@ class ConfirmScreen extends Component {
             <View style={styles.BtnContainer}>
               <View style={styles.BtnCancelArea}>
                 <TouchableOpacity
-                  style={styles.TouchBtnCancel}
+                  style={styles.touchbox}
                   onPress={() => {
                     this.goAlert();
                   }}
@@ -224,7 +213,7 @@ class ConfirmScreen extends Component {
 
               <View style={styles.BtnCancelArea}>
                 <TouchableOpacity
-                  style={styles.TouchBtnCancel}
+                  style={styles.touchbox}
                   onPress={() => {
                     this.props.navigation.navigate('RouteResult', {
                       //예매정보 전달
@@ -233,6 +222,7 @@ class ConfirmScreen extends Component {
                       end_data: this.state.data.end_point, //도착 목적지 정보
                       start_time: this.state.data.start_time,
                       date: this.dateParse(this.state.data.start_date),
+
                       //유저정보 전달
                       uid: uid,
                       uname: uname,
@@ -359,20 +349,24 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#6495ED',
     marginRight: '4%',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-  TouchBtnCancel: {
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
+    //  justifyContent: 'space-around',
     alignItems: 'center',
   },
   BtnCancelBox: {
-    width: '40%',
-    height: '40%',
+    flex: 1,
+    justifyContent: 'center',
   },
-  BtnCancleText: { color: 'white', fontSize: 18, fontWeight: 'bold' },
+  touchbox: {
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'red',
+  },
+  BtnCancleText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
 });
 
 export default ConfirmScreen;

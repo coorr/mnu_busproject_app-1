@@ -90,6 +90,7 @@ class RouteResult extends Component {
   getSeatData = async () => {
     try {
       const { route_data, date, uid } = this.props.route.params;
+
       await fetch('http://10.0.2.2:5000/api/reserve', {
         method: 'POST',
         headers: {
@@ -183,6 +184,7 @@ class RouteResult extends Component {
       </View>
     );
   };
+
   componentDidMount = () => {
     this.getSeatData();
     this.closeActivityIndicator();

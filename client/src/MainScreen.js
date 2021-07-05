@@ -110,21 +110,21 @@ class MainScreen extends Component {
             </TouchableOpacity>
           </View>
 
-          <View style={styles.TabAreaTwo}>
+          <View style={styles.TabAreaOne}>
             <TouchableOpacity
-              style={styles.TabBoxTwo}
+              style={styles.TabBoxOne}
               onPress={() => {
                 this.props.navigation.navigate('NoticeScreen');
               }}
             >
-              <Image source={notice} style={styles.TabTwoImage} />
-              <Text style={styles.TabTwoText}>공지사항</Text>
+              <Image source={notice} style={styles.TabOneImage} />
+              <Text style={styles.TabOneText}>공지사항</Text>
             </TouchableOpacity>
           </View>
 
-          <View style={styles.TabAreaThree}>
+          <View style={styles.TabAreaOne}>
             <TouchableOpacity
-              style={styles.TabBoxThree}
+              style={styles.TabBoxOne}
               onPress={() => {
                 this.props.navigation.navigate('SettingScreen', {
                   uid: uid,
@@ -134,8 +134,8 @@ class MainScreen extends Component {
                 });
               }}
             >
-              <Image source={user} style={styles.TabThreeImage} />
-              <Text style={styles.TabThreeText}>내 정보</Text>
+              <Image source={user} style={styles.TabOneImage} />
+              <Text style={styles.TabOneText}>내 정보</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -207,30 +207,12 @@ const styles = StyleSheet.create({
   busIconInformation: { width: 50, height: 50 },
 
   TabContainer: { width: '100%', height: '100%', flexDirection: 'row' },
-  TabAreaOne: { width: '33.3%', height: '100%' },
-  TabBoxOne: { width: '100%', height: '100%' },
-  TabOneImage: { width: 60, height: 60, marginLeft: 30, marginTop: 8 },
+  TabAreaOne: { flex: 1, height: '100%' },
+  TabBoxOne: { width: '100%', height: '100%', alignItems: 'center' },
+  TabOneImage: { width: 60, height: 60, marginLeft: 0, marginTop: 8 },
   TabOneText: {
     marginTop: 3,
     textAlign: 'center',
-    fontSize: 18,
-  },
-
-  TabAreaTwo: { width: '33.3%', height: '100%' },
-  TabBoxTwo: { width: '100%', height: '100%' },
-  TabTwoImage: { width: 60, height: 60, marginLeft: '27%', marginTop: 6 },
-  TabTwoText: {
-    marginTop: 3,
-    textAlign: 'center',
-    fontSize: 18,
-  },
-
-  TabAreaThree: { width: '33.3%', height: '100%' },
-  TabBoxThree: { width: '100%', height: '100%' },
-  TabThreeImage: { width: 60, height: 60, marginLeft: '29%', marginTop: 6 },
-  TabThreeText: {
-    textAlign: 'center',
-    marginTop: 3,
     fontSize: 18,
   },
 });

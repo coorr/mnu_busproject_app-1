@@ -38,7 +38,7 @@ class RouteReserve extends Component {
 
   fetchDataleft = async () => {
     try {
-      const response = await fetch('http://10.0.2.2:5000/api/route_local');
+      const response = await fetch('http://172.16.2.171:5000/api/route_local');
       const Ldata = await response.json();
       this.setState({ data: Ldata });
     } catch (err) {
@@ -50,7 +50,7 @@ class RouteReserve extends Component {
     try {
       if (this.state.scrollleftvalue !== '') {
         //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-        await fetch('http://10.0.2.2:5000/api/routes', {
+        await fetch('http://172.16.2.171:5000/api/routes', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -80,7 +80,7 @@ class RouteReserve extends Component {
     try {
       // 예약내역에 유저가 있는지 체크하는 함수.
       const { uid, uname, dept, stdnum } = this.props.route.params;
-      await fetch('http://10.0.2.2:5000/api/reserve_check', {
+      await fetch('http://172.16.2.171:5000/api/reserve_check', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -503,10 +503,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  scrollarea: {
-    flex: 1,
-    flexDirection: 'row',
-  },
+  scrollarea: { flex: 1, flexDirection: 'row', width: '100%', height: '100%' },
   scrollleft: {
     borderRightWidth: 1,
     borderRightColor: '#5C72E1',
@@ -521,52 +518,48 @@ const styles = StyleSheet.create({
   },
   boxl: {
     width: '100%',
-    height: 80,
-    justifyContent: 'center',
+    height: 100,
     alignItems: 'flex-start',
-    flexDirection: 'column',
+    flexDirection: 'row',
     backgroundColor: 'white',
+    paddingBottom: 3,
   },
   boxr: {
     width: '100%',
-    height: 80,
-    marginLeft: 10,
-    alignItems: 'flex-start',
+    height: 100,
+    alignItems: 'center',
     backgroundColor: 'white',
-    borderBottomColor: 'gray',
-    borderBottomWidth: 1,
+    borderBottomColor: '#EBECF0',
+    borderBottomWidth: 3,
   },
   backcolor: {
     backgroundColor: '#EBECF0',
-    position: 'relative',
-    left: 98,
-    width: 60,
-    height: 72,
+    zIndex: 4,
+    width: '40%',
+    height: '100%',
   },
   checklogo: {
-    position: 'relative',
-    left: 98,
-    width: 60,
-    height: 75,
+    backgroundColor: '#EBECF0',
+    zIndex: 4,
+    width: '40%',
+    height: '100%',
   },
 
   lefttext: {
-    paddingLeft: 10,
     width: '60%',
-    height: '90%',
-    fontSize: 20,
+    height: '100%',
+    fontSize: 18,
     fontWeight: '200',
-    textAlign: 'left',
+    textAlign: 'center',
+    textAlignVertical: 'center',
     backgroundColor: '#EBECF0',
-    position: 'absolute',
   },
   righttext1: {
     flex: 1,
     fontSize: 20,
     fontWeight: '200',
     textAlign: 'center',
-    position: 'absolute',
-    top: 25,
+    textAlignVertical: 'center',
   },
 });
 

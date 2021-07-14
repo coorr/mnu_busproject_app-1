@@ -7,6 +7,7 @@ import {
   Image,
   FlatList,
   Alert,
+  Dimensions,
 } from 'react-native';
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
@@ -313,7 +314,6 @@ const styles = StyleSheet.create({
     height: '15%',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
     borderColor: '#ced4da',
     backgroundColor: '#6495ED',
   },
@@ -321,7 +321,6 @@ const styles = StyleSheet.create({
   qrcodeView: {
     width: '100%',
     height: '85%',
-    borderWidth: 1,
     borderColor: '#ced4da',
     alignItems: 'center',
   },
@@ -349,7 +348,7 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#6495ED',
     marginRight: '4%',
-    //  justifyContent: 'space-around',
+    justifyContent: 'space-around',
     alignItems: 'center',
   },
   BtnCancelBox: {
@@ -357,10 +356,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   touchbox: {
+    alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
+    width: Dimensions.get('window').width / 2,
     height: '100%',
-    backgroundColor: 'red',
   },
   BtnCancleText: {
     color: 'white',

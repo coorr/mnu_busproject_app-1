@@ -1,0 +1,14 @@
+.sidebar {
+    font-size: larger;
+    font-weight: 500;
+}
+.sidebar-item-active {
+    font-size: larger;
+    font-weight: 500;
+    color: black;
+}
+.sidebar-item {
+    font-size: larger;
+    font-weight: 500;
+    color: white;
+}

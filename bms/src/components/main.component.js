@@ -4,6 +4,7 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { Sidebar } from '../features/sidebar/Sidebar';
 import { Calendars } from '../features/calendar/Calendars';
 import { UserCount } from '../features/usercount/UserCount';
+import { Notice } from '../features/notice/Notice';
 export default class Main extends Component {
   render() {
     return (
@@ -24,9 +25,7 @@ export default class Main extends Component {
             <div className="sleft">
               <p className="titletext">공지사항</p>
               <div className="boardbox">
-                <li>1</li>
-                <li>1</li>
-                <li>1</li>
+                <Notice />
               </div>
             </div>
             <div className="sright">

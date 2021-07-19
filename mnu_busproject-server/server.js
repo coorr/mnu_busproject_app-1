@@ -1,6 +1,6 @@
 const fs = require('fs');
 const express = require('express');
-const bodyParser =require('body-parser');
+const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -22,8 +22,15 @@ const connection = mariadb.createPool({
     
 });
 
+const options = {
+  Origin: 'http://172.16.2.171/api/board', // 접근 권한을 부여하는 도메인
+  Credentials: true, // 응답 헤더에 Access-Control-Allow-Credentials 추가
+  OptionsSuccessStatus: 200 // 응답 상태 200으로 설정 
+};
 
+app.use(cors(options));
 
+//app.use(cors());
 async function asyncFunction() {
     let conn;
     try {
@@ -32,7 +39,7 @@ async function asyncFunction() {
       
       
 
-      const rows1 = await conn.query("SELECT * FROM  board");
+      const rows1 = await conn.query("SELECT * FROM  board order by udate desc,pid desc"); // 최신 게시물이 상위로 올라가도록 날짜(udate)기준 내림차순 정렬
       app.get('/api/board',(req,res)=>{
           res.send(rows1)
       })

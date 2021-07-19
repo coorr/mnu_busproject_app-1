@@ -19,7 +19,7 @@ function App() {
         <nav className="navcontainer">
           <div className="App-header">
             {/* 링크추가 */}
-            <p2 className="App-headertext">목포대학교 스쿨버스 관리시스템</p2>
+            <p className="App-headertext">목포대학교 스쿨버스 관리시스템</p>
           </div>
         </nav>
 

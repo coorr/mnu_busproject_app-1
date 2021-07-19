@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import '../style/main.style.css';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { Sidebar } from '../features/sidebar/Sidebar';
+import { Board_Notice } from '../features/notice/Board_Notice';
+
 export default class Notice extends Component {
   render() {
     return (
@@ -10,7 +12,7 @@ export default class Notice extends Component {
           <Sidebar />
         </div>
         <div className="content">
-          <p>tddasddsadt</p>
+          <Board_Notice />
         </div>
       </div>
     );

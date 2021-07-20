@@ -53,7 +53,9 @@ export function Main_Notice() {
 
   const list = list5().map(board => (
     <div className="titlebox">
-      <li className="notice_title_text">{board?.title}</li>
+      <li className="notice_title_text" key={board?.pid}>
+        {board?.title}
+      </li>
       {dateParse(board?.udate)}
     </div>
   ));

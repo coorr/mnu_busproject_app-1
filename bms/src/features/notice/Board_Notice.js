@@ -3,11 +3,16 @@ import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 import 'moment/locale/ko';
 import './Board_Notice.css';
+import Pagination from './Pagination';
 
 export function Board_Notice() {
   const [boards, setBoards] = useState([]); // usestate 로 state 상태 관리.
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(10);
   //componentdidmount + componentdidupdate 랑 동일
   useEffect(() => {
+    setLoading(true);
     const fetchData = async () => {
       try {
         //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
@@ -22,6 +27,7 @@ export function Board_Notice() {
           .then(res => {
             if (res !== null) {
               setBoards(res);
+              setLoading(false);
             } else {
               console.log('load fail');
             }
@@ -36,29 +42,37 @@ export function Board_Notice() {
     fetchData();
   }, []);
 
+  const indexOfLast = currentPage * postsPerPage;
+  const indexOfFirst = indexOfLast - postsPerPage;
+  function currentPosts(tmp) {
+    let currentPosts = 0;
+    currentPosts = tmp.slice(indexOfFirst, indexOfLast);
+    return currentPosts;
+  }
+
   const dateParse = notice_date => {
     // 날짜 파싱하는 함수
     let ndate = moment(notice_date).format('YYYY-MM-DD');
     return ndate;
   };
 
-  const listnum = boards.length; // 갯수 조절.
-  const list5 = () => {
-    const result = [];
-    for (let i = 0; i < listnum; i++) {
-      result.push(boards[i]);
-    }
-    return result;
+  const cboards = currentPosts(boards);
+  const lists = ({ loading }) => {
+    return (
+      <>
+        {/* { loading && … } 부분은, loading 값이 true일 때 && 다음의 것을 표시한다는 의미 */}
+        {loading && <div> loading... </div>}
+        {cboards.map(board => (
+          <div className="btitlebox" key={board?.pid}>
+            <div className="bnotice_pid">{board?.pid}</div>
+            <div className="bnotice_title">{board?.title}</div>
+            <div className="bnotice_writer">{board?.writer}</div>
+            <div className="bnotice_date">{dateParse(board?.udate)}</div>
+          </div>
+        ))}
+      </>
+    );
   };
-
-  const list = list5().map(board => (
-    <div className="btitlebox">
-      <div className="bnotice_pid">{board?.pid}</div>
-      <div className="bnotice_title">{board?.title}</div>
-      <div className="bnotice_writer">{board?.writer}</div>
-      <div className="bnotice_date">{dateParse(board?.udate)}</div>
-    </div>
-  ));
 
   return (
     <div>
@@ -68,7 +82,15 @@ export function Board_Notice() {
         <div className="header_writer">작성자</div>
         <div className="header_date">게시일</div>
       </div>
-      <div> {list}</div>
+      <div>
+        {lists(loading)}
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={boards.length}
+          paginate={setCurrentPage}
+          current={currentPage}
+        />
+      </div>
     </div>
   );
 }

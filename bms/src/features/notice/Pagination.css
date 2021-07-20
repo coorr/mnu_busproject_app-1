@@ -1,0 +1,15 @@
+ .pagination {
+    display: flex;
+    margin-top: 20px;
+    justify-content: center;
+    
+}
+
+.page-item {
+    background-color: rgb(93, 170, 184);
+}
+
+.page-link {
+  background-color: #f8f9fa;
+} 
+

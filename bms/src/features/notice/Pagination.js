@@ -17,6 +17,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, current }) => {
                 <span
                   onClick={() => paginate(number)}
                   className="page-link"
+                  // eslint-disable-next-line react-native/no-inline-styles
                   style={{ backgroundColor: '#1087ff', color: 'white' }}
                 >
                   {number}

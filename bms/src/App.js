@@ -1,7 +1,12 @@
 import React from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 
 import Login from './components/login.component';
 import Main from './components/main.component';
@@ -12,8 +17,10 @@ import reserve from './components/reserve.component';
 import Member from './components/member.component';
 
 function App() {
+  let isAuthorized = window.sessionStorage.getItem('access-token');
   return (
     <Router>
+      {!isAuthorized ? <Redirect to="/" /> : <Redirect to="/main" />}
       {/* 기본 app 베이스 디자인 */}
       <div className="App">
         <nav className="navcontainer">

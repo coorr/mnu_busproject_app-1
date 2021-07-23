@@ -15,6 +15,8 @@ import Station from './components/station.component';
 import Notice from './components/notice.component';
 import reserve from './components/reserve.component';
 import Member from './components/member.component';
+import Notice_Read from './components/notice_read.component';
+import Notice_WriteView from './components/notice_write.component';
 
 function App() {
   let isAuthorized = window.sessionStorage.getItem('access-token');
@@ -33,12 +35,14 @@ function App() {
         {/* 경로 스위치 등록 */}
         <Switch>
           <Route exact path="/" component={Login} />
-          <Route path="/main" component={Main} />
-          <Route path="/route" component={Routes} />
-          <Route path="/station" component={Station} />
-          <Route path="/notice" component={Notice} />
-          <Route path="/reserve" component={reserve} />
-          <Route path="/members" component={Member} />
+          <Route exact path="/main" component={Main} />
+          <Route exact path="/route" component={Routes} />
+          <Route exact path="/station" component={Station} />
+          <Route exact path="/notice" component={Notice} />
+          <Route exact path="/notice_read/:id" component={Notice_Read} />
+          <Route exact path="/notice_write" component={Notice_WriteView} />
+          <Route exact path="/reserve" component={reserve} />
+          <Route exact path="/members" component={Member} />
         </Switch>
       </div>
     </Router>

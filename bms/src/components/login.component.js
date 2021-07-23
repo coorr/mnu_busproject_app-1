@@ -16,7 +16,7 @@ class Login extends Component {
   login = async () => {
     try {
       if (this.state.username === 'Admin' && this.state.password !== '') {
-        await fetch('http://172.16.2.171:5000/api/users', {
+        await fetch('http://192.168.0.16:5000/api/users', {
           method: 'POST',
           headers: {
             Accept: 'application/json',

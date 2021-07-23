@@ -27,4 +27,7 @@ body, html, .App, #root, .outer {
 }
 
 
-
+a {
+  color: inherit;;
+  text-decoration: none;
+}

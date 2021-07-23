@@ -3,6 +3,7 @@ import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 import 'moment/locale/ko';
 import './Main_Notice.css';
+import { Link } from 'react-router-dom';
 
 export function Main_Notice() {
   const [boards, setBoards] = useState([]); // usestate 로 state 상태 관리.
@@ -11,7 +12,7 @@ export function Main_Notice() {
     const fetchData = async () => {
       try {
         //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-        await fetch('http://172.16.2.171:5000/api/board', {
+        await fetch('http://192.168.0.16:5000/api/board', {
           method: 'get',
           headers: {
             Accept: 'application/json',
@@ -54,7 +55,16 @@ export function Main_Notice() {
   const list = list5().map(board => (
     <div className="titlebox">
       <li className="notice_title_text" key={board?.pid}>
-        {board?.title}
+        <Link
+          to={{
+            pathname: `notice_read/${board?.pid}`,
+            state: {
+              data: board,
+            },
+          }}
+        >
+          {board?.title}
+        </Link>
       </li>
       {dateParse(board?.udate)}
     </div>

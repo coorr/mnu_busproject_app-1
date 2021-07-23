@@ -6,6 +6,7 @@
 }
 
 .page-item {
+  cursor:pointer;
     background-color: rgb(93, 170, 184);
 }
 

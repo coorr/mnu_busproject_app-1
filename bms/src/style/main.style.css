@@ -8,6 +8,7 @@
 }
 
 .left_tab {
+    min-width: 150px;
     border-radius: 15px;
     padding-top: 16px;
     margin-top: 15px;
@@ -16,6 +17,7 @@
     background-color: #989898;
 }
 .content {
+    min-width: 450px;
     margin-left: 20px;
     border-radius: 15px;
     height: 100%;

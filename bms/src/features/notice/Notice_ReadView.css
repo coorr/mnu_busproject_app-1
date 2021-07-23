@@ -1,0 +1,66 @@
+.container {
+
+    text-align: justify;
+}
+.detail_titlebox {
+   display: flex;
+   justify-content: center;
+   border: 1px #270909 solid;
+   padding:15px;
+   font-size: larger;
+   border-bottom: 1px gray solid;
+}
+.writerbox {
+    padding: 10px;
+    border-left: 1px gray solid;
+    border-right: 1px gray solid;
+    border-bottom:  1px gray solid;
+
+}
+.udatebox {
+    padding: 10px;
+    border-left: 1px gray solid;
+    border-right: 1px gray solid;
+    border-bottom:  1px gray solid;
+
+
+}
+.contentbox {
+    padding: 10px;
+    border-left: 1px gray solid;
+    border-right: 1px gray solid;
+    border-bottom:  1px gray solid;
+    
+}
+.cbox {
+    
+    font-size: 18px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 50px;
+    text-align: center;
+}
+.deletebutton {
+    cursor:pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    
+    width: 90px;
+    height: 60px;
+    background-color:#0095FF;
+    color: white;
+}
+.editbutton {
+    cursor:pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    width: 90px;
+    height: 60px;
+    background-color:#0095FF;
+    color: white;
+}

@@ -4,6 +4,7 @@ import moment from 'moment';
 import 'moment/locale/ko';
 import './Board_Notice.css';
 import Pagination from './Pagination';
+import { Link } from 'react-router-dom';
 
 export function Board_Notice() {
   const [boards, setBoards] = useState([]); // usestate 로 state 상태 관리.
@@ -16,7 +17,7 @@ export function Board_Notice() {
     const fetchData = async () => {
       try {
         //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-        await fetch('http://172.16.2.171:5000/api/board', {
+        await fetch('http://192.168.0.16:5000/api/board', {
           method: 'get',
           headers: {
             Accept: 'application/json',
@@ -65,7 +66,18 @@ export function Board_Notice() {
         {cboards.map(board => (
           <div className="btitlebox" key={board?.pid}>
             <div className="bnotice_pid">{board?.pid}</div>
-            <div className="bnotice_title">{board?.title}</div>
+            <div className="bnotice_title">
+              <Link
+                to={{
+                  pathname: `notice_read/${board?.pid}`,
+                  state: {
+                    data: board,
+                  },
+                }}
+              >
+                {board?.title}
+              </Link>
+            </div>
             <div className="bnotice_writer">{board?.writer}</div>
             <div className="bnotice_date">{dateParse(board?.udate)}</div>
           </div>
@@ -91,6 +103,9 @@ export function Board_Notice() {
           current={currentPage}
         />
       </div>
+      <Link to="notice_write">
+        <div className="wrtie_button">글쓰기</div>
+      </Link>
     </div>
   );
 }

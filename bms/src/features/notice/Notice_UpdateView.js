@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import './Notice_WriteView.css';
+import './Notice_UpdateView.css';
 import { useHistory, withRouter, Link } from 'react-router-dom';
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 import 'moment/locale/ko';
 
-export function Notice_WriteView() {
+export function Notice_UpdateView() {
   const [inputs, setinputs] = useState({
     title: '',
     content: '',
@@ -43,43 +43,43 @@ export function Notice_WriteView() {
       history.goBack();
     }
   };
-  const fetchpost = async () => {
-    const user_session = JSON.parse(
-      window.sessionStorage.getItem('access-token'),
-    );
-    try {
-      //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-      await fetch('http://121.149.180.199:5000/api/board_write', {
-        method: 'post',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: JSON.stringify({
-          title: title,
-          content: content,
-          writer: user_session.uname,
-          udate: dateParse(),
-        }),
-      })
-        .then(response => response.json())
-        .then(res => {
-          if (res.success === true) {
-            // eslint-disable-next-line no-alert
-            alert('저장에 성공했습니다.');
-            history.goBack();
-          } else {
-            // eslint-disable-next-line no-alert
-            alert('게시글을 등록하지 못했습니다.');
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const fetchpost = async () => {
+  //   const user_session = JSON.parse(
+  //     window.sessionStorage.getItem('access-token'),
+  //   );
+  //   try {
+  //     //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
+  //     await fetch('http://121.149.180.199:5000/api/board_write', {
+  //       method: 'post',
+  //       headers: {
+  //         Accept: 'application/json',
+  //         'Content-Type': 'application/json; charset=UTF-8',
+  //       },
+  //       body: JSON.stringify({
+  //         title: title,
+  //         content: content,
+  //         writer: user_session.uname,
+  //         udate: dateParse(),
+  //       }),
+  //     })
+  //       .then(response => response.json())
+  //       .then(res => {
+  //         if (res.success === true) {
+  //           // eslint-disable-next-line no-alert
+  //           alert('저장에 성공했습니다.');
+  //           history.goBack();
+  //         } else {
+  //           // eslint-disable-next-line no-alert
+  //           alert('게시글을 등록하지 못했습니다.');
+  //         }
+  //       })
+  //       .catch(error => {
+  //         console.log(error);
+  //       });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   return (
     <div className="container">
@@ -106,7 +106,7 @@ export function Notice_WriteView() {
           </div>
         </form>
       </div>
-      <div className="input_buttonbox">
+      {/* <div className="input_buttonbox">
         <div className="golist" onClick={() => confirmModal_golist()}>
           목록
         </div>
@@ -124,9 +124,9 @@ export function Notice_WriteView() {
         >
           저장
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
 
-export default withRouter(Notice_WriteView);
+export default withRouter(Notice_UpdateView);

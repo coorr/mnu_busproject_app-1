@@ -10,7 +10,7 @@ export function Notice_ReadView() {
   const { data } = location.state; // 전달받은 값 데이터에 저장
   const history = useHistory(); // do this inside the component
 
-  const goBack = () => history.goBack();
+  const goBack = () => history.push('/notice');
   const dateParse = notice_date => {
     // 날짜 파싱하는 함수
     let ndate = moment(notice_date).format('YYYY-MM-DD');
@@ -27,7 +27,10 @@ export function Notice_ReadView() {
 
   const confirmModal_edit = () => {
     if (window.confirm('게시글을 수정하시겠습니까?')) {
-      console.log('확인2. 변화 있음');
+      history.push({
+        pathname: '/notice_update',
+        state: { udata: data },
+      });
     } else {
       console.log('취소. 변화 없음');
     }
@@ -35,10 +38,10 @@ export function Notice_ReadView() {
 
   return (
     <div className="container">
-      <div className="detail_titlebox">{data.title}</div>
-      <div className="writerbox">작성자 : {data.writer}</div>
-      <div className="udatebox">게시일 : {dateParse(data.udate)}</div>
-      <div className="contentbox">{data.content}</div>
+      <div className="detail_titlebox">{data?.title}</div>
+      <div className="writerbox">작성자 : {data?.writer}</div>
+      <div className="udatebox">게시일 : {dateParse(data?.udate)}</div>
+      <div className="contentbox">{data?.content}</div>
 
       <div className="cbox">
         <div className="golist" onClick={goBack}>

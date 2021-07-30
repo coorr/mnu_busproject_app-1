@@ -8,16 +8,16 @@ import { Link } from 'react-router-dom';
 
 export function Board_Notice() {
   const [boards, setBoards] = useState([]); // usestate 로 state 상태 관리.
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(10);
+  const [postsPerPage, setPostsPerPage] = useState(12); //12
   //componentdidmount + componentdidupdate 랑 동일
+
   useEffect(() => {
-    setLoading(true);
-    const fetchData = async () => {
+    const fetchData = () => {
       try {
         //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-        await fetch('http://192.168.0.16:5000/api/board', {
+        fetch('http://121.149.180.199:5000/api/board', {
           method: 'get',
           headers: {
             Accept: 'application/json',
@@ -41,7 +41,7 @@ export function Board_Notice() {
       }
     };
     fetchData();
-  }, []);
+  }, [boards]);
 
   const indexOfLast = currentPage * postsPerPage;
   const indexOfFirst = indexOfLast - postsPerPage;
@@ -58,7 +58,7 @@ export function Board_Notice() {
   };
 
   const cboards = currentPosts(boards);
-  const lists = ({ loading }) => {
+  const lists = loading => {
     return (
       <>
         {/* { loading && … } 부분은, loading 값이 true일 때 && 다음의 것을 표시한다는 의미 */}

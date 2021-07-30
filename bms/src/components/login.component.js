@@ -16,7 +16,7 @@ class Login extends Component {
   login = async () => {
     try {
       if (this.state.username === 'Admin' && this.state.password !== '') {
-        await fetch('http://192.168.0.16:5000/api/users', {
+        await fetch('http://121.149.180.199:5000/api/users', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -29,12 +29,13 @@ class Login extends Component {
         })
           .then(response => response.json())
           .then(res => {
-            console.log('bfetch');
             if (res.success === true) {
               const user = JSON.parse(res.user);
-              console.log('fetch');
               // 세션저장 발행-생성기 서버작업필요
-              window.sessionStorage.setItem('access-token', user);
+              window.sessionStorage.setItem(
+                'access-token',
+                JSON.stringify(user),
+              );
               this.setState({
                 userData: true,
               });

@@ -11,8 +11,7 @@ export function Main_Notice() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-        await fetch('http://192.168.0.16:5000/api/board', {
+        await fetch('http://121.149.180.199:5000/api/board', {
           method: 'get',
           headers: {
             Accept: 'application/json',
@@ -35,7 +34,7 @@ export function Main_Notice() {
       }
     };
     fetchData();
-  }, []);
+  }, [boards]); // default = re-render , [] = 첫 1회만 렌더링
 
   const dateParse = notice_date => {
     // 날짜 파싱하는 함수

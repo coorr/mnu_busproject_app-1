@@ -16,7 +16,8 @@ import Notice from './components/notice.component';
 import reserve from './components/reserve.component';
 import Member from './components/member.component';
 import Notice_Read from './components/notice_read.component';
-import Notice_WriteView from './components/notice_write.component';
+import Notice_Write from './components/notice_write.component';
+import Notice_Update from './components/notice_update.component';
 
 function App() {
   let isAuthorized = window.sessionStorage.getItem('access-token');
@@ -40,7 +41,8 @@ function App() {
           <Route exact path="/station" component={Station} />
           <Route exact path="/notice" component={Notice} />
           <Route exact path="/notice_read/:id" component={Notice_Read} />
-          <Route exact path="/notice_write" component={Notice_WriteView} />
+          <Route exact path="/notice_write" component={Notice_Write} />
+          <Route exact path="/notice_update" component={Notice_Update} />
           <Route exact path="/reserve" component={reserve} />
           <Route exact path="/members" component={Member} />
         </Switch>

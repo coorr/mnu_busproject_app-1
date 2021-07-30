@@ -39,17 +39,37 @@ async function asyncFunction() {
       
       
 
-      const rows1 = await conn.query("SELECT * FROM  board order by udate desc,pid desc"); // 최신 게시물이 상위로 올라가도록 날짜(udate)기준 내림차순 정렬
-      app.get('/api/board',(req,res)=>{
-          res.send(rows1)
+      // 커넥션 쿼리 비동기처리로 인해 게시판 즉시 갱신문제
+      app.get('/api/board',async(req,res)=>{
+        const rows1 = await conn.query("SELECT * FROM  board order by udate desc,pid desc"); // 최신 게시물이 상위로 올라가도록 날짜(udate)기준 내림차순 정렬
+         await res.send(rows1)
       })
 
-      const rows2 = await conn.query("SELECT * FROM  roadtest");
-      app.get('/api/roadtest',(req,res)=>{
-          res.send(rows2)
+      app.post('/api/board_write',async(req,res) => {
+        try{
+       var title = req.body.title;
+       var content = req.body.content;
+       var writer =req.body.writer;
+       var udate = req.body.udate;
+
+        var rows12 = await conn.query(
+          "INSERT INTO board (title,content,writer,udate) VALUES (?,?,?,?)",
+          [title,content,writer,udate,]
+          );
+            
+          if((JSON.stringify(rows12)) != '{"affectedRows": 1, "insertId": 0, "warningStatus": 0}'){
+            res.send({'success':true});
+          }
+          else {
+            res.send({'success':false,'reserve':'예매 실패'});
+          }
+        } catch(err) {
+          console.log(err);
+        }
       })
+  
       
-      /
+      
       app.post('/api/roaddetail',async(req,res) => {
         try{
         var startAreas = req.body.startAreas;
@@ -91,8 +111,9 @@ async function asyncFunction() {
         }
       })
 
-    const rows7 = await conn.query("SELECT local FROM  route group by local");
+    
     app.get('/api/route_local',(req,res)=>{
+      const rows7 = conn.query("SELECT local FROM  route group by local");
         res.send(rows7)
     })
 
@@ -136,10 +157,10 @@ async function asyncFunction() {
       }
     })
 
-    app.post('/api/reserve_check',async(req,res) => {
+    app.post('/api/reserve_check',(req,res) => {
       try{
       var user = req.body.uid;
-      var rows6 = await conn.query(
+      var rows6 =  conn.query(
         "SELECT * FROM reserve WHERE uid = ? AND start_date >= DATE_ADD(NOW(),INTERVAL -7 DAY) AND STATUS = 0", // 지금 현재시간 ~ 7일전까지 범위 검색 uid 리턴 or * 리턴
         [user]
         );

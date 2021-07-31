@@ -1,14 +1,16 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import './Notice_UpdateView.css';
-import { useHistory, withRouter, Link } from 'react-router-dom';
+import { useHistory, withRouter, useLocation } from 'react-router-dom';
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 import 'moment/locale/ko';
 
 export function Notice_UpdateView() {
+  const location = useLocation();
+  const data = location.state.udata;
   const [inputs, setinputs] = useState({
-    title: '',
-    content: '',
+    title: data?.title,
+    content: data?.content,
   });
 
   const { title, content } = inputs;
@@ -37,49 +39,46 @@ export function Notice_UpdateView() {
         // eslint-disable-next-line no-alert
         window.confirm('작성중인 문서가 취소됩니다. 목록으로 이동하시겠습니까?')
       ) {
-        history.goBack();
+        history.push('/notice');
       }
     } else {
-      history.goBack();
+      history.push('/notice');
     }
   };
-  // const fetchpost = async () => {
-  //   const user_session = JSON.parse(
-  //     window.sessionStorage.getItem('access-token'),
-  //   );
-  //   try {
-  //     //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-  //     await fetch('http://121.149.180.199:5000/api/board_write', {
-  //       method: 'post',
-  //       headers: {
-  //         Accept: 'application/json',
-  //         'Content-Type': 'application/json; charset=UTF-8',
-  //       },
-  //       body: JSON.stringify({
-  //         title: title,
-  //         content: content,
-  //         writer: user_session.uname,
-  //         udate: dateParse(),
-  //       }),
-  //     })
-  //       .then(response => response.json())
-  //       .then(res => {
-  //         if (res.success === true) {
-  //           // eslint-disable-next-line no-alert
-  //           alert('저장에 성공했습니다.');
-  //           history.goBack();
-  //         } else {
-  //           // eslint-disable-next-line no-alert
-  //           alert('게시글을 등록하지 못했습니다.');
-  //         }
-  //       })
-  //       .catch(error => {
-  //         console.log(error);
-  //       });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const fetchupdate = async () => {
+    try {
+      //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
+      await fetch('http://121.149.180.199:5000/api/board_update', {
+        method: 'post',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: JSON.stringify({
+          pid: data?.pid,
+          title: title,
+          content: content,
+          udate: dateParse(),
+        }),
+      })
+        .then(response => response.json())
+        .then(res => {
+          if (res.success === true) {
+            // eslint-disable-next-line no-alert
+            alert('저장에 성공했습니다.');
+            history.push('/notice');
+          } else {
+            // eslint-disable-next-line no-alert
+            alert('게시글을 등록하지 못했습니다.');
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="container">
@@ -106,7 +105,7 @@ export function Notice_UpdateView() {
           </div>
         </form>
       </div>
-      {/* <div className="input_buttonbox">
+      <div className="input_buttonbox">
         <div className="golist" onClick={() => confirmModal_golist()}>
           목록
         </div>
@@ -114,17 +113,15 @@ export function Notice_UpdateView() {
           className="input_notice"
           onClick={() => {
             if (title !== '' && content !== '') {
-              fetchpost();
-
-              // console.log(changestate().cstate);
+              fetchupdate();
             } else {
               alert('제목과 내용을 모두 입력해주세요.');
             }
           }}
         >
-          저장
+          수정
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }

@@ -9,6 +9,7 @@ app.use(express.json());
 const data =fs.readFileSync('./database.json');
 const conf =JSON.parse(data);
 const mariadb = require('mariadb');
+const { pid } = require('process');
 
 
 
@@ -58,6 +59,49 @@ async function asyncFunction() {
           );
             
           if((JSON.stringify(rows12)) != '{"affectedRows": 1, "insertId": 0, "warningStatus": 0}'){
+            res.send({'success':true});
+          }
+          else {
+            res.send({'success':false,'reserve':'예매 실패'});
+          }
+        } catch(err) {
+          console.log(err);
+        }
+      })
+
+      app.post('/api/board_update',async(req,res) => {
+        try{
+      var pid = req.body.pid;
+       var title = req.body.title;
+       var content = req.body.content;
+       var udate = req.body.udate;
+
+        var rows13 = await conn.query(
+          "UPDATE board SET title = ?, content = ?, udate = ? WHERE pid = ?",
+          [title,content,udate,pid]
+          );
+            
+          if((JSON.stringify(rows13)) != '{"affectedRows": 1, "insertId": 0, "warningStatus": 0}'){
+            res.send({'success':true});
+          }
+          else {
+            res.send({'success':false,'reserve':'예매 실패'});
+          }
+        } catch(err) {
+          console.log(err);
+        }
+      })
+
+      app.post('/api/board_delete',async(req,res) => {
+        try{
+      var pid = req.body.pid;
+  
+        var rows14 = await conn.query(
+          "CALL delsort(?)",
+          [pid]
+          );
+            
+          if((JSON.stringify(rows14)).length >0){
             res.send({'success':true});
           }
           else {

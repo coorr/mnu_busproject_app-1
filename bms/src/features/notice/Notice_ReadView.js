@@ -11,15 +11,47 @@ export function Notice_ReadView() {
   const history = useHistory(); // do this inside the component
 
   const goBack = () => history.push('/notice');
-  const dateParse = notice_date => {
+  const dateParse = () => {
     // 날짜 파싱하는 함수
-    let ndate = moment(notice_date).format('YYYY-MM-DD');
+    var d = new Date();
+    let ndate = moment(d).format('YYYY-MM-DD');
     return ndate;
+  };
+  const fetchdelete = async () => {
+    try {
+      //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
+      await fetch('http://121.149.180.199:5000/api/board_delete', {
+        method: 'post',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: JSON.stringify({
+          pid: data?.pid,
+        }),
+      })
+        .then(response => response.json())
+        .then(res => {
+          if (res.success === true) {
+            // eslint-disable-next-line no-alert
+            alert('게시물을 삭제했습니다.');
+            history.goBack();
+          } else {
+            // eslint-disable-next-line no-alert
+            alert('게시글을 등록하지 못했습니다.');
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const confirmModal_delete = () => {
     if (window.confirm('게시글을 삭제하시겠습니까?')) {
-      console.log('확인1. 변화 있음');
+      fetchdelete();
     } else {
       console.log('취소. 변화 없음');
     }

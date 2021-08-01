@@ -21,6 +21,7 @@ class RoadScreen extends Component {
       fullData: [],
       search: '',
     };
+    this.RoadList();
   }
 
   handleSearch = text => {
@@ -30,8 +31,13 @@ class RoadScreen extends Component {
 
   RoadList = async () => {
     try {
-      const apiURL = 'http://10.0.2.2:5000/api/roadtest';
-      fetch(apiURL)
+      await fetch('http://121.149.180.199:5000/api/route', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      })
         .then(response => response.json())
         .then(responseJson => {
           this.setState({ data: responseJson });
@@ -48,13 +54,13 @@ class RoadScreen extends Component {
   searchFilter = text => {
     if (text) {
       const newData = this.state.fullData.filter(item => {
-        var disassemble = hangul.disassemble(item.RoadArea, true);
+        var disassemble = hangul.disassemble(item.direction, true);
         var cho = '';
         for (var i = 0, l = disassemble.length; i < l; i++) {
           cho += disassemble[i][0];
         }
         item.disassemble = cho;
-        const itemData = item.RoadArea ? item.RoadArea : '';
+        const itemData = item.direction ? item.direction : '';
         const textData = text;
         const initialData = hangul.disassemble(textData).join('');
         return (
@@ -82,15 +88,10 @@ class RoadScreen extends Component {
     );
   };
 
-  componentDidMount() {
-    this.RoadList();
-  }
-
   renderFooter = () => {
     return (
       <View
         style={{
-          paddingVertical: 20,
           borderTopWidth: 1,
           borderTopColor: '#CED0CE',
         }}
@@ -113,15 +114,15 @@ class RoadScreen extends Component {
                   style={styles.InputFoam}
                   onPress={() => {
                     this.props.navigation.navigate('RoadDetail', {
-                      startArea: item.StartArea,
-                      firstArea: item.FirstArea,
-                      endArea: item.EndArea,
+                      startArea: item.start_point, // 노선명
+                      firstArea: item.start_point, //  출발지
+                      endArea: item.end_point, // 도착지
                     });
                   }}
                 >
                   <View style={styles.InputArea}>
-                    <Text style={styles.RoadAreaText}>{item.RoadArea}</Text>
-                    <Text style={styles.StartAreaText}>{item.StartArea}</Text>
+                    <Text style={styles.RoadAreaText}>{item.direction}</Text>
+                    <Text style={styles.StartAreaText}>{item.start_point}</Text>
                   </View>
                 </TouchableOpacity>
               </View>
@@ -131,6 +132,7 @@ class RoadScreen extends Component {
           ListFooterComponent={this.renderFooter}
         />
       </View>
+
       // <View>
       //   <Text />
       // </View>
@@ -145,12 +147,11 @@ const styles = StyleSheet.create({
     height: '100%',
     margin: 0,
     padding: 0,
-    borderWidth: 2,
   },
   InputFoamBox: {
     width: '100%',
     height: '100%',
-    borderTopWidth: 10,
+    borderTopWidth: 5,
     borderTopColor: '#ced4da',
   },
   InputArea: {

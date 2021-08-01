@@ -24,12 +24,6 @@ export function Notice_UpdateView() {
     };
     setinputs(nextinputs);
   };
-  const dateParse = () => {
-    // 날짜 파싱하는 함수
-    var d = new Date();
-    let ndate = moment(d).format('YYYY-MM-DD');
-    return ndate;
-  };
 
   // 작성한 텍스트가 없을 경우 바로 목록으로 이동 . 있을 경우 경고문구 확인할 경우만 목록이동
   const history = useHistory(); // do this inside the component
@@ -58,7 +52,6 @@ export function Notice_UpdateView() {
           pid: data?.pid,
           title: title,
           content: content,
-          udate: dateParse(),
         }),
       })
         .then(response => response.json())

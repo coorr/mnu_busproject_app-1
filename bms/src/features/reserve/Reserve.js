@@ -1,7 +1,7 @@
 import React from 'react';
-import './UserCount.css';
+import './Reserve.css';
 
-export function UserCount() {
+export function Reserve() {
   return (
     <div className="box">
       <div className="left">
@@ -18,4 +18,4 @@ export function UserCount() {
   );
 }
 
-export default UserCount;
+export default Reserve;

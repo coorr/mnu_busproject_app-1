@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../style/main.style.css';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { Sidebar } from '../features/sidebar/Sidebar';
+import { Reserve } from '../features/reserve/Reserve';
 export default class reserve extends Component {
   render() {
     return (
@@ -10,7 +11,7 @@ export default class reserve extends Component {
           <Sidebar />
         </div>
         <div className="content">
-          <p>1232131412412</p>
+          <Reserve />
         </div>
       </div>
     );

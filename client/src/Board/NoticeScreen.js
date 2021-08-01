@@ -24,7 +24,7 @@ class NoticeScreen extends Component {
 
   fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/board');
+      const response = await fetch('http://121.149.180.199:5000/api/board');
       const boards = await response.json();
       this.setState({ data: boards });
     } catch (err) {

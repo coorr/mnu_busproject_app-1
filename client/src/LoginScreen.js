@@ -27,7 +27,7 @@ class LoginScreen extends Component {
   login = async () => {
     try {
       if (this.state.username !== '' && this.state.password !== '') {
-        await fetch('http://10.0.2.2:5000/api/users', {
+        await fetch('http://121.149.180.199:5000/api/users', {
           method: 'POST',
           headers: {
             Accept: 'application/json',

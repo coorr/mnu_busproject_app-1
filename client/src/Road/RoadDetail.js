@@ -25,7 +25,8 @@ class RoadDetail extends Component {
   DetailList = async () => {
     try {
       const { startArea } = this.props.route.params;
-      await fetch('http://10.0.2.2:5000/api/roaddetail', {
+      console.log(startArea);
+      await fetch('http://121.149.180.199:5000/api/roaddetail', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -62,7 +63,7 @@ class RoadDetail extends Component {
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
               <View>
-                <Text style={styles.BusRoadBox}>{item.BusRoad}</Text>
+                <Text style={styles.BusRoadBox}>{item.roadname}</Text>
                 <Text style={styles.NumIDBox}>{item.numID}</Text>
               </View>
             )}

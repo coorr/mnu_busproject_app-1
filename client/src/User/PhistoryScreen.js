@@ -24,7 +24,7 @@ class PhistoryScreen extends Component {
     try {
       const { uid } = this.props.route.params;
       //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-      await fetch('http://10.0.2.2:5000/api/penalty', {
+      await fetch('http://121.149.180.199:5000/api/penalty', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

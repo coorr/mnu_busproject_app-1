@@ -74,11 +74,11 @@ async function asyncFunction() {
       var pid = req.body.pid;
        var title = req.body.title;
        var content = req.body.content;
-       var udate = req.body.udate;
+
 
         var rows13 = await conn.query(
-          "UPDATE board SET title = ?, content = ?, udate = ? WHERE pid = ?",
-          [title,content,udate,pid]
+          "UPDATE board SET title = ?, content = ? WHERE pid = ?",
+          [title,content,pid]
           );
             
           if((JSON.stringify(rows13)) != '{"affectedRows": 1, "insertId": 0, "warningStatus": 0}'){
@@ -114,23 +114,7 @@ async function asyncFunction() {
   
       
       
-      app.post('/api/roaddetail',async(req,res) => {
-        try{
-        var startAreas = req.body.startAreas;
-        var rows3 = await conn.query(
-          "SELECT * FROM  roaddetail WHERE StartArea = ? order by numID",
-          [startAreas]
-          );
-          if(rows3.length>0){
-            res.send({'success':true,'startAreas':JSON.stringify(rows3)});
-          }
-          else {
-            res.send({'success':false,'startAreas':'network error'});
-          }
-        } catch(err) {
-          console.log(err);
-        }
-      })
+
 
 
 
@@ -156,9 +140,9 @@ async function asyncFunction() {
       })
 
     
-    app.get('/api/route_local',(req,res)=>{
-      const rows7 = conn.query("SELECT local FROM  route group by local");
-        res.send(rows7)
+    app.get('/api/route_local',async(req,res)=>{
+      const rows7 =await conn.query("SELECT local FROM  route group by local");
+      await res.send(rows7)
     })
 
     app.post('/api/routes',async(req,res) => {
@@ -179,6 +163,42 @@ async function asyncFunction() {
       }
  
     })
+    app.post('/api/route',async(req,res) => {
+      try{
+      var rows16 = await conn.query(
+        "SELECT * FROM route order by start_point"
+        );
+        if(rows16.length>0){
+          res.send(rows16)
+        }
+        else {
+          res.send({'success':false,'route':'network error'});
+        }
+      } catch(err) {
+        console.log(err);
+      }
+ 
+    })
+    
+      
+      
+      app.post('/api/roaddetail',async(req,res) => {
+        try{
+        var startAreas = req.body.startAreas;
+        var rows15 = await conn.query(
+          "SELECT * FROM  roaddetail WHERE roadname = ? order by numID",
+          [startAreas]
+          );
+          if(rows15.length>0){
+            res.send({'success':true,'startAreas':JSON.stringify(rows15)});
+          }
+          else {
+            res.send({'success':false,'startAreas':'network error'});
+          }
+        } catch(err) {
+          console.log(err);
+        }
+      })
 
     app.post('/api/reserve',async(req,res) => {
       try{
@@ -201,10 +221,10 @@ async function asyncFunction() {
       }
     })
 
-    app.post('/api/reserve_check',(req,res) => {
+    app.post('/api/reserve_check',async(req,res) => {
       try{
       var user = req.body.uid;
-      var rows6 =  conn.query(
+      var rows6 = await conn.query(
         "SELECT * FROM reserve WHERE uid = ? AND start_date >= DATE_ADD(NOW(),INTERVAL -7 DAY) AND STATUS = 0", // 지금 현재시간 ~ 7일전까지 범위 검색 uid 리턴 or * 리턴
         [user]
         );
@@ -226,7 +246,6 @@ async function asyncFunction() {
     app.post('/api/reserve_delete', async(req,res) => {
       try{
         var user = req.body.uid;
-        console.log(user);
         var rows6 = await conn.query(
           "DELETE FROM reserve WHERE uid = ? ",
           [user]
@@ -275,7 +294,7 @@ async function asyncFunction() {
       var start_date = req.body.start_date;
       var reserve_seat = req.body.reserve_seat;
       var uid = req.body.uid;
-      console.log(route,start_date,reserve_seat,uid);
+
       var rows5 = await conn.query(
         "UPDATE reserve SET reserve_seat = ? WHERE start_point = ?  AND start_date= ? AND uid= ? ", // 변경번호 , 경로,예약날, uid
         [reserve_seat,route,start_date,uid]

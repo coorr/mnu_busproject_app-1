@@ -38,7 +38,9 @@ class RouteReserve extends Component {
 
   fetchDataleft = async () => {
     try {
-      const response = await fetch('http://172.16.2.171:5000/api/route_local');
+      const response = await fetch(
+        'http://121.149.180.199:5000/api/route_local',
+      );
       const Ldata = await response.json();
       this.setState({ data: Ldata });
     } catch (err) {
@@ -50,7 +52,7 @@ class RouteReserve extends Component {
     try {
       if (this.state.scrollleftvalue !== '') {
         //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-        await fetch('http://172.16.2.171:5000/api/routes', {
+        await fetch('http://121.149.180.199:5000/api/routes', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -80,7 +82,7 @@ class RouteReserve extends Component {
     try {
       // 예약내역에 유저가 있는지 체크하는 함수.
       const { uid, uname, dept, stdnum } = this.props.route.params;
-      await fetch('http://172.16.2.171:5000/api/reserve_check', {
+      await fetch('http://121.149.180.199:5000/api/reserve_check', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

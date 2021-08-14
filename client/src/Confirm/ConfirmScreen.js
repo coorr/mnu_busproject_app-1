@@ -35,7 +35,7 @@ class ConfirmScreen extends Component {
     try {
       // 예약내역에 유저가 있는지 체크하는 함수.
       const { uid } = this.props.route.params;
-      await fetch('http://121.149.180.199:5000/api/reserve_check', {
+      await fetch('http://172.16.2.171:5000/api/reserve_check', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

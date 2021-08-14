@@ -38,9 +38,7 @@ class RouteReserve extends Component {
 
   fetchDataleft = async () => {
     try {
-      const response = await fetch(
-        'http://121.149.180.199:5000/api/route_local',
-      );
+      const response = await fetch('http://172.16.2.171:5000/api/route_local');
       const Ldata = await response.json();
       this.setState({ data: Ldata });
     } catch (err) {
@@ -52,7 +50,7 @@ class RouteReserve extends Component {
     try {
       if (this.state.scrollleftvalue !== '') {
         //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-        await fetch('http://121.149.180.199:5000/api/routes', {
+        await fetch('http://172.16.2.171:5000/api/routes', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -82,7 +80,7 @@ class RouteReserve extends Component {
     try {
       // 예약내역에 유저가 있는지 체크하는 함수.
       const { uid, uname, dept, stdnum } = this.props.route.params;
-      await fetch('http://121.149.180.199:5000/api/reserve_check', {
+      await fetch('http://172.16.2.171:5000/api/reserve_check', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -136,13 +134,25 @@ class RouteReserve extends Component {
     var d = new Date(); // d 객체생성
     const ctime = moment(d).format('HH:mm:ss');
     const minDate = moment(d).format('YYYY-MM-DD'); // Today
-    const maxDate = moment(d.getTime()).add('7', 'd').format('YYYY-MM-DD'); // d 객체에서 7일 후까지
+    const maxDate = moment(d.getTime()).add('6', 'd').format('YYYY-MM-DD'); // d 객체에서 7일 후까지
     const { selectedStartDate } = this.state;
     const startDate =
       selectedStartDate !== ''
         ? selectedStartDate.format('YYYY - MM - DD (dddd)')
         : '';
-
+    // 토, 일 주말 선택 제한하는 함수.
+    const disableDate = () => {
+      const weekendlist = [];
+      for (let i = 0; i < 7; i++) {
+        let dval = moment(d.getTime()).add(i, 'd').format('ddd');
+        if (dval === '일' || dval === '토') {
+          weekendlist.push(
+            moment(d.getTime()).add(i, 'd').format('YYYY-MM-DD'),
+          );
+        }
+      }
+      return weekendlist;
+    };
     const customDayHeaderStylesCallback = ({ dayOfWeek, month, year }) => {
       // 년/월/주 헤더 타이틀 스타일
 
@@ -268,6 +278,7 @@ class RouteReserve extends Component {
                     customDayHeaderStyles={customDayHeaderStylesCallback}
                     todayTextStyle={{ color: 'white' }}
                     todayBackgroundColor="#5B79ED"
+                    disabledDates={disableDate()} // 예약기간내 토,일 날짜 배열(array) 반환
                     onDateChange={this.onDateChange}
                     weekdays={['일', '월', '화', '수', '목', '금', '토']} //요일
                     months={[

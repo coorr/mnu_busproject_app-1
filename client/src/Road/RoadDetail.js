@@ -26,7 +26,7 @@ class RoadDetail extends Component {
     try {
       const { startArea } = this.props.route.params;
       console.log(startArea);
-      await fetch('http://121.149.180.199:5000/api/roaddetail', {
+      await fetch('http://172.16.2.171:5000/api/roaddetail', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

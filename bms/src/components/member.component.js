@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../style/main.style.css';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { Sidebar } from '../features/sidebar/Sidebar';
+import { MemberList } from '../features/member/MemberList';
 export default class Member extends Component {
   render() {
     return (
@@ -10,7 +11,7 @@ export default class Member extends Component {
           <Sidebar />
         </div>
         <div className="content">
-          <p>tdasdasdsadt</p>
+          <MemberList />
         </div>
       </div>
     );

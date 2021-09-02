@@ -139,6 +139,59 @@ async function asyncFunction() {
         }
       })
 
+      app.post('/api/userlist',async(req,res) => {
+        try{
+       var inputvalue = req.body.inputvalue;
+         
+       if (inputvalue.length > 0) {
+        const re = await conn.query(
+          "SELECT * FROM user WHERE uid=? or uname = ? or dept = ? or stdnum = ? ",
+          [inputvalue,inputvalue,inputvalue,inputvalue]
+          );
+          if(re.length>0) {
+            res.send({'success':true,'user':re});
+        }
+        else {
+        res.send({'success':false,'message': 'User Not Found'});
+        }
+       }
+       else {
+        const re = await conn.query(
+          "SELECT * FROM user WHERE NOT dept= '학생지원과' "
+          );
+          if(re.length>0) {
+            res.send({'success':true,'user':re});
+        }
+        else {
+        res.send({'success':false,'message': 'User Not Found'});
+        }
+       }
+      
+          
+         
+        } catch (err) {
+          console.log(err);
+        }
+      })
+
+      app.post('/api/userlist',async(req,res) => {
+        try{
+       
+      const re = await conn.query(
+          "SELECT * FROM user WHERE NOT dept= '학생지원과' "
+          );
+          
+          if(re.length>0) {
+              res.send({'success':true,'user':re});
+          }
+          else {
+          res.send({'success':false,'message': 'User Not Found'});
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      })
+
     
     app.get('/api/route_local',async(req,res)=>{
       const rows7 =await conn.query("SELECT local FROM  route group by local");

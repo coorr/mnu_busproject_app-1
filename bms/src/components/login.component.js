@@ -39,8 +39,7 @@ class Login extends Component {
               this.setState({
                 userData: true,
               });
-              console.log(this.state.userData);
-              this.props.history.push('/main');
+              this.props.history.replace('/main');
               // 이동
             } else {
               alert(res.message);

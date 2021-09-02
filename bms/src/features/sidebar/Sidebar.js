@@ -1,11 +1,13 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 
 import SidebarItem from './SidebarItem';
 import './Sidebar.css';
+
 export function Sidebar() {
   // URL의 path값을 받아올 수 있다.
   const pathName = useLocation().pathname;
+  const history = useHistory();
   // 메뉴 리스트 경로
   const menus = [
     { name: '대시보드', path: '/main' },
@@ -16,7 +18,10 @@ export function Sidebar() {
     { name: '예약 정보', path: '/reserve' },
     { name: '회원 정보', path: '/members' },
   ];
-
+  const logout = () => {
+    window.sessionStorage.clear();
+    history.push('/');
+  };
   return (
     <div className="sidebar">
       {menus.map((menu, index) => {
@@ -31,6 +36,9 @@ export function Sidebar() {
           </Link>
         );
       })}
+      <div className="logoutbutton" onClick={logout}>
+        로그아웃
+      </div>
     </div>
   );
 }

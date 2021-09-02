@@ -23,7 +23,7 @@ function App() {
   let isAuthorized = window.sessionStorage.getItem('access-token');
   return (
     <Router>
-      {!isAuthorized ? <Redirect to="/" /> : <Redirect to="/main" />}
+      {!isAuthorized ? <Redirect to="/" /> : null}
       {/* 기본 app 베이스 디자인 */}
       <div className="App">
         <nav className="navcontainer">

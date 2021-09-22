@@ -23,6 +23,7 @@ function App() {
   let isAuthorized = window.sessionStorage.getItem('access-token');
   return (
     <Router>
+      {/* isAuthorized 가 비었을 경우 '/'링크 다이렉트 이동 - 링크이동 방지*/}
       {!isAuthorized ? <Redirect to="/" /> : null}
       {/* 기본 app 베이스 디자인 */}
       <div className="App">

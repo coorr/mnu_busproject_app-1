@@ -3,7 +3,7 @@ import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 import 'moment/locale/ko';
 import './Board_Notice.css';
-import Pagination from './Pagination';
+import Pagination from '../pagination/Pagination';
 import { Link } from 'react-router-dom';
 
 export function Board_Notice() {
@@ -17,7 +17,7 @@ export function Board_Notice() {
     const fetchData = () => {
       try {
         //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-        fetch('http://121.149.180.199:5000/api/board', {
+        fetch('http://112.164.190.62:5000/api/board', {
           method: 'get',
           headers: {
             Accept: 'application/json',

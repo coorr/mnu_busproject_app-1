@@ -11,7 +11,7 @@ export function Main_Notice() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetch('http://121.149.180.199:5000/api/board', {
+        await fetch('http://112.164.190.62:5000/api/board', {
           method: 'get',
           headers: {
             Accept: 'application/json',

@@ -16,7 +16,7 @@ class Login extends Component {
   login = async () => {
     try {
       if (this.state.username === 'Admin' && this.state.password !== '') {
-        await fetch('http://121.149.180.199:5000/api/users', {
+        await fetch('http://112.164.190.62:5000/api/users', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -56,6 +56,12 @@ class Login extends Component {
     }
   };
 
+  onKeyPress = e => {
+    if (e.key === 'Enter') {
+      this.login(); //엔터 입력시 login 함수 실행.
+    }
+  };
+
   onChange = e => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -63,10 +69,16 @@ class Login extends Component {
   };
 
   render() {
+    window.onpopstate = function (event) {
+      // 윈도우 뒤로가기 방지
+      if (event) {
+        window.history.go(1);
+      }
+    };
     return (
       <div className="outer">
         <div className="inner">
-          <form autoComplete="off">
+          <form autoComplete="off" onKeyPress={this.onKeyPress}>
             <h3>Log in</h3>
             <div className="form-group">
               <label>ID</label>

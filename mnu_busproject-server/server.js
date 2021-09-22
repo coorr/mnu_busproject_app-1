@@ -20,11 +20,12 @@ const connection = mariadb.createPool({
     port:conf.port,
     database:conf.database,
     multipleStatements: true,
+    dateStrings: 'date'
     
 });
 
 const options = {
-  Origin: 'http://172.16.2.171/api/board', // 접근 권한을 부여하는 도메인
+  Origin: 'http://112.164.190.62/api/board', // 접근 권한을 부여하는 도메인
   Credentials: true, // 응답 헤더에 Access-Control-Allow-Credentials 추가
   OptionsSuccessStatus: 200 // 응답 상태 200으로 설정 
 };
@@ -38,7 +39,15 @@ async function asyncFunction() {
     
       conn = await connection.getConnection();
       
-      
+      app.post('/api/user_count',async(req,res)=>{
+        try{
+          const rows7 =await conn.query("SELECT COUNT(CASE WHEN  start_date = CURDATE() then 1 END ) AS today,COUNT(*) AS  total FROM reserve; "); // CURDATE() : today 
+        await res.send(JSON.stringify(rows7))}
+        catch (err) {
+          console.log(err);
+        }
+        
+      })
 
       // 커넥션 쿼리 비동기처리로 인해 게시판 즉시 갱신문제
       app.get('/api/board',async(req,res)=>{
@@ -247,6 +256,25 @@ async function asyncFunction() {
           }
           else {
             res.send({'success':false,'startAreas':'network error'});
+          }
+        } catch(err) {
+          console.log(err);
+        }
+      })
+      
+      app.post('/api/reserve_data',async(req,res) => {
+        try{
+        var route = req.body.route;
+        var start_date = req.body.start_date;
+        var rows9 = await conn.query(
+          "SELECT * FROM  reserve order by start_date desc");
+       
+          
+          if(rows9.length>0){
+            res.send({'success':true,'reserve_data':rows9});
+          }
+          else {
+            res.send({'success':false,'message':'network error'});
           }
         } catch(err) {
           console.log(err);

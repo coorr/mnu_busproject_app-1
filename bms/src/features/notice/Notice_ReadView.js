@@ -20,7 +20,7 @@ export function Notice_ReadView() {
   const fetchdelete = async () => {
     try {
       //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-      await fetch('http://121.149.180.199:5000/api/board_delete', {
+      await fetch('http://112.164.190.62:5000/api/board_delete', {
         method: 'post',
         headers: {
           Accept: 'application/json',

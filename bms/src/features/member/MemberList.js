@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './MemberList.css';
-import Pagination from './Pagination';
+import Pagination from '../pagination/Pagination';
 
 export function MemberList() {
   const [userlists, setLists] = useState([]); // usestate 로 state 상태 관리.
@@ -15,7 +15,7 @@ export function MemberList() {
     const fetchData = () => {
       try {
         //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-        fetch('http://121.149.180.199:5000/api/userlist', {
+        fetch('http://112.164.190.62:5000/api/userlist', {
           method: 'post',
           headers: {
             Accept: 'application/json',
@@ -52,9 +52,7 @@ export function MemberList() {
   };
 
   const checkbuttonchange = () => {
-    console.log('검색누름');
     setChechButton(!checkbutton);
-    console.log(checkbutton);
   };
 
   const indexOfLast = currentPage * postsPerPage;
@@ -82,6 +80,13 @@ export function MemberList() {
       </>
     );
   };
+
+  const onKeyPress = e => {
+    if (e.key === 'Enter') {
+      checkbuttonchange(); //검색 실행
+    }
+  };
+
   return (
     <div>
       <div className="header">
@@ -93,6 +98,7 @@ export function MemberList() {
             placeholder=" ID, 이름, 학번, 학과 ,... "
             name="username"
             onChange={handleInputChange}
+            onKeyPress={onKeyPress}
             value={inputValue}
           />
 

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import '../style/main.style.css';
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import { Sidebar } from '../features/sidebar/Sidebar';
-import { Notice_UpdateView } from '../features/notice/Notice_UpdateView';
-import { Notice_WriteView } from '../features/notice/Notice_WriteView';
+import '../../style/main.style.css';
+import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import { Sidebar } from '../../features/sidebar/Sidebar';
+import { Notice_UpdateView } from '../../features/notice/Notice_UpdateView';
+
 export default class Notice_Update extends Component {
   render() {
     return (

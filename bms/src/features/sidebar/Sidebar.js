@@ -31,6 +31,7 @@ export function Sidebar() {
             <SidebarItem
               menu={menu}
               //현재 경로에 경로 이름이 포함될 경우 true 아닐 경우 false
+
               isActive={pathName.includes(menu.path) ? true : false}
             />
           </Link>

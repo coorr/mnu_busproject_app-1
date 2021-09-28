@@ -3,14 +3,14 @@ import { useHistory, useLocation, withRouter } from 'react-router-dom';
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 import 'moment/locale/ko';
-import './Notice_ReadView.css';
+import './Route_ReadView.css';
 
-export function Notice_ReadView() {
+export function Route_ReadView() {
   const location = useLocation();
   const { data } = location.state; // 전달받은 값 데이터에 저장
   const history = useHistory(); // do this inside the component
 
-  const goBack = () => history.push('/notice');
+  const goBack = () => history.push('/route');
   const dateParse = () => {
     // 날짜 파싱하는 함수
     var d = new Date();
@@ -20,7 +20,7 @@ export function Notice_ReadView() {
   const fetchdelete = async () => {
     try {
       //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-      await fetch('http://112.164.190.62:5000/api/board_delete', {
+      await fetch('http://112.164.190.62:5000/api/route_delete', {
         method: 'post',
         headers: {
           Accept: 'application/json',
@@ -34,11 +34,11 @@ export function Notice_ReadView() {
         .then(res => {
           if (res.success === true) {
             // eslint-disable-next-line no-alert
-            alert('게시물을 삭제했습니다.');
+            alert('노선을 삭제했습니다.');
             history.goBack();
           } else {
             // eslint-disable-next-line no-alert
-            alert('게시글을 등록하지 못했습니다.');
+            alert('노선을 등록하지 못했습니다.');
           }
         })
         .catch(error => {
@@ -50,7 +50,7 @@ export function Notice_ReadView() {
   };
 
   const confirmModal_delete = () => {
-    if (window.confirm('게시글을 삭제하시겠습니까?')) {
+    if (window.confirm('노선을 삭제하시겠습니까?')) {
       fetchdelete();
     } else {
       console.log('취소. 변화 없음');
@@ -58,9 +58,9 @@ export function Notice_ReadView() {
   };
 
   const confirmModal_edit = () => {
-    if (window.confirm('게시글을 수정하시겠습니까?')) {
+    if (window.confirm('노선을 수정하시겠습니까?')) {
       history.push({
-        pathname: '/notice_update',
+        pathname: '/route_update',
         state: { udata: data },
       });
     } else {
@@ -70,33 +70,7 @@ export function Notice_ReadView() {
 
   return (
     <div className="container">
-      <div className="table_box">
-        <div className="detail_titlebox">
-          <div className="box_left">
-            <label className="readview_text">제목</label>
-          </div>
-          <div className="box_right">{data?.title}</div>
-        </div>
-        <div className="detail_titlebox">
-          <div className="box_left">
-            <label className="readview_text">작성자</label>
-          </div>
-          <div className="box_right">{data?.writer}</div>
-        </div>
-        <div className="detail_titlebox">
-          <div className="box_left">
-            <label className="readview_text">게시일</label>
-          </div>
-          <div className="box_right">{dateParse(data?.udate)}</div>
-        </div>
-        <div className="detail_textbox">
-          <div className="box_top">
-            <label className="readview_text">공지내용 </label>
-          </div>
-          <div className="box_text">{data?.content}</div>
-        </div>
-      </div>
-
+      <div>test</div>
       <div className="cbox">
         <div className="golist" onClick={goBack}>
           목록
@@ -114,4 +88,4 @@ export function Notice_ReadView() {
   );
 }
 
-export default withRouter(Notice_ReadView);
+export default withRouter(Route_ReadView);

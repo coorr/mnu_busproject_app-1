@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import './Notice_WriteView.css';
+import './Route_WriteView.css';
 import { useHistory, withRouter, Link } from 'react-router-dom';
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 import 'moment/locale/ko';
 
-export function Notice_WriteView() {
+export function Route_WriteView() {
   const [inputs, setinputs] = useState({
     title: '',
     content: '',
@@ -37,10 +37,10 @@ export function Notice_WriteView() {
         // eslint-disable-next-line no-alert
         window.confirm('작성중인 문서가 취소됩니다. 목록으로 이동하시겠습니까?')
       ) {
-        history.push('/notice');
+        history.goBack();
       }
     } else {
-      history.push('/notice');
+      history.goBack();
     }
   };
   const fetchpost = async () => {
@@ -48,6 +48,7 @@ export function Notice_WriteView() {
       window.sessionStorage.getItem('access-token'),
     );
     try {
+      //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
       await fetch('http://112.164.190.62:5000/api/board_write', {
         method: 'post',
         headers: {
@@ -85,21 +86,19 @@ export function Notice_WriteView() {
       <div>
         <form autoComplete="off">
           <div className="input_titlebox">
-            <label className="text">제목</label>
             <input
               type="text"
               id="input_title"
               name="title"
-              placeholder="제목을 작성해주세요."
+              placeholder="제목"
               onChange={onChange}
               value={title}
             />
           </div>
           <div className="input_contentbox">
-            <label className="text">내용</label>
             <textarea
               id="input_content"
-              placeholder="내용을 작성해주세요."
+              placeholder="내용을 입력하세요."
               name="content"
               onChange={onChange}
               value={content}
@@ -109,7 +108,7 @@ export function Notice_WriteView() {
       </div>
       <div className="input_buttonbox">
         <div className="golist" onClick={() => confirmModal_golist()}>
-          취소
+          목록
         </div>
         <div
           className="input_notice"
@@ -130,4 +129,4 @@ export function Notice_WriteView() {
   );
 }
 
-export default withRouter(Notice_WriteView);
+export default withRouter(Route_WriteView);

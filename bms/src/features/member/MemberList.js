@@ -75,6 +75,7 @@ export function MemberList() {
             <div className="bnotice_pid">{ulist?.uname}</div>
             <div className="bnotice_pid">{ulist?.dept}</div>
             <div className="bnotice_pid">{ulist?.stdnum}</div>
+            <div className="bnotice_pid">{ulist?.penalty_point}</div>
           </div>
         ))}
       </>
@@ -95,7 +96,7 @@ export function MemberList() {
             autoComplete="off"
             type="text"
             className="search_box"
-            placeholder=" ID, 이름, 학번, 학과 ,... "
+            placeholder=" ID, 이름, 학번, 학과 ... "
             name="username"
             onChange={handleInputChange}
             onKeyPress={onKeyPress}
@@ -112,6 +113,7 @@ export function MemberList() {
           <div className="unamebox">이름</div>
           <div className="deptbox">학과</div>
           <div className="stdnumbox">학번</div>
+          <div className="penalty_point">벌점</div>
         </div>
       </div>
       <div>

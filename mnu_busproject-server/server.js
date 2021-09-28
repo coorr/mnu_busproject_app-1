@@ -71,7 +71,7 @@ async function asyncFunction() {
             res.send({'success':true});
           }
           else {
-            res.send({'success':false,'reserve':'예매 실패'});
+            res.send({'success':false,'reserve':'server error'});
           }
         } catch(err) {
           console.log(err);
@@ -94,7 +94,7 @@ async function asyncFunction() {
             res.send({'success':true});
           }
           else {
-            res.send({'success':false,'reserve':'예매 실패'});
+            res.send({'success':false,'reserve':'server error'});
           }
         } catch(err) {
           console.log(err);
@@ -114,7 +114,7 @@ async function asyncFunction() {
             res.send({'success':true});
           }
           else {
-            res.send({'success':false,'reserve':'예매 실패'});
+            res.send({'success':false,'reserve':'server error'});
           }
         } catch(err) {
           console.log(err);
@@ -123,8 +123,6 @@ async function asyncFunction() {
   
       
       
-
-
 
 
       app.post('/api/users',async(req,res) => {
@@ -183,23 +181,7 @@ async function asyncFunction() {
         }
       })
 
-      app.post('/api/userlist',async(req,res) => {
-        try{
-       
-      const re = await conn.query(
-          "SELECT * FROM user WHERE NOT dept= '학생지원과' "
-          );
-          
-          if(re.length>0) {
-              res.send({'success':true,'user':re});
-          }
-          else {
-          res.send({'success':false,'message': 'User Not Found'});
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      })
+    
 
     
     app.get('/api/route_local',async(req,res)=>{
@@ -228,7 +210,7 @@ async function asyncFunction() {
     app.post('/api/route',async(req,res) => {
       try{
       var rows16 = await conn.query(
-        "SELECT * FROM route order by start_point"
+        "SELECT * FROM route order by numID asc"
         );
         if(rows16.length>0){
           res.send(rows16)
@@ -241,7 +223,91 @@ async function asyncFunction() {
       }
  
     })
-    
+
+    app.post('/api/station',async(req,res) => {
+      try{
+      var rows16 = await conn.query(
+        "SELECT * FROM roaddetail order by numID asc"
+        );
+        if(rows16.length>0){
+          res.send(rows16)
+        }
+        else {
+          res.send({'success':false,'route':'network error'});
+        }
+      } catch(err) {
+        console.log(err);
+      }
+ 
+    })
+
+    app.post('/api/station_write',async(req,res) => {
+      try{
+     var direction = req.body.direction;
+     var numID=req.body.numID;
+     var roadname = req.body.roadname;
+     var detail = req.body.detail;
+
+      var rows12 = await conn.query(
+        "INSERT INTO roaddetail (direction,numID,roadname,detail) VALUES (?,?,?,?)",
+        [direction,numID,roadname,detail]
+        );
+          
+        if((JSON.stringify(rows12)) != '{"affectedRows": 1, "insertId": 0, "warningStatus": 0}'){
+          res.send({'success':true});
+        }
+        else {
+          res.send({'success':false,'reserve':'server error'});
+        }
+      } catch(err) {
+        console.log(err);
+      }
+    })
+
+    app.post('/api/station_update',async(req,res) => {
+      try{
+        var pnumId = req.body.pnumId;
+        var direction = req.body.direction;
+        var numID=req.body.numID;
+        var roadname = req.body.roadname;
+        var detail = req.body.detail;
+
+
+      var rows13 = await conn.query(
+        "UPDATE roaddetail SET direction = ?, numID = ?, roadname = ?, detail = ? WHERE numID = ?",
+        [direction,numID,roadname,detail,pnumId]
+        );
+          
+        if((JSON.stringify(rows13)) != '{"affectedRows": 1, "insertId": 0, "warningStatus": 0}'){
+          res.send({'success':true});
+        }
+        else {
+          res.send({'success':false,'reserve':'server error'});
+        }
+      } catch(err) {
+        console.log(err);
+      }
+    })
+
+    app.post('/api/station_delete',async(req,res) => {
+      try{
+    var numID = req.body.numID;
+
+      var rows14 = await conn.query(
+        "DELETE FROM roaddetail WHERE numID = ?",
+        [numID]
+        );
+          
+        if((JSON.stringify(rows14)).length >0){
+          res.send({'success':true});
+        }
+        else {
+          res.send({'success':false,'reserve':'server error'});
+        }
+      } catch(err) {
+        console.log(err);
+      }
+    })
       
       
       app.post('/api/roaddetail',async(req,res) => {

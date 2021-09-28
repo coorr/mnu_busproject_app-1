@@ -1,10 +1,11 @@
-.input_titlebox{
-    
-}
-.input_contentbox{
-   
-}
+.container {
 
+}
+.text { 
+    display: flex;
+    justify-content: start;
+    align-items: flex-start;
+}
 #input_title {
 margin-bottom: 20px;
     padding-left: 20px;

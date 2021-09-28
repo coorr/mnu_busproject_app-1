@@ -64,23 +64,21 @@ export function Board_Notice() {
         {/* { loading && … } 부분은, loading 값이 true일 때 && 다음의 것을 표시한다는 의미 */}
         {loading && <div> loading... </div>}
         {cboards.map(board => (
-          <div className="btitlebox" key={board?.pid}>
-            <div className="bnotice_pid">{board?.pid}</div>
-            <div className="bnotice_title">
-              <Link
-                to={{
-                  pathname: `notice_read/${board?.pid}`,
-                  state: {
-                    data: board,
-                  },
-                }}
-              >
-                {board?.title}
-              </Link>
+          <Link
+            to={{
+              pathname: `notice_read/${board?.pid}`,
+              state: {
+                data: board,
+              },
+            }}
+          >
+            <div className="btitlebox" key={board?.pid}>
+              <div className="bnotice_pid">{board?.pid}</div>
+              <div className="bnotice_title">{board?.title}</div>
+              <div className="bnotice_writer">{board?.writer}</div>
+              <div className="bnotice_date">{dateParse(board?.udate)}</div>
             </div>
-            <div className="bnotice_writer">{board?.writer}</div>
-            <div className="bnotice_date">{dateParse(board?.udate)}</div>
-          </div>
+          </Link>
         ))}
       </>
     );

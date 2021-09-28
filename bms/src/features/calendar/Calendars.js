@@ -10,6 +10,7 @@ export function Calendars() {
         calendarType="US"
         showNeighboringMonth={false}
         formatDay={(locale, date) => dayjs(date).format('DD')}
+        view="month"
       />
     </div>
   );

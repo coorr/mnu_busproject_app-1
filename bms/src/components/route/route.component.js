@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import '../style/main.style.css';
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import { Sidebar } from '../features/sidebar/Sidebar';
+import '../../style/main.style.css';
+import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import { Sidebar } from '../../features/sidebar/Sidebar';
+import { Route } from '../../features/route/Route';
 export default class Routes extends Component {
   render() {
     return (
@@ -10,7 +11,7 @@ export default class Routes extends Component {
           <Sidebar />
         </div>
         <div className="content">
-          <p>tdasdasdsadt</p>
+          <Route />
         </div>
       </div>
     );

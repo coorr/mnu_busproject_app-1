@@ -29,7 +29,7 @@ export default class Main extends Component {
               </div>
             </div>
             <div className="sright">
-              <p className="titletext">분실물 신고</p>
+              <p className="titletext">분실물 신고/벌점 리스트</p>
               <div className="boardbox">준비중입니다.(padding10px)</div>
             </div>
           </div>

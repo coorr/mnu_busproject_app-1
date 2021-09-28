@@ -1,13 +1,9 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-const reload = () => {
-  window.location.reload(true);
-};
-
 function SidebarItem({ menu, isActive }) {
   return isActive === true ? (
-    <div className="sidebar-item-active" onClick={reload}>
+    <div className="sidebar-item-active">
       <p>{menu.name}</p>
     </div>
   ) : (

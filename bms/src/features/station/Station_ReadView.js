@@ -3,14 +3,14 @@ import { useHistory, useLocation, withRouter } from 'react-router-dom';
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 import 'moment/locale/ko';
-import './Notice_ReadView.css';
+import './Station_ReadView.css';
 
-export function Notice_ReadView() {
+export function Station_ReadView() {
   const location = useLocation();
   const { data } = location.state; // 전달받은 값 데이터에 저장
   const history = useHistory(); // do this inside the component
 
-  const goBack = () => history.push('/notice');
+  const goBack = () => history.push('/station');
   const dateParse = () => {
     // 날짜 파싱하는 함수
     var d = new Date();
@@ -20,14 +20,14 @@ export function Notice_ReadView() {
   const fetchdelete = async () => {
     try {
       //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-      await fetch('http://112.164.190.62:5000/api/board_delete', {
+      await fetch('http://112.164.190.62:5000/api/station_delete', {
         method: 'post',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: JSON.stringify({
-          pid: data?.pid,
+          numID: data?.numID,
         }),
       })
         .then(response => response.json())
@@ -60,7 +60,7 @@ export function Notice_ReadView() {
   const confirmModal_edit = () => {
     if (window.confirm('게시글을 수정하시겠습니까?')) {
       history.push({
-        pathname: '/notice_update',
+        pathname: '/station_update',
         state: { udata: data },
       });
     } else {
@@ -70,30 +70,30 @@ export function Notice_ReadView() {
 
   return (
     <div className="container">
-      <div className="table_box">
+      <div className="table_box2">
         <div className="detail_titlebox">
           <div className="box_left">
-            <label className="readview_text">제목</label>
+            <label className="readview_text">방면/지역</label>
           </div>
-          <div className="box_right">{data?.title}</div>
+          <div className="box_right">{data?.direction}</div>
         </div>
         <div className="detail_titlebox">
           <div className="box_left">
-            <label className="readview_text">작성자</label>
+            <label className="readview_text">정류장 번호</label>
           </div>
-          <div className="box_right">{data?.writer}</div>
+          <div className="box_right">{data?.numID}</div>
         </div>
         <div className="detail_titlebox">
           <div className="box_left">
-            <label className="readview_text">게시일</label>
+            <label className="readview_text">정류장 이름</label>
           </div>
-          <div className="box_right">{dateParse(data?.udate)}</div>
+          <div className="box_right">{data?.roadname}</div>
         </div>
         <div className="detail_textbox">
           <div className="box_top">
-            <label className="readview_text">공지내용 </label>
+            <label className="readview_text">세부내용</label>
           </div>
-          <div className="box_text">{data?.content}</div>
+          <div className="box_text">{data?.detail}</div>
         </div>
       </div>
 
@@ -114,4 +114,4 @@ export function Notice_ReadView() {
   );
 }
 
-export default withRouter(Notice_ReadView);
+export default withRouter(Station_ReadView);

@@ -78,19 +78,21 @@ export function Notice_UpdateView() {
       <div>
         <form autoComplete="off">
           <div className="input_titlebox">
+            <label className="text">제목</label>
             <input
               type="text"
               id="input_title"
               name="title"
-              placeholder="제목"
+              placeholder="제목을 입력해주세요."
               onChange={onChange}
               value={title}
             />
           </div>
           <div className="input_contentbox">
+            <label className="text">내용</label>
             <textarea
               id="input_content"
-              placeholder="내용을 입력하세요."
+              placeholder="내용을 입력해주세요."
               name="content"
               onChange={onChange}
               value={content}

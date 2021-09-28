@@ -7,7 +7,7 @@ export function Reserve() {
   const [reserve, setReserve] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(15); //
+  const [postsPerPage, setPostsPerPage] = useState(15); //15개씩 출력
 
   useEffect(() => {
     const fetchData = () => {
@@ -24,7 +24,6 @@ export function Reserve() {
           .then(res => {
             if (res.success === true) {
               setReserve(res.reserve_data);
-              console.log(res.reserve_data[0]);
               setLoading(false);
             } else {
               alert(res.message);
@@ -39,7 +38,6 @@ export function Reserve() {
       }
     };
     fetchData();
-    console.log('test');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -62,6 +60,7 @@ export function Reserve() {
             <div className="box">예약자 </div>
             <div className="box">출발지 </div>
             <div className="box">도착지 </div>
+            <div className="box">출발일 </div>
             <div className="box">출발 시간 </div>
             <div className="box">좌석 번호 </div>
             <div className="box">예약 시간 </div>
@@ -73,6 +72,7 @@ export function Reserve() {
             <div className="bnotice_pid">{rlist?.uid}</div>
             <div className="bnotice_pid">{rlist?.start_point}</div>
             <div className="bnotice_pid">{rlist?.end_point}</div>
+            <div className="bnotice_pid">{rlist?.start_date}</div>
             <div className="bnotice_pid">{rlist?.start_time}</div>
             <div className="bnotice_pid">{rlist?.reserve_seat}</div>
             <div className="bnotice_pid">{rlist?.reserve_datetime}</div>

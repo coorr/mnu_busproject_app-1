@@ -1,30 +1,37 @@
-
-
-#input_title {
-margin-bottom: 20px;
-    padding-left: 20px;
-    min-width: 400px;
-    border: none;
-    font-size: 22px;
-    border-bottom: 1px #ababab solid;
-    border: none;
-    width: 100%;
+input:focus {outline:none;}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
-#input_content {
+#input_value{
+    border:none;
+    border-left: 1px gray solid;
+    width: 100%;
+    height: 100%;
+}
+#input_value2{
     resize: none;
-    min-height: 400px;
-    margin-bottom: 20px;
-    padding-left: 20px;
-    min-width: 400px;
-    border: none;
-    font-size: 22px;
-    border-bottom:  1px black solid;
-    border: none;
     width: 100%;
+    outline: none;
+    flex: 1;
+    border: none;
+    height: 100%;
 }
+
 .input_buttonbox{ 
     display: flex;
     justify-content:space-around;
+}
+.detail_titlebox{
+    width: 100%;
+    height: 20%;
+    flex: 1;
+}
+.box_text{
+    width: 100%;
+   
+;
 }
 .golist{ 
     cursor:pointer;

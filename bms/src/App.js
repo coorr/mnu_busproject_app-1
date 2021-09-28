@@ -10,14 +10,24 @@ import {
 
 import Login from './components/login.component';
 import Main from './components/main.component';
-import Routes from './components/route.component';
-import Station from './components/station.component';
-import Notice from './components/notice.component';
+
+import Routes from './components/route/route.component';
+import Route_Read from './components/route/route_read.component';
+import Route_Write from './components/notice/notice_write.component';
+import Route_Update from './components/notice/notice_update.component';
+
+import Station from './components/station/station.component';
+import Station_Read from './components/station/station_read.component';
+import Station_Write from './components/station/station_write.component';
+import Station_Update from './components/station/station_update.component';
+
+import Notice from './components/notice/notice.component';
+import Notice_Read from './components/notice/notice_read.component';
+import Notice_Write from './components/notice/notice_write.component';
+import Notice_Update from './components/notice/notice_update.component';
+
 import reserve from './components/reserve.component';
 import Member from './components/member.component';
-import Notice_Read from './components/notice_read.component';
-import Notice_Write from './components/notice_write.component';
-import Notice_Update from './components/notice_update.component';
 
 function App() {
   let isAuthorized = window.sessionStorage.getItem('access-token');
@@ -38,8 +48,17 @@ function App() {
         <Switch>
           <Route exact path="/" component={Login} />
           <Route exact path="/main" component={Main} />
+
           <Route exact path="/route" component={Routes} />
+          <Route exact path="/route_read/:id" component={Route_Read} />
+          <Route exact path="/route_write" component={Route_Write} />
+          <Route exact path="/route_update" component={Route_Update} />
+
           <Route exact path="/station" component={Station} />
+          <Route exact path="/station_read/:id" component={Station_Read} />
+          <Route exact path="/station_write" component={Station_Write} />
+          <Route exact path="/station_update" component={Station_Update} />
+
           <Route exact path="/notice" component={Notice} />
           <Route exact path="/notice_read/:id" component={Notice_Read} />
           <Route exact path="/notice_write" component={Notice_Write} />

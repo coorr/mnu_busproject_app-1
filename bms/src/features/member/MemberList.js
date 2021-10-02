@@ -15,7 +15,7 @@ export function MemberList() {
     const fetchData = () => {
       try {
         //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-        fetch('http://112.164.190.62:5000/api/userlist', {
+        fetch('http://112.164.190.84:5000/api/userlist', {
           method: 'post',
           headers: {
             Accept: 'application/json',
@@ -33,6 +33,7 @@ export function MemberList() {
             } else {
               alert(res.message);
               setLoading(false);
+              console.log('test');
             }
           })
           .catch(error => {

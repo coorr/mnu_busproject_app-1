@@ -13,8 +13,8 @@ import Main from './components/main.component';
 
 import Routes from './components/route/route.component';
 import Route_Read from './components/route/route_read.component';
-import Route_Write from './components/notice/notice_write.component';
-import Route_Update from './components/notice/notice_update.component';
+import Route_Write from './components/route/route_write.component';
+import Route_Update from './components/route/route_update.component';
 
 import Station from './components/station/station.component';
 import Station_Read from './components/station/station_read.component';

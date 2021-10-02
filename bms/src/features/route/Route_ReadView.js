@@ -1,5 +1,6 @@
-import React from 'react';
-import { useHistory, useLocation, withRouter } from 'react-router-dom';
+/* eslint-disable no-alert */
+import React, { useState, useEffect } from 'react';
+import { useHistory, useLocation, withRouter, Link } from 'react-router-dom';
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 import 'moment/locale/ko';
@@ -20,24 +21,22 @@ export function Route_ReadView() {
   const fetchdelete = async () => {
     try {
       //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-      await fetch('http://112.164.190.62:5000/api/route_delete', {
+      await fetch('http://112.164.190.84:5000/api/route_delete', {
         method: 'post',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: JSON.stringify({
-          pid: data?.pid,
+          numID: data?.numID,
         }),
       })
         .then(response => response.json())
         .then(res => {
           if (res.success === true) {
-            // eslint-disable-next-line no-alert
             alert('노선을 삭제했습니다.');
             history.goBack();
           } else {
-            // eslint-disable-next-line no-alert
             alert('노선을 등록하지 못했습니다.');
           }
         })
@@ -67,10 +66,64 @@ export function Route_ReadView() {
       console.log('취소. 변화 없음');
     }
   };
+  const station_read = () => {
+    var rearray = [];
+    var ar = data?.station_numID.split(',');
+    // 정류장의 갯수만큼 나눠서 배열 추가
+    for (var i = 0; ar.length > i; i++) {
+      rearray.push(ar[i].split('-'));
+    }
+    return (
+      <div className="table4">
+        <div className="row2_title">
+          <div className="slt_title">순서</div>
+          <div className="slt_title">정류장 번호</div>
+          <div className="slt2_title">정류장</div>
+        </div>
+        {rearray.map((station_array, index) => (
+          <div className="row2">
+            <div className="slt">{index + 1}</div>
+            <div className="slt">{station_array[0]}</div>
+            <div className="slt2">{station_array[1]}</div>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
+  const list = station_read();
   return (
     <div className="container">
-      <div>test</div>
+      <div className="title_header">{data?.numID}번 버스정보</div>
+      <div className="table3">
+        <div className="row">
+          <div className="c1">노선 번호</div>
+          <div className="c2">{data?.numID}</div>
+          <div className="c1">노선 유형</div>
+          <div className="c2">{data?.route_type}</div>
+        </div>
+        <div className="row">
+          <div className="c1">지역</div>
+          <div className="c2">{data?.local}</div>
+          <div className="c1">방면</div>
+          <div className="c2">{data?.direction}</div>
+        </div>
+        <div className="row">
+          <div className="c1">기점 (출발)</div>
+          <div className="c2">{data?.start_point}</div>
+          <div className="c1">종점 (도착)</div>
+          <div className="c2">{data?.end_point}</div>
+        </div>
+        <div className="row">
+          <div className="c1">출발시간</div>
+          <div className="c2">{data?.start_time}</div>
+          <div className="c1">운행횟수</div>
+          <div className="c2">{data?.count}</div>
+        </div>
+      </div>
+      <div className="title_header">{data?.numID}번 노선정보</div>
+      {data?.station_numID === '' ? <div>등록된 정류장이 없습니다.</div> : list}
+
       <div className="cbox">
         <div className="golist" onClick={goBack}>
           목록

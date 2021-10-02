@@ -10,14 +10,14 @@ export function Board_Notice() {
   const [boards, setBoards] = useState([]); // usestate 로 state 상태 관리.
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(12); //12
+  const [postsPerPage, setPostsPerPage] = useState(13); //12
   //componentdidmount + componentdidupdate 랑 동일
 
   useEffect(() => {
     const fetchData = () => {
       try {
         //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-        fetch('http://112.164.190.62:5000/api/board', {
+        fetch('http://112.164.190.84:5000/api/board', {
           method: 'get',
           headers: {
             Accept: 'application/json',
@@ -41,7 +41,7 @@ export function Board_Notice() {
       }
     };
     fetchData();
-  }, [boards]);
+  }, []);
 
   const indexOfLast = currentPage * postsPerPage;
   const indexOfFirst = indexOfLast - postsPerPage;

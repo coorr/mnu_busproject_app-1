@@ -49,7 +49,7 @@ export function Route_WriteView() {
     );
     try {
       //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-      await fetch('http://112.164.190.62:5000/api/board_write', {
+      await fetch('http://112.164.190.84:5000/api/board_write', {
         method: 'post',
         headers: {
           Accept: 'application/json',

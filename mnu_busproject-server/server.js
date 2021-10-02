@@ -213,7 +213,7 @@ async function asyncFunction() {
         "SELECT * FROM route order by numID asc"
         );
         if(rows16.length>0){
-          res.send(rows16)
+          res.json(rows16);
         }
         else {
           res.send({'success':false,'route':'network error'});
@@ -224,10 +224,84 @@ async function asyncFunction() {
  
     })
 
+    app.post('/api/route_write',async(req,res) => {
+      try{
+     var direction = req.body.direction;
+     var numID=req.body.numID;
+     var roadname = req.body.roadname;
+     var detail = req.body.detail;
+
+      var rows12 = await conn.query(
+        "INSERT INTO route VALUES (?,?,?,?)",
+        [direction,numID,roadname,detail]
+        );
+          
+        if((JSON.stringify(rows12)) != '{"affectedRows": 1, "insertId": 0, "warningStatus": 0}'){
+          res.send({'success':true});
+        }
+        else {
+          res.send({'success':false,'reserve':'server error'});
+        }
+      } catch(err) {
+        console.log(err);
+      }
+    })
+
+    app.post('/api/route_update',async(req,res) => {
+      try{
+
+        var numID=req.body.numID;
+        var route_type = req.body.route_type;
+        var local = req.body.local;
+        var direction = req.body.direction;
+        var start_point = req.body.start_point;
+        var end_point = req.body.end_point;
+        var start_time= req.body.start_time
+        var count = req.body.count;
+        var station_numID = req.body.station_numID;
+        var pnumId = req.body.pnumId;
+        
+      var rows13 = await conn.query(
+        "UPDATE route SET numID=?,route_type=?,local=?,direction = ?,start_point=?,end_point=?,start_time=?,count=?,station_numID=?  WHERE numID = ?",
+        [numID,route_type,local,direction,start_point,end_point,start_time,count,station_numID,pnumId]
+        );
+          
+        if((JSON.stringify(rows13)) != '{"affectedRows": 1, "insertId": 0, "warningStatus": 0}'){
+          res.send({'success':true});
+        }
+        else {
+          res.send({'success':false,'reserve':'server error'});
+        }
+      } catch(err) {
+        console.log(err);
+      }
+    })
+
+    app.post('/api/route_delete',async(req,res) => {
+      try{
+    var numID = req.body.numID;
+
+      var rows14 = await conn.query(
+        "DELETE FROM route WHERE numID = ?",
+        [numID]
+        );
+          
+        if((JSON.stringify(rows14)).length >0){
+          res.send({'success':true});
+        }
+        else {
+          res.send({'success':false,'reserve':'server error'});
+        }
+      } catch(err) {
+        console.log(err);
+      }
+    })
+
+
     app.post('/api/station',async(req,res) => {
       try{
       var rows16 = await conn.query(
-        "SELECT * FROM roaddetail order by numID asc"
+        "SELECT * FROM roaddetail order by direction, numID asc"
         );
         if(rows16.length>0){
           res.send(rows16)
@@ -240,6 +314,8 @@ async function asyncFunction() {
       }
  
     })
+
+
 
     app.post('/api/station_write',async(req,res) => {
       try{

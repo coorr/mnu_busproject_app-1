@@ -48,7 +48,7 @@ export function Notice_WriteView() {
       window.sessionStorage.getItem('access-token'),
     );
     try {
-      await fetch('http://112.164.190.62:5000/api/board_write', {
+      await fetch('http://112.164.190.84:5000/api/board_write', {
         method: 'post',
         headers: {
           Accept: 'application/json',

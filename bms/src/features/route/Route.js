@@ -4,18 +4,19 @@ import moment from 'moment';
 import 'moment/locale/ko';
 import './Route.css';
 import { Link } from 'react-router-dom';
-
+import Pagination from '../pagination/Pagination';
 export function Route() {
   const [routes, setRoutes] = useState([]); // usestate 로 state 상태 관리.
   const [loading, setLoading] = useState(true);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(15); //표시갯수
   //componentdidmount + componentdidupdate 랑 동일
 
   useEffect(() => {
     const fetchData = () => {
       try {
         //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-        fetch('http://112.164.190.62:5000/api/route', {
+        fetch('http://112.164.190.84:5000/api/route', {
           method: 'post',
           headers: {
             Accept: 'application/json',
@@ -39,7 +40,7 @@ export function Route() {
       }
     };
     fetchData();
-  }, [routes]);
+  }, []);
 
   const dateParse = notice_date => {
     // 날짜 파싱하는 함수
@@ -47,12 +48,22 @@ export function Route() {
     return ndate;
   };
 
+  const indexOfLast = currentPage * postsPerPage;
+  const indexOfFirst = indexOfLast - postsPerPage;
+  function currentPosts(tmp) {
+    let currentPosts = 0;
+    currentPosts = tmp.slice(indexOfFirst, indexOfLast);
+    return currentPosts;
+  }
+
+  const cboards = currentPosts(routes);
+
   const lists = loading => {
     return (
       <>
         {/* { loading && … } 부분은, loading 값이 true일 때 && 다음의 것을 표시한다는 의미 */}
         {loading && <div> loading... </div>}
-        {routes.map(route => (
+        {cboards.map(route => (
           <Link
             to={{
               pathname: `route_read/${route?.numID}`,
@@ -89,8 +100,16 @@ export function Route() {
         <div className="header_pid">출발시간</div>
         <div className="header_pid">운행횟수</div>
       </div>
-      <div>{lists(loading)}</div>
-      <Link to="notice_write">
+      <div>
+        {lists(loading)}
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={routes.length}
+          paginate={setCurrentPage}
+          current={currentPage}
+        />
+      </div>
+      <Link to="route_write">
         <div className="wrtie_button">노선 추가</div>
       </Link>
     </div>

@@ -7,13 +7,13 @@ export function Reserve() {
   const [reserve, setReserve] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(15); //15개씩 출력
+  const [postsPerPage, setPostsPerPage] = useState(10); //15개씩 출력
 
   useEffect(() => {
     const fetchData = () => {
       try {
         //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-        fetch('http://112.164.190.62:5000/api/reserve_data', {
+        fetch('http://112.164.190.84:5000/api/reserve_data', {
           method: 'post',
           headers: {
             Accept: 'application/json',

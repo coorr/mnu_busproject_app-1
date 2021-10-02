@@ -42,12 +42,10 @@
    text-align: left;
 }
 .cbox {
-    
     font-size: 18px;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    margin-top: 50px;
+    justify-content: center;
     text-align: center;
 }
 .deletebutton {
@@ -63,6 +61,8 @@
     color: white;
 }
 .editbutton {
+    margin-left: 10px;
+    margin-right: 10px;
     cursor:pointer;
     display: flex;
     align-items: center;

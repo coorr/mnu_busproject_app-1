@@ -20,7 +20,7 @@ export function Station_ReadView() {
   const fetchdelete = async () => {
     try {
       //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-      await fetch('http://112.164.190.62:5000/api/station_delete', {
+      await fetch('http://112.164.190.84:5000/api/station_delete', {
         method: 'post',
         headers: {
           Accept: 'application/json',
@@ -85,7 +85,7 @@ export function Station_ReadView() {
         </div>
         <div className="detail_titlebox">
           <div className="box_left">
-            <label className="readview_text">정류장 이름</label>
+            <label className="readview_text">정류장</label>
           </div>
           <div className="box_right">{data?.roadname}</div>
         </div>

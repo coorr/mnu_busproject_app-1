@@ -48,7 +48,7 @@ export function Station_WriteView() {
   const fetchpost = async () => {
     try {
       //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-      await fetch('http://112.164.190.62:5000/api/station_write', {
+      await fetch('http://112.164.190.84:5000/api/station_write', {
         method: 'post',
         headers: {
           Accept: 'application/json',
@@ -87,7 +87,7 @@ export function Station_WriteView() {
           <div className="box_left">
             <label className="readview_text">방면/지역</label>
           </div>
-          <div className="input_box_right">
+          <div className="box_right">
             <input
               autoComplete="off"
               type="text"
@@ -103,7 +103,7 @@ export function Station_WriteView() {
           <div className="box_left">
             <label className="readview_text">정류장 번호</label>
           </div>
-          <div className="input_box_right">
+          <div className="box_right">
             <input
               autoComplete="off"
               type="number"
@@ -117,15 +117,15 @@ export function Station_WriteView() {
         </div>
         <div className="detail_titlebox">
           <div className="box_left">
-            <label className="readview_text">정류장 이름</label>
+            <label className="readview_text">정류장</label>
           </div>
-          <div className="input_box_right">
+          <div className="box_right">
             <input
               autoComplete="off"
               type="text"
               id="input_value"
               name="roadname"
-              placeholder="정류장 이름"
+              placeholder="정류장"
               onChange={onChange}
               value={roadname}
             />

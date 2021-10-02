@@ -1,4 +1,5 @@
 .headlinebox {
+    min-width: 650px;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -65,7 +66,6 @@
     font-size: 15px;
 }
 .wrtie_button {
-    margin-top: 15px;
     font-size: 18px;
     display: flex;
     align-items: center;

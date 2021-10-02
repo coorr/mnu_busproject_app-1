@@ -11,7 +11,7 @@ export function Main_Notice() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetch('http://112.164.190.62:5000/api/board', {
+        await fetch('http://112.164.190.84:5000/api/board', {
           method: 'get',
           headers: {
             Accept: 'application/json',
@@ -34,7 +34,7 @@ export function Main_Notice() {
       }
     };
     fetchData();
-  }, [boards]); // default = re-render , [] = 첫 1회만 렌더링
+  }, []); // default = re-render , [] = 첫 1회만 렌더링
 
   const dateParse = notice_date => {
     // 날짜 파싱하는 함수

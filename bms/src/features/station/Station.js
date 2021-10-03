@@ -18,7 +18,7 @@ export function Station() {
     const fetchData = () => {
       try {
         //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-        fetch('http://112.164.190.84:5000/api/station', {
+        fetch('http://112.164.190.87:5000/api/station', {
           method: 'post',
           headers: {
             Accept: 'application/json',

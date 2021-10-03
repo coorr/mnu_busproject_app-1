@@ -20,7 +20,7 @@ export function Station_ReadView() {
   const fetchdelete = async () => {
     try {
       //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-      await fetch('http://112.164.190.84:5000/api/station_delete', {
+      await fetch('http://112.164.190.87:5000/api/station_delete', {
         method: 'post',
         headers: {
           Accept: 'application/json',
@@ -53,7 +53,7 @@ export function Station_ReadView() {
     if (window.confirm('게시글을 삭제하시겠습니까?')) {
       fetchdelete();
     } else {
-      console.log('취소. 변화 없음');
+      console.log('취소.');
     }
   };
 
@@ -64,7 +64,7 @@ export function Station_ReadView() {
         state: { udata: data },
       });
     } else {
-      console.log('취소. 변화 없음');
+      console.log('취소.');
     }
   };
 

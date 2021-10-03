@@ -226,14 +226,19 @@ async function asyncFunction() {
 
     app.post('/api/route_write',async(req,res) => {
       try{
+     var numID =req.body.numID;
+     var route_type = req.body.route_type;
+     var local = req.body.local;
      var direction = req.body.direction;
-     var numID=req.body.numID;
-     var roadname = req.body.roadname;
-     var detail = req.body.detail;
+     var start_point = req.body.start_point;
+     var end_point = req.body.end_point;
+     var start_time =req.body.start_time;
+     var count =req.body.count;
+     var station_numID =req.body.station_numID;
 
       var rows12 = await conn.query(
-        "INSERT INTO route VALUES (?,?,?,?)",
-        [direction,numID,roadname,detail]
+        "INSERT INTO route VALUES (?,?,?,?,?,?,?,?,?)",
+        [numID,route_type,local,direction,start_point,end_point,start_time,count,station_numID]
         );
           
         if((JSON.stringify(rows12)) != '{"affectedRows": 1, "insertId": 0, "warningStatus": 0}'){
@@ -259,11 +264,11 @@ async function asyncFunction() {
         var start_time= req.body.start_time
         var count = req.body.count;
         var station_numID = req.body.station_numID;
-        var pnumId = req.body.pnumId;
-        
+        var pnumberID = req.body.pnumberID;
+
       var rows13 = await conn.query(
-        "UPDATE route SET numID=?,route_type=?,local=?,direction = ?,start_point=?,end_point=?,start_time=?,count=?,station_numID=?  WHERE numID = ?",
-        [numID,route_type,local,direction,start_point,end_point,start_time,count,station_numID,pnumId]
+        "UPDATE route SET numID=?,route_type=?,local=?,direction=?,start_point=?,end_point=?,start_time=?,count=?,station_numID=? WHERE numID = ?",
+        [numID,route_type,local,direction,start_point,end_point,start_time,count,station_numID,pnumberID]
         );
           
         if((JSON.stringify(rows13)) != '{"affectedRows": 1, "insertId": 0, "warningStatus": 0}'){

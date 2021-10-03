@@ -10,7 +10,7 @@ export function Route_ReadView() {
   const location = useLocation();
   const { data } = location.state; // 전달받은 값 데이터에 저장
   const history = useHistory(); // do this inside the component
-
+  const ar = data?.station_numID !== null ? data?.station_numID.split(',') : '';
   const goBack = () => history.push('/route');
   const dateParse = () => {
     // 날짜 파싱하는 함수
@@ -21,7 +21,7 @@ export function Route_ReadView() {
   const fetchdelete = async () => {
     try {
       //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-      await fetch('http://112.164.190.84:5000/api/route_delete', {
+      await fetch('http://112.164.190.87:5000/api/route_delete', {
         method: 'post',
         headers: {
           Accept: 'application/json',
@@ -68,7 +68,7 @@ export function Route_ReadView() {
   };
   const station_read = () => {
     var rearray = [];
-    var ar = data?.station_numID.split(',');
+
     // 정류장의 갯수만큼 나눠서 배열 추가
     for (var i = 0; ar.length > i; i++) {
       rearray.push(ar[i].split('-'));
@@ -122,7 +122,11 @@ export function Route_ReadView() {
         </div>
       </div>
       <div className="title_header">{data?.numID}번 노선정보</div>
-      {data?.station_numID === '' ? <div>등록된 정류장이 없습니다.</div> : list}
+      {data?.station_numID === null ? (
+        <div>등록된 정류장이 없습니다.</div>
+      ) : (
+        list
+      )}
 
       <div className="cbox">
         <div className="golist" onClick={goBack}>

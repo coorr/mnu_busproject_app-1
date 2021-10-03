@@ -17,7 +17,7 @@ export function Board_Notice() {
     const fetchData = () => {
       try {
         //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-        fetch('http://112.164.190.84:5000/api/board', {
+        fetch('http://112.164.190.87:5000/api/board', {
           method: 'get',
           headers: {
             Accept: 'application/json',

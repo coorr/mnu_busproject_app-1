@@ -1,4 +1,5 @@
 .container{
+    min-width: 600px;
     width: 100%;
     height: fit-content;
     flex: 1;
@@ -22,7 +23,7 @@
     flex-direction: column;
     border-top: 1px gray solid;
     border-left: 1px gray solid;
-    
+    margin-bottom: 30px;
 }
 .row{
     height: 100%;
@@ -46,6 +47,7 @@
     border-right: 1px gray solid;
 }
 .c2{
+    background-color: white;
     padding: 0px;
     font-weight: 400;
     display: flex;
@@ -79,7 +81,12 @@
     flex:1;
     border-bottom: 1px gray solid;
 }
-
+.slt_left_title{
+    flex:1;
+}
+.slt_right_title{
+    flex:1;
+}
 .slt_title{
     justify-content: center;
     align-items: center;
@@ -100,6 +107,7 @@
 }
 
 .slt_left{
+    border-left: 1px gray solid ;
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -110,15 +118,40 @@
 }
 .slt_left_top{
     flex: 1;
+    cursor:pointer;
 }
 .slt_left_bottom{
     flex: 1;
+    cursor:pointer;
 }
 
 .slt_right{
+    height: 100%;
+    border-right: 1px gray solid ;
+    cursor:pointer;
     flex: 1;
+    font-size:x-large;
+    font-weight: 600;
+}
+.slt_right2{
+    height: 100%;
+    cursor:pointer;
+    flex: 1;
+    font-size:x-large;
+    font-weight: 600;
 }
 .row2{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+    margin: 0px;
+    flex:1;
+    border-bottom: 1px gray solid;
+}
+.row3{
     width: 100%;
     height: 40px;
     display: flex;

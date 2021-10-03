@@ -16,7 +16,7 @@ export function Route() {
     const fetchData = () => {
       try {
         //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-        fetch('http://112.164.190.84:5000/api/route', {
+        fetch('http://112.164.190.87:5000/api/route', {
           method: 'post',
           headers: {
             Accept: 'application/json',
@@ -57,7 +57,6 @@ export function Route() {
   }
 
   const cboards = currentPosts(routes);
-
   const lists = loading => {
     return (
       <>
@@ -109,7 +108,14 @@ export function Route() {
           current={currentPage}
         />
       </div>
-      <Link to="route_write">
+      <Link
+        to={{
+          pathname: 'route_write',
+          state: {
+            data: routes,
+          },
+        }}
+      >
         <div className="wrtie_button">노선 추가</div>
       </Link>
     </div>

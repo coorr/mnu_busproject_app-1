@@ -7,7 +7,7 @@ export function UserCount() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetch('http://112.164.190.84:5000/api/user_count', {
+        await fetch('http://112.164.190.87:5000/api/user_count', {
           method: 'post',
           headers: {
             accept: 'application/json',

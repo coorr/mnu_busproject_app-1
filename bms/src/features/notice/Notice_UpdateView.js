@@ -42,7 +42,7 @@ export function Notice_UpdateView() {
   const fetchupdate = async () => {
     try {
       //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-      await fetch('http://112.164.190.84:5000/api/board_update', {
+      await fetch('http://112.164.190.87:5000/api/board_update', {
         method: 'post',
         headers: {
           Accept: 'application/json',

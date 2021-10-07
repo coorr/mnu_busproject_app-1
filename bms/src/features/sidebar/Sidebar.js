@@ -14,9 +14,9 @@ export function Sidebar() {
     { name: '노선', path: '/route' },
     { name: '정류장 ', path: '/station' },
     { name: '공지사항', path: '/notice' },
-    //{ name: '분실물', path: '/lost' },
     { name: '예약 정보', path: '/reserve' },
     { name: '회원 정보', path: '/members' },
+    { name: '벌점 정보', path: '/penalty' },
   ];
   const logout = () => {
     window.sessionStorage.clear();

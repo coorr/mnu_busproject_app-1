@@ -28,6 +28,7 @@ import Notice_Update from './components/notice/notice_update.component';
 
 import reserve from './components/reserve.component';
 import Member from './components/member.component';
+import Penalty from './components/penalty.component';
 
 function App() {
   let isAuthorized = window.sessionStorage.getItem('access-token');
@@ -65,6 +66,7 @@ function App() {
           <Route exact path="/notice_update" component={Notice_Update} />
           <Route exact path="/reserve" component={reserve} />
           <Route exact path="/members" component={Member} />
+          <Route exact path="/penalty" component={Penalty} />
         </Switch>
       </div>
     </Router>
@@ -72,23 +74,3 @@ function App() {
 }
 
 export default App;
-
-// import React from 'react';
-// import logo from './logo.svg';
-// import { Counter } from './features/counter/Counter';
-// import './App.css';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         {/* 카운터 함수 실행 */}
-//         <Counter />
-
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;

@@ -557,6 +557,41 @@ async function asyncFunction() {
         console.log(err);
       }
     })
+
+
+    app.post('/api/penaltylist',async(req,res) => {
+      try{
+        var inputvalue = req.body.inputvalue;
+       
+     if (inputvalue.length > 0) {
+      const re = await conn.query(
+        "SELECT * FROM penalty WHERE uid = ?",
+        [inputvalue]
+        );
+        if(re.length>0) {
+          res.send({'success':true,'penalty':re});
+      }
+      else {
+      res.send({'success':false,'message': 'User Not Found'});
+      }
+     }
+     else {
+      const re = await conn.query(
+        "SELECT * FROM penalty ",
+        );
+        if(re.length>0) {
+          res.send({'success':true,'penalty':re});
+      }
+      else {
+      res.send({'success':false,'message': 'User Not Found'});
+      }
+     }
+          
+      } catch (err) {
+        console.log(err);
+      }
+    })
+
     app.post('/api/reserve_history',async(req,res) => {
       try{
       var uid = req.body.uid;

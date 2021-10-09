@@ -9,11 +9,13 @@ import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 import 'moment/locale/ko';
+import { a } from 'hangul-js';
 
 class RouteReserve extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      route_type: 1, // 등교 :0, 하교:1 --테스트 기간 하교만
       checkbutton: false, // 체크버튼 false일 경우 전체 뷰 true 일경우 리스트 뷰
       scrollleftvalue: '', // 왼쪽 리스트 선택 값
       scrollrightvalue: '', // 오른쪽 리스트 선택 값
@@ -29,6 +31,13 @@ class RouteReserve extends Component {
     this.fetchDataleft();
   }
 
+  componentDidUpdate(previousProps, previousState) {
+    if (previousState.scrollleftvalue !== this.state.scrollleftvalue) {
+      // 이전 state 상태와 현재가 다를경우 fetch 실행.
+      this.fetchDataright();
+    }
+  }
+
   onDateChange(date) {
     this.setState({
       selectedStartDate: date, // utc 표준 형식으로 data 저장
@@ -38,9 +47,11 @@ class RouteReserve extends Component {
 
   fetchDataleft = async () => {
     try {
-      const response = await fetch('http://172.16.2.171:5000/api/route_local');
+      const response = await fetch(
+        'http://112.164.190.87:5000/api/route_local',
+      );
       const Ldata = await response.json();
-      this.setState({ data: Ldata });
+      this.setState({ Ldata: Ldata });
     } catch (err) {
       console.log(err);
     }
@@ -50,7 +61,7 @@ class RouteReserve extends Component {
     try {
       if (this.state.scrollleftvalue !== '') {
         //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-        await fetch('http://172.16.2.171:5000/api/routes', {
+        await fetch('http://112.164.190.87:5000/api/routes', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -58,13 +69,13 @@ class RouteReserve extends Component {
           },
           body: JSON.stringify({
             local: this.state.scrollleftvalue,
+            route_type: this.state.route_type,
           }),
         })
           .then(response => response.json())
           .then(res => {
             if (res.success === true) {
-              var routes = JSON.parse(res.route);
-              this.setState({ Rdata: routes });
+              this.setState({ Rdata: res.route });
             } else {
               alert(res.route);
             }
@@ -80,7 +91,7 @@ class RouteReserve extends Component {
     try {
       // 예약내역에 유저가 있는지 체크하는 함수.
       const { uid, uname, dept, stdnum } = this.props.route.params;
-      await fetch('http://172.16.2.171:5000/api/reserve_check', {
+      await fetch('http://112.164.190.87:5000/api/reserve_check', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -125,10 +136,6 @@ class RouteReserve extends Component {
       return alert('모든 항목을 선택해 주세요.'); //  경고 창 띄우기
     }
   };
-
-  componentDidUpdate() {
-    this.fetchDataright();
-  }
 
   render() {
     var d = new Date(); // d 객체생성
@@ -220,6 +227,65 @@ class RouteReserve extends Component {
 
     return (
       <View style={styles.Container}>
+        <View style={styles.route_selector}>
+          <View
+            style={
+              this.state.route_type === 0
+                ? styles.route_ButtonArea_on
+                : styles.route_ButtonArea_off
+            }
+          >
+            <TouchableOpacity
+              onPress={() => {
+                if (this.state.route_type !== 0) {
+                  alert('테스트 기간은 하교만 이용 가능합니다.');
+                  // this.setState({
+                  //   route_type: 0,
+                  // });
+                }
+              }}
+            >
+              <Text
+                style={
+                  this.state.route_type === 0
+                    ? styles.route_selector_text_on
+                    : styles.route_selector_text_off
+                }
+              >
+                등교
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <View
+            style={
+              this.state.route_type === 1
+                ? styles.route_ButtonArea_on
+                : styles.route_ButtonArea_off
+            }
+          >
+            <TouchableOpacity
+              onPress={() => {
+                if (this.state.route_type !== 1) {
+                  this.setState({
+                    route_type: 1,
+                  });
+                }
+              }}
+            >
+              <Text
+                style={
+                  this.state.route_type === 1
+                    ? styles.route_selector_text_on
+                    : styles.route_selector_text_off
+                }
+              >
+                하교
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
         <View style={styles.SelectionContainer}>
           <View style={styles.StartButtonArea}>
             <TouchableOpacity
@@ -347,20 +413,21 @@ class RouteReserve extends Component {
             <View style={styles.scrollarea}>
               <FlatList
                 style={styles.scrollleft}
-                data={this.state.data}
+                data={this.state.Ldata}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => (
                   <TouchableOpacity
                     onPress={() => {
-                      this.setState({ scrollrightvalue: '' });
                       if (this.state.scrollleftvalue === item.local) {
                         //기존 지역 설정 값 있을 시에
                         this.setState({
+                          scrollrightvalue: '',
                           scrollleftvalue: '', //왼쪽 지역 설정 값 초기화
                           checkstatus: !this.state.checkstatus, // 지역설정시 화면 전환
                         });
                       } else {
                         //없을 시 해당 지역으로 설정 후 화면 전환
+
                         this.setState({
                           scrollleftvalue: item.local,
                           checkstatus: !this.state.checkstatus,
@@ -417,13 +484,54 @@ class RouteReserve extends Component {
 
 const styles = StyleSheet.create({
   Container: { flex: 1, backgroundColor: 'white' },
+
+  route_selector: {
+    width: '100%',
+    height: '10%',
+    flexDirection: 'row',
+    borderBottomWidth: 0.2,
+  },
+  route_ButtonArea_on: {
+    backgroundColor: '#3CB371',
+    width: '50%',
+    height: '100%',
+    borderRightWidth: 0.2,
+  },
+  route_ButtonArea_off: {
+    backgroundColor: '#cccccc',
+    width: '50%',
+    height: '100%',
+    borderRightWidth: 0.2,
+  },
+
+  route_selector_text_on: {
+    color: 'white',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    width: '100%',
+    fontSize: 20,
+    height: '100%',
+  },
+  route_selector_text_off: {
+    color: 'black',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    width: '100%',
+    fontSize: 20,
+    height: '100%',
+  },
   SelectionContainer: {
     width: '100%',
-    height: '25%',
+    height: '15%',
     borderBottomWidth: 0.2,
     flexDirection: 'row',
+    paddingBottom: 10,
   },
-  StartButtonArea: { width: '50%', height: '100%', borderRightWidth: 0.2 },
+  StartButtonArea: {
+    width: '50%',
+    height: '100%',
+    borderRightWidth: 0.2,
+  },
   StartTouchButton: {
     width: '90%',
     height: '90%',
@@ -433,14 +541,14 @@ const styles = StyleSheet.create({
   },
   StartButtonText: { marginTop: 10, marginLeft: 10, fontSize: 18 },
   StartButtonInput: {
-    marginTop: 30,
+    marginTop: 5,
     marginLeft: 15,
     fontSize: 30,
     fontWeight: '300',
     color: '#949494',
   },
   StartButtonInputchange: {
-    marginTop: 30,
+    marginTop: 5,
     marginLeft: 15,
     fontSize: 30,
     color: 'black',

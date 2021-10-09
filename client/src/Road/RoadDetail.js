@@ -18,15 +18,13 @@ class RoadDetail extends Component {
     super(props);
     this.state = {
       data: [],
-      startArea: '',
     };
   }
 
   DetailList = async () => {
     try {
-      const { startArea } = this.props.route.params;
-      console.log(startArea);
-      await fetch('http://172.16.2.171:5000/api/roaddetail', {
+      const { numID } = this.props.route.params;
+      await fetch('http://112.164.190.87:5000/api/route_screen_detail', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -34,16 +32,28 @@ class RoadDetail extends Component {
         },
 
         body: JSON.stringify({
-          startAreas: startArea,
+          numID: numID,
         }),
       })
         .then(response => response.json())
         .then(res => {
           if (res.success === true) {
-            var startAreas = JSON.parse(res.startAreas);
-            this.setState({ data: startAreas });
+            const ar =
+              res.detail[0].station_numID !== null
+                ? res.detail[0].station_numID.split(',')
+                : '';
+            var rearray = [];
+
+            // 정류장의 갯수만큼 나눠서 배열 추가
+            for (var i = 0; ar.length > i; i++) {
+              rearray.push(ar[i].split('-'));
+            }
+            this.setState({
+              data: rearray,
+            });
+            // this.setState({ data: res.detail[0] });
           } else {
-            alert(res.startAreas);
+            alert(res.route);
           }
         });
     } catch (err) {
@@ -63,8 +73,8 @@ class RoadDetail extends Component {
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
               <View>
-                <Text style={styles.BusRoadBox}>{item.roadname}</Text>
-                <Text style={styles.NumIDBox}>{item.numID}</Text>
+                <Text style={styles.BusRoadBox}>{item[1]}</Text>
+                <Text style={styles.NumIDBox}>{item[0]}</Text>
               </View>
             )}
           />
@@ -74,14 +84,14 @@ class RoadDetail extends Component {
   };
 
   title = () => {
-    const { startArea, firstArea, endArea } = this.props.route.params;
+    const { direction, start_point, end_point } = this.props.route.params;
     return (
       <View style={styles.StartBox}>
-        <Text style={styles.StartHangul}>{startArea}</Text>
+        <Text style={styles.StartHangul}>{direction}</Text>
         <View style={styles.FirstArea}>
-          <Text style={styles.FirstHangul}>{firstArea}</Text>
+          <Text style={styles.FirstHangul}>{start_point}</Text>
           <Image source={ArrowIcon} style={styles.busIcon} />
-          <Text style={styles.EndHangul}>{endArea}</Text>
+          <Text style={styles.EndHangul}>{end_point}</Text>
         </View>
       </View>
     );

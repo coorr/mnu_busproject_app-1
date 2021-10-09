@@ -67,7 +67,7 @@ class ConfirmScreen extends Component {
     try {
       const { uid } = this.props.route.params;
 
-      await fetch('http://121.149.180.199:5000/api/reserve_delete', {
+      await fetch('http://112.164.190.87:5000/api/reserve_delete', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

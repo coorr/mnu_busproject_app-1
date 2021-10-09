@@ -31,7 +31,7 @@ class RoadScreen extends Component {
 
   RoadList = async () => {
     try {
-      await fetch('http://172.16.2.171:5000/api/route', {
+      await fetch('http://112.164.190.87:5000/api/route_screen', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -54,13 +54,13 @@ class RoadScreen extends Component {
   searchFilter = text => {
     if (text) {
       const newData = this.state.fullData.filter(item => {
-        var disassemble = hangul.disassemble(item.direction, true);
+        var disassemble = hangul.disassemble(item.start_point, true);
         var cho = '';
         for (var i = 0, l = disassemble.length; i < l; i++) {
           cho += disassemble[i][0];
         }
         item.disassemble = cho;
-        const itemData = item.direction ? item.direction : '';
+        const itemData = item.start_point ? item.start_point : '';
         const textData = text;
         const initialData = hangul.disassemble(textData).join('');
         return (
@@ -114,15 +114,16 @@ class RoadScreen extends Component {
                   style={styles.InputFoam}
                   onPress={() => {
                     this.props.navigation.navigate('RoadDetail', {
-                      startArea: item.start_point, // 노선명
-                      firstArea: item.start_point, //  출발지
-                      endArea: item.end_point, // 도착지
+                      numID: item.numID,
+                      direction: item.direction,
+                      start_point: item.start_point,
+                      end_point: item.end_point,
                     });
                   }}
                 >
                   <View style={styles.InputArea}>
-                    <Text style={styles.RoadAreaText}>{item.direction}</Text>
-                    <Text style={styles.StartAreaText}>{item.start_point}</Text>
+                    <Text style={styles.RoadAreaText}>{item.start_point}</Text>
+                    <Text style={styles.StartAreaText}>{item.direction}</Text>
                   </View>
                 </TouchableOpacity>
               </View>

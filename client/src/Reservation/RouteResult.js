@@ -91,7 +91,7 @@ class RouteResult extends Component {
     try {
       const { route_data, date, uid } = this.props.route.params;
 
-      await fetch('http://172.16.2.171:5000/api/reserve', {
+      await fetch('http://112.164.190.87:5000/api/reserve', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

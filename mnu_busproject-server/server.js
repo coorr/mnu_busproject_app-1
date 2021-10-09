@@ -189,19 +189,61 @@ async function asyncFunction() {
       await res.send(rows7)
     })
 
-    app.post('/api/routes',async(req,res) => {
+
+
+
+    app.post('/api/route_screen',async(req,res) => {
       try{
-      var local = req.body.local;
-      var rows8 = await conn.query(
-        "SELECT * FROM  route WHERE local = ? order by start_point",
-        [local]
+      var rows16 = await conn.query(
+        "SELECT direction,start_point,end_point numID FROM route order by numID asc"
         );
-        if(rows8.length>0){
-          res.send({'success':true,'route':JSON.stringify(rows8)});
+        if(rows16.length>0){
+          res.json(rows16);
         }
         else {
           res.send({'success':false,'route':'network error'});
         }
+      } catch(err) {
+        console.log(err);
+      }
+ 
+    })
+    app.post('/api/route_screen_detail',async(req,res) => {
+      try{
+      const numID = req.body.numID;
+      var rows16 = await conn.query(
+        "SELECT station_numID FROM route where numID = ? ",
+        [numID]
+        );
+        if(rows16.length>0){
+          res.send({'success':true,'detail':rows16})
+        }
+        else {
+          res.send({'success':false,'route':'network error'});
+        }
+      } catch(err) {
+        console.log(err);
+      }
+ 
+    })
+
+    app.post('/api/routes',async(req,res) => {
+      try{
+      var local = req.body.local;
+      var route_type = req.body.route_type;
+        console.log(2323+route_type);
+        console.log(local);
+        var rows8 = await conn.query(
+        "SELECT start_point,end_point,start_time FROM  route WHERE local = ? && route_type = ? order by start_point",
+        [local,route_type]
+        );
+        if(rows8.length>0){
+          res.send({'success':true,'route':rows8});
+        }
+        else {
+          res.send({'success':false,'route':null});
+        }
+      
       } catch(err) {
         console.log(err);
       }
@@ -391,23 +433,6 @@ async function asyncFunction() {
     })
       
       
-      app.post('/api/roaddetail',async(req,res) => {
-        try{
-        var startAreas = req.body.startAreas;
-        var rows15 = await conn.query(
-          "SELECT * FROM  roaddetail WHERE roadname = ? order by numID",
-          [startAreas]
-          );
-          if(rows15.length>0){
-            res.send({'success':true,'startAreas':JSON.stringify(rows15)});
-          }
-          else {
-            res.send({'success':false,'startAreas':'network error'});
-          }
-        } catch(err) {
-          console.log(err);
-        }
-      })
       
       app.post('/api/reserve_data',async(req,res) => {
         try{

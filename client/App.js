@@ -26,6 +26,8 @@ import SettingScreen from './src/User/SettingScreen';
 import PolicyScreen from './src/User/PolicyScreen';
 import PhistoryScreen from './src/User/PhistoryScreen';
 import RhistoryScreen from './src/User/RhistoryScreen';
+import ScanScreen from './src/Confirm/QRCodeScreen';
+
 // import { Provider } from 'react-redux';
 // import { applyMiddleware, createStore } from 'redux';
 // import promiseMiddleware from 'redux-promise';
@@ -216,6 +218,17 @@ class App extends Component {
               },
               headerTintColor: 'white',
               headerTitle: '예매 확인',
+            }}
+          />
+          <Stack.Screen
+            name="ScanScreen"
+            component={ScanScreen}
+            options={{
+              headerStyle: {
+                backgroundColor: '#5B79ED',
+              },
+              headerTintColor: 'white',
+              headerShown: false,
             }}
           />
         </Stack.Navigator>

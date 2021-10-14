@@ -89,9 +89,15 @@ class RoadDetail extends Component {
       <View style={styles.StartBox}>
         <Text style={styles.StartHangul}>{direction}</Text>
         <View style={styles.FirstArea}>
-          <Text style={styles.FirstHangul}>{start_point}</Text>
-          <Image source={ArrowIcon} style={styles.busIcon} />
-          <Text style={styles.EndHangul}>{end_point}</Text>
+          <View style={styles.Areabox1}>
+            <Text style={styles.FirstHangul}>{start_point}</Text>
+          </View>
+          <View style={styles.Areabox2}>
+            <Image source={ArrowIcon} style={styles.busIcon} />
+          </View>
+          <View style={styles.Areabox1}>
+            <Text style={styles.EndHangul}>{end_point}</Text>
+          </View>
         </View>
       </View>
     );
@@ -119,7 +125,7 @@ class RoadDetail extends Component {
       <>
         <StatusBar barStyle="dark-content" />
         <ReactNativeParallaxHeader
-          // headerMinHeight={HEADER_HEIGHT}
+          headerMinHeight={110}
           headerMaxHeight={180}
           extraScrollHeight={20}
           navbarColor="#5B79ED"
@@ -144,18 +150,19 @@ const styles = StyleSheet.create({
   lineBox: {
     // height: '100%',
     // width: '100%',
-    marginLeft: '20%',
+    paddingBottom: '3%',
+    marginLeft: '10%',
     marginTop: '10%',
-    borderLeftWidth: 5,
+    borderLeftWidth: 4,
     borderColor: 'gray',
-    marginBottom: '10%',
   },
-  BusRoadBox: { marginLeft: '3%' },
+  BusRoadBox: { marginTop: '2%', marginLeft: '3%' },
   NumIDBox: {
+    paddingTop: '1%',
+    paddingBottom: '2%',
     color: '#686868',
-    fontSize: 12,
+    fontSize: 13,
     marginLeft: '3%',
-    marginBottom: '8%',
     borderBottomWidth: 1,
     borderColor: '#F5F5F5',
   },
@@ -170,20 +177,41 @@ const styles = StyleSheet.create({
     marginRight: '50%',
   },
   StartHangul: {
-    fontSize: 20,
+    fontSize: 25,
     color: 'white',
-    fontWeight: 'bold',
+    fontWeight: '600',
+    marginBottom: 20,
   },
 
   Box: { width: '100%', height: '100%', borderWidth: 1 },
+
   FirstArea: {
     flexDirection: 'row',
+    justifyContent: 'center',
   },
-  FirstHangul: { fontSize: 12, color: 'white' },
-  ArrowBox: { width: '15%', height: '100%', marginLeft: '8%' },
-  busIcon: { width: 15, height: 15 },
-  EndArea: { width: '100%', height: '100%' },
-  EndHangul: { fontSize: 12, color: 'white' },
+
+  Areabox1: {
+    flex: 2,
+    // justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  Areabox2: {
+    flex: 1,
+    // justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+
+  FirstHangul: { fontSize: 15, color: 'white' },
+  busIcon: {
+    width: '30%',
+    height: 20,
+  },
+  EndHangul: {
+    flex: 1,
+
+    fontSize: 15,
+    color: 'white',
+  },
 
   bodys: { height: '100%', width: '100%' },
 
@@ -196,7 +224,7 @@ const styles = StyleSheet.create({
   titleStyle: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 22,
   },
   BackArrow: { width: 30, height: 30, marginLeft: '15%' },
 });

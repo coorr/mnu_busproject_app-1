@@ -89,7 +89,7 @@ class RouteResult extends Component {
 
   getSeatData = async () => {
     try {
-      const { route_data, date, uid } = this.props.route.params;
+      const { start_data, date, uid } = this.props.route.params;
 
       await fetch('http://112.164.190.87:5000/api/reserve', {
         method: 'POST',
@@ -98,7 +98,7 @@ class RouteResult extends Component {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          route: route_data,
+          start_data: start_data,
           start_date: date,
         }),
       })
@@ -136,8 +136,9 @@ class RouteResult extends Component {
       // RouteCheckScreen 으로 전송
 
       const {
+        route_type,
+        local,
         start_data,
-        route_data,
         end_data,
         start_time,
         date,
@@ -149,8 +150,9 @@ class RouteResult extends Component {
 
       this.props.navigation.navigate('ReserveCheckScreen', {
         //예약정보
-        start_data: start_data, // 출발 지역 :광주 , 목포
-        route_data: route_data, // 선택 노선 정보
+        route_type: route_type,
+        local: local, // 출발 지역 :광주 , 목포
+        start_data: start_data, // 선택 노선 정보
         end_data: end_data,
         start_time: start_time,
         date: date,
@@ -190,7 +192,7 @@ class RouteResult extends Component {
     this.closeActivityIndicator();
   };
   render() {
-    const { route_data } = this.props.route.params;
+    const { start_data } = this.props.route.params;
     const animating = this.state.animating;
 
     return (
@@ -204,7 +206,7 @@ class RouteResult extends Component {
         />
 
         <View style={styles.topbox}>
-          <Text style={styles.start_point_text}>{route_data}</Text>
+          <Text style={styles.start_point_text}>{start_data}</Text>
         </View>
 
         {/* // 버스 좌석이미지 반복출력 */}

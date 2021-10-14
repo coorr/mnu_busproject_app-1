@@ -1,9 +1,6 @@
 /* eslint-disable no-alert */
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, FlatList } from 'react-native';
-import moment from 'moment';
-// 안써도 자동으로 한국 시간을 불러. 명확하게 하기 위해 import
-import 'moment/locale/ko';
 
 class PolicyScreen extends Component {
   constructor(props) {
@@ -12,12 +9,6 @@ class PolicyScreen extends Component {
   }
   state = {
     data: [],
-  };
-
-  dateParse = notice_date => {
-    // 날짜 파싱하는 함수
-    let ndate = moment(notice_date).format('YYYY-MM-DD');
-    return ndate;
   };
 
   reservefetchdata = async () => {
@@ -54,13 +45,16 @@ class PolicyScreen extends Component {
       <View style={styles.container}>
         <View style={styles.titleheader}>
           <View style={styles.textbox1}>
-            <Text style={styles.titleheadertext}>좌석번호</Text>
+            <Text style={styles.titleheadertext}>통학</Text>
           </View>
           <View style={styles.textbox2}>
             <Text style={styles.titleheadertext}>노선이름</Text>
           </View>
           <View style={styles.textbox3}>
             <Text style={styles.titleheadertext}>출발일</Text>
+          </View>
+          <View style={styles.textbox3}>
+            <Text style={styles.titleheadertext}>좌석번호</Text>
           </View>
         </View>
         <FlatList
@@ -69,15 +63,18 @@ class PolicyScreen extends Component {
           renderItem={({ item }) => (
             <View style={styles.box}>
               <View style={styles.textbox1}>
-                <Text style={styles.contenttext}>{item.reserve_seat}</Text>
+                <Text style={styles.contenttext}>
+                  {item.route_type === 1 ? '등교' : '하교'}
+                </Text>
               </View>
               <View style={styles.textbox2}>
                 <Text style={styles.contenttext}>{item.start_point}</Text>
               </View>
               <View style={styles.textbox3}>
-                <Text style={styles.contenttext}>
-                  {this.dateParse(item.pdate)}
-                </Text>
+                <Text style={styles.contenttext}>{item.start_date}</Text>
+              </View>
+              <View style={styles.textbox3}>
+                <Text style={styles.contenttext}>{item.reserve_seat}</Text>
               </View>
             </View>
           )}
@@ -100,7 +97,7 @@ const styles = StyleSheet.create({
   textbox1: {
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 2,
+    flex: 1,
   },
   textbox2: {
     alignItems: 'center',

@@ -13,7 +13,6 @@ class NoticeScreen extends Component {
   }
   state = {
     data: [],
-    isLoading: true,
   };
 
   dateParse = notice_date => {

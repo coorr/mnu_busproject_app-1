@@ -12,8 +12,9 @@ class ReserveCheckScreen extends Component {
   sendSeatData = async () => {
     try {
       const {
+        route_type,
+        local,
         start_data,
-        route_data,
         end_data,
         start_time,
         date,
@@ -31,10 +32,11 @@ class ReserveCheckScreen extends Component {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          route_type: route_type,
+          local: local,
           start: start_data,
           end: end_data,
           reserve_seat: seat_number,
-          route: route_data,
           start_time: start_time,
           start_date: date,
           uid: uid,
@@ -69,19 +71,27 @@ class ReserveCheckScreen extends Component {
 
   ModifySeatData = async () => {
     try {
-      const { route_data, date, seat_number, uid, uname, dept, stdnum } =
-        this.props.route.params;
-      console.log(11);
+      const {
+        route_type,
+        start_data,
+        date,
+        seat_number,
+        uid,
+        uname,
+        dept,
+        stdnum,
+      } = this.props.route.params;
 
-      await fetch('http://172.16.2.171:5000/api/reserve_modify', {
+      await fetch('http://112.164.190.87:5000/api/reserve_modify', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          route_type: route_type,
           reserve_seat: seat_number,
-          route: route_data, // 노선정보
+          start_data: start_data, // 노선정보
           start_date: date,
           uid: uid,
         }),
@@ -89,7 +99,6 @@ class ReserveCheckScreen extends Component {
         .then(response => response.json())
         .then(res => {
           if (res.success === true) {
-            console.log(1111);
             this.props.navigation.reset({
               routes: [
                 {
@@ -116,8 +125,9 @@ class ReserveCheckScreen extends Component {
 
   render() {
     const {
+      route_type,
+      local,
       start_data,
-      route_data,
       end_data,
       date,
       seat_number,
@@ -145,7 +155,8 @@ class ReserveCheckScreen extends Component {
           <View style={styles.middlebox}>
             <View style={styles.box_area}>
               <Text style={styles.middleboxtexttiny}>노선</Text>
-              <Text style={styles.middleboxtext}>{route_data}</Text>
+              {/* 노선명 변경시 수정해야함. */}
+              <Text style={styles.middleboxtext}>{start_data}</Text>
             </View>
             <View style={styles.box_area}>
               <Text style={styles.middleboxtexttiny}>좌석번호</Text>

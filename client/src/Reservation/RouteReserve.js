@@ -87,7 +87,7 @@ class RouteReserve extends Component {
       console.log(err);
     }
   };
-  reserve_check = async (start, route, end, date, today, ctime) => {
+  reserve_check = async (local, start, end, date, today, ctime) => {
     try {
       // 예약내역에 유저가 있는지 체크하는 함수.
       const { uid, uname, dept, stdnum } = this.props.route.params;
@@ -99,15 +99,17 @@ class RouteReserve extends Component {
         },
         body: JSON.stringify({
           uid: uid,
+          route_type: this.state.route_type,
         }),
       })
         .then(response => response.json())
         .then(res => {
-          if (res.success === true) {
+          if (res.success === false) {
             this.props.navigation.navigate('RouteResult', {
               //예매정보 전달
-              start_data: start, // 출발 지역 :광주 , 목포
-              route_data: route, // 선택 노선 정보
+              route_type: this.state.route_type,
+              local: local, // 출발 지역 :광주 , 목포
+              start_data: start, // 선택 노선 정보
               end_data: end, //도착 목적지 정보
               start_time: this.state.start_time,
               date: date.format('YYYY-MM-DD'),
@@ -127,11 +129,11 @@ class RouteReserve extends Component {
     }
   };
 
-  checkdata = (start, route, end, date, today, ctime) => {
+  checkdata = (local, start, end, date, today, ctime) => {
     // 출발지 ,경로,예약날자
     // 아이디 , 이름, 학과,학번
-    if (start !== '' && route !== '' && date !== '' && end !== '') {
-      return this.reserve_check(start, route, end, date, today, ctime);
+    if (local !== '' && start !== '' && date !== '' && end !== '') {
+      return this.reserve_check(local, start, end, date, today, ctime);
     } else {
       return alert('모든 항목을 선택해 주세요.'); //  경고 창 띄우기
     }
@@ -239,8 +241,18 @@ class RouteReserve extends Component {
               onPress={() => {
                 if (this.state.route_type !== 0) {
                   alert('테스트 기간은 하교만 이용 가능합니다.');
+                  // 등교 기능 실행 시 on
                   // this.setState({
                   //   route_type: 0,
+                  //   checkbutton: false, // 체크버튼 false일 경우 전체 뷰 true 일경우 리스트 뷰
+                  //   scrollleftvalue: '', // 왼쪽 리스트 선택 값
+                  //   scrollrightvalue: '', // 오른쪽 리스트 선택 값
+                  //   scrollcentervalue: '', // 노선 경로 번호
+                  //   checkstatus: false, // 버튼 체크 유무
+                  //   Rdata: [], // 왼쪽 리스트 값 저장.
+                  //   selectedStartDate: '',
+                  //   dateclick: false,
+                  //   start_time: '',
                   // });
                 }
               }}
@@ -269,6 +281,15 @@ class RouteReserve extends Component {
                 if (this.state.route_type !== 1) {
                   this.setState({
                     route_type: 1,
+                    checkbutton: false, // 체크버튼 false일 경우 전체 뷰 true 일경우 리스트 뷰
+                    scrollleftvalue: '', // 왼쪽 리스트 선택 값
+                    scrollrightvalue: '', // 오른쪽 리스트 선택 값
+                    scrollcentervalue: '', // 노선 경로 번호
+                    checkstatus: false, // 버튼 체크 유무
+                    Rdata: [], // 왼쪽 리스트 값 저장.
+                    selectedStartDate: '',
+                    dateclick: false,
+                    start_time: '',
                   });
                 }
               }}
@@ -308,7 +329,14 @@ class RouteReserve extends Component {
           </View>
 
           <View style={styles.StartButtonArea}>
-            <TouchableOpacity style={styles.StartTouchButton}>
+            <TouchableOpacity
+              style={styles.StartTouchButton}
+              onPress={() => {
+                this.setState({
+                  checkbutton: !this.state.checkbutton,
+                });
+              }}
+            >
               <Text style={styles.StartButtonText}>도착지</Text>
               {this.state.scrollrightvalue !== '' ? (
                 <Text style={styles.StartButtonInputchange}>

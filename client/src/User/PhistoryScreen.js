@@ -24,21 +24,20 @@ class PhistoryScreen extends Component {
     try {
       const { uid } = this.props.route.params;
       //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-      await fetch('http://112.164.190.87:5000/api/penalty', {
+      await fetch('http://112.164.190.87:5000/api/penaltylist', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: JSON.stringify({
-          uid: uid,
+          inputvalue: uid,
         }),
       })
         .then(response => response.json())
         .then(res => {
           if (res.success === true) {
-            var penalty = JSON.parse(res.penalty);
-            this.setState({ data: penalty });
+            this.setState({ data: res.penalty });
           } else {
             alert(res.message);
           }

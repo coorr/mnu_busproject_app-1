@@ -9,7 +9,6 @@ import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 import 'moment/locale/ko';
-import { a } from 'hangul-js';
 
 class RouteReserve extends Component {
   constructor(props) {
@@ -59,6 +58,7 @@ class RouteReserve extends Component {
 
   fetchDataright = async () => {
     try {
+      console.log(this.state.selectedStartDate);
       if (this.state.scrollleftvalue !== '') {
         //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
         await fetch('http://112.164.190.87:5000/api/routes', {
@@ -87,7 +87,7 @@ class RouteReserve extends Component {
       console.log(err);
     }
   };
-  reserve_check = async (local, start, end, date, today, ctime) => {
+  reserve_check = async (local, start, end, date) => {
     try {
       // 예약내역에 유저가 있는지 체크하는 함수.
       const { uid, uname, dept, stdnum } = this.props.route.params;
@@ -130,12 +130,20 @@ class RouteReserve extends Component {
   };
 
   checkdata = (local, start, end, date, today, ctime) => {
-    // 출발지 ,경로,예약날자
-    // 아이디 , 이름, 학과,학번
-    if (local !== '' && start !== '' && date !== '' && end !== '') {
-      return this.reserve_check(local, start, end, date, today, ctime);
-    } else {
+    // 공백이 있는 경우 항목입력 경고 출력
+    if (local === '' || start === '' || date === '' || end === '') {
       return alert('모든 항목을 선택해 주세요.'); //  경고 창 띄우기
+    }
+    //당일 출발시간이 지난 노선의 경우 선택 제한
+    else if (
+      date.format('YYYY-MM-DD') === today &&
+      ctime > this.state.start_time
+    ) {
+      return alert('이미 출발한 노선은 선택할 수 없습니다.');
+    }
+    // 출반 기간이 남은 노선에 한하여 예약 가능.
+    else {
+      return this.reserve_check(local, start, end, date);
     }
   };
 

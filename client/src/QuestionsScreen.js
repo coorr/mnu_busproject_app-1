@@ -8,7 +8,7 @@ class QuestionsScreen extends Component {
     let telnum = '';
 
     if ((Platform.OS = 'android')) {
-      telnum = 'tel:${061-458-2032}';
+      telnum = 'tel:061-458-2032';
     } else {
       telnum = 'telprompt:${061-450-2302}';
     }

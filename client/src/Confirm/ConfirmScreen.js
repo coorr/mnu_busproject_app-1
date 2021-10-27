@@ -12,7 +12,6 @@ import {
 import qr_scanner_128 from '../../assets/image/qr_scanner_128.png';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import QuestionMark from '../../assets/image/question-mark.png';
-import ScanScreen from './QRCodeScreen';
 
 class ConfirmScreen extends Component {
   constructor(props) {
@@ -28,18 +27,12 @@ class ConfirmScreen extends Component {
   }
   // componentDidMount(),componentDidUpdate()
   componentDidMount() {
-    console.log('close');
     this.closeActivityIndicator();
   }
 
   componentDidUpdate(previousProps, previousState) {
     if (previousState.route_type !== this.state.route_type) {
       this.reserve_check();
-      console.log('12345');
-    } else {
-      console.log(this.state.route_type);
-      console.log('update');
-      console.log(previousState.route_type);
     }
   }
 
@@ -56,7 +49,7 @@ class ConfirmScreen extends Component {
     try {
       // 예약내역에 유저가 있는지 체크하는 함수.
       const { uid } = this.props.route.params;
-      await fetch('http://112.164.190.87:5000/api/reserve_check', {
+      await fetch('http://121.149.180.144:5000/api/reserve_check', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -89,7 +82,7 @@ class ConfirmScreen extends Component {
     try {
       const { uid } = this.props.route.params;
 
-      await fetch('http://112.164.190.87:5000/api/reserve_delete', {
+      await fetch('http://121.149.180.144:5000/api/reserve_delete', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -115,7 +108,6 @@ class ConfirmScreen extends Component {
   };
 
   goAlert = () => {
-    console.log('state.data.status' + this.state.data.status);
     if (this.state.data.status === 0) {
       Alert.alert(
         '예매 취소하시겠습니까?',
@@ -141,13 +133,7 @@ class ConfirmScreen extends Component {
     }
   };
 
-  test_console = () => {
-    console.log('run');
-    <ScanScreen />;
-  };
-
   render() {
-    console.log('반복');
     const { uid, uname, dept, stdnum } = this.props.route.params;
     const animating = this.state.animating;
     return (
@@ -459,11 +445,13 @@ const styles = StyleSheet.create({
     borderColor: '#ced4da',
   },
   RoadBox: {
+    justifyContent: 'center',
+    alignItems: 'center',
     flex: 1,
     height: '100%',
-    width: '15%',
+    width: '25%',
     // borderWidth: 1,
-    marginLeft: '5%',
+    marginLeft: '2%',
   },
   RoadCircleStart: {
     marginTop: '5%',
@@ -485,7 +473,7 @@ const styles = StyleSheet.create({
 
   RoadStart: { fontSize: 15, color: 'gray', fontWeight: 'bold' },
 
-  localArea: { height: '100%', width: '50%' },
+  localArea: { height: '100%', width: '45%' },
   localBox: {
     height: '25%',
     width: '70%',
@@ -493,7 +481,7 @@ const styles = StyleSheet.create({
     marginTop: '5%',
     marginLeft: '5%',
   },
-  local_StartPoint: { fontWeight: 'bold', fontSize: 16 },
+  local_StartPoint: { fontWeight: 'bold', fontSize: 13 },
 
   // qrcodeArea: { width: '100%', height: '100%', borderWidth: 1 },
   qrcodeContainer: {

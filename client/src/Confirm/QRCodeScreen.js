@@ -6,16 +6,67 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
 
 class ScanScreen extends Component {
+  ModifySeatData = async () => {
+    try {
+      const {
+        route_type,
+        start_data,
+        date,
+        seat_number,
+        uid,
+        uname,
+        dept,
+        stdnum,
+      } = this.props.route.params;
+
+      await fetch('http://121.149.180.144:5000/api/reserve_modify', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          route_type: route_type,
+          reserve_seat: seat_number,
+          start_data: start_data, // 노선정보
+          start_date: date,
+          uid: uid,
+        }),
+      })
+        .then(response => response.json())
+        .then(res => {
+          if (res.success === true) {
+            this.props.navigation.reset({
+              routes: [
+                {
+                  name: 'MainScreenView',
+                  params: {
+                    uid: uid,
+                    uname: uname,
+                    dept: dept,
+                    stdnum: stdnum,
+                  },
+                },
+              ],
+            });
+          } else {
+            alert(res.reserve);
+          }
+        })
+
+        .done();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   onSuccess = e => {
-    Linking.openURL(e.data).catch(err =>
-      console.error('An error occured', err),
-    );
+    this.ModifySeatData();
   };
   cancle = () => {
     this.props.navigation.pop(); //뒤로 가기
   };
   render() {
-    console.log('camera');
     return (
       <QRCodeScanner
         onRead={this.onSuccess}

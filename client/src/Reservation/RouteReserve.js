@@ -47,7 +47,7 @@ class RouteReserve extends Component {
   fetchDataleft = async () => {
     try {
       const response = await fetch(
-        'http://112.164.190.87:5000/api/route_local',
+        'http://121.149.180.144:5000/api/route_local',
       );
       const Ldata = await response.json();
       this.setState({ Ldata: Ldata });
@@ -61,7 +61,7 @@ class RouteReserve extends Component {
       console.log(this.state.selectedStartDate);
       if (this.state.scrollleftvalue !== '') {
         //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-        await fetch('http://112.164.190.87:5000/api/routes', {
+        await fetch('http://121.149.180.144:5000/api/routes', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -91,7 +91,7 @@ class RouteReserve extends Component {
     try {
       // 예약내역에 유저가 있는지 체크하는 함수.
       const { uid, uname, dept, stdnum } = this.props.route.params;
-      await fetch('http://112.164.190.87:5000/api/reserve_check', {
+      await fetch('http://121.149.180.144:5000/api/reserve_check', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -474,7 +474,11 @@ class RouteReserve extends Component {
                     <View style={styles.boxl}>
                       <Text style={styles.lefttext}>{item.local}</Text>
                       {this.state.scrollleftvalue === item.local ? (
-                        <Image source={check} style={styles.checklogo} />
+                        <Image
+                          source={check}
+                          style={styles.checklogo}
+                          resizeMode="contain"
+                        />
                       ) : (
                         <View style={styles.backcolor} />
                       )}
@@ -575,18 +579,18 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     backgroundColor: '#EBECF0',
   },
-  StartButtonText: { marginTop: 10, marginLeft: 10, fontSize: 18 },
+  StartButtonText: { marginTop: 10, marginLeft: 10, fontSize: 13 },
   StartButtonInput: {
     marginTop: 5,
-    marginLeft: 15,
-    fontSize: 30,
+    textAlign: 'center',
+    fontSize: 20,
     fontWeight: '300',
     color: '#949494',
   },
   StartButtonInputchange: {
     marginTop: 5,
-    marginLeft: 15,
-    fontSize: 30,
+    textAlign: 'center',
+    fontSize: 20,
     color: 'black',
     fontWeight: '300',
   },
@@ -654,7 +658,7 @@ const styles = StyleSheet.create({
     width: '60%',
   },
   listtext: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: '100',
     color: 'white',
     textAlign: 'center',
@@ -675,7 +679,7 @@ const styles = StyleSheet.create({
   },
   boxl: {
     width: '100%',
-    height: 100,
+    height: 80,
     alignItems: 'flex-start',
     flexDirection: 'row',
     backgroundColor: 'white',
@@ -683,7 +687,7 @@ const styles = StyleSheet.create({
   },
   boxr: {
     width: '100%',
-    height: 100,
+    height: 80,
     alignItems: 'center',
     backgroundColor: 'white',
     borderBottomColor: '#EBECF0',
@@ -692,14 +696,18 @@ const styles = StyleSheet.create({
   backcolor: {
     backgroundColor: '#EBECF0',
     zIndex: 4,
-    width: '40%',
+    width: '100%',
     height: '100%',
   },
   checklogo: {
+    width: '100%',
+    flex: 1,
+    height: '100%',
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#EBECF0',
     zIndex: 4,
-    width: '40%',
-    height: '100%',
   },
 
   lefttext: {

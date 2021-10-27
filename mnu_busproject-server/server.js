@@ -507,7 +507,7 @@ async function asyncFunction() {
           );
           console.log(rows6);
           if(rows6.length>0){
-            res.send({'success':true,'message':'지워졌습니다.', 'reserve':rows6});
+            res.send({'success':true,'message':'지워졌습니다.'});
           }
           else {
             res.send({'success':false }); 

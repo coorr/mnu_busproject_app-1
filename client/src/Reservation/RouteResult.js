@@ -91,7 +91,7 @@ class RouteResult extends Component {
     try {
       const { start_data, date, uid } = this.props.route.params;
 
-      await fetch('http://112.164.190.87:5000/api/reserve', {
+      await fetch('http://121.149.180.144:5000/api/reserve', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -271,11 +271,7 @@ class RouteResult extends Component {
           }}
         >
           <View style={styles.buttonbox}>
-            {this.state.usercheck === false ? (
-              <Text style={styles.reservetext}>예약하기</Text>
-            ) : (
-              <Text style={styles.reservetext}>변경하기</Text>
-            )}
+            <Text style={styles.reservetext}>좌석선택</Text>
           </View>
         </TouchableOpacity>
       </View>

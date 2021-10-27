@@ -27,7 +27,7 @@ class LoginScreen extends Component {
   login = async () => {
     try {
       if (this.state.username !== '' && this.state.password !== '') {
-        await fetch('http://112.164.190.87:5000/api/users', {
+        await fetch('http://121.149.180.144:5000/api/users', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -88,7 +88,7 @@ class LoginScreen extends Component {
       await AsyncStorage.getItem('userData', (err, result) => {
         const userInfo = JSON.parse(result); // 저장된 id/password userInfo 객체에 담는다.
         if (userInfo != null) {
-          fetch('http://112.164.190.87:5000/api/users', {
+          fetch('http://121.149.180.144:5000/api/users', {
             method: 'POST',
             headers: {
               Accept: 'application/json',

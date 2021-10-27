@@ -31,7 +31,7 @@ class RoadScreen extends Component {
 
   RoadList = async () => {
     try {
-      await fetch('http://112.164.190.87:5000/api/route_screen', {
+      await fetch('http://121.149.180.144:5000/api/route_screen', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

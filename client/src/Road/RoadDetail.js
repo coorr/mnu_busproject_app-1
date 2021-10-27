@@ -24,7 +24,7 @@ class RoadDetail extends Component {
   DetailList = async () => {
     try {
       const { numID } = this.props.route.params;
-      await fetch('http://112.164.190.87:5000/api/route_screen_detail', {
+      await fetch('http://121.149.180.144:5000/api/route_screen_detail', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

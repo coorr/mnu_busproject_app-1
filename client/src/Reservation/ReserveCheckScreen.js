@@ -25,7 +25,7 @@ class ReserveCheckScreen extends Component {
         stdnum,
       } = this.props.route.params;
 
-      await fetch('http://112.164.190.87:5000/api/reserve_input', {
+      await fetch('http://121.149.180.144:5000/api/reserve_input', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -82,7 +82,7 @@ class ReserveCheckScreen extends Component {
         stdnum,
       } = this.props.route.params;
 
-      await fetch('http://112.164.190.87:5000/api/reserve_modify', {
+      await fetch('http://121.149.180.144:5000/api/reserve_modify', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

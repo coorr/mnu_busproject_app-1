@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   busText: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 30,
+    fontSize: 25,
     // borderWidth: 1,
     justifyContent: 'space-between',
   },

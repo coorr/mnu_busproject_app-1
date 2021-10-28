@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, FlatList } from 'react-native';
+import { StyleSheet, View, Text, FlatList, Alert } from 'react-native';
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 import 'moment/locale/ko';
@@ -39,7 +39,7 @@ class PhistoryScreen extends Component {
           if (res.success === true) {
             this.setState({ data: res.penalty });
           } else {
-            alert(res.message);
+            Alert.alert('조회결과', res.message);
           }
         })
         .done();

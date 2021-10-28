@@ -38,26 +38,30 @@ const styles = StyleSheet.create({
     height: '90%',
 
     justifyContent: 'center',
-    backgroundColor: '#5B79ED',
+    backgroundColor: '#768FE4',
     alignItems: 'center',
   },
   contentbox: {
-    height: '95%',
+    width: '95%',
+    height: '90%',
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'center',
-    width: '95%',
     backgroundColor: 'white',
   },
   title: {
+    textAlign: 'center',
     fontSize: 25,
     fontWeight: 'bold',
   },
   content1: {
+    textAlign: 'center',
     fontSize: 20,
     fontWeight: '400',
   },
   content2: {
+    color: '#768FE4',
+    textAlign: 'center',
     marginTop: 10,
     fontSize: 18,
     fontWeight: '400',

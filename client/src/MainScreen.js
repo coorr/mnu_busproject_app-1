@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text, Image, Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import busIcon from '../assets/image/bus.png';
@@ -31,15 +31,27 @@ class MainScreen extends Component {
             }}
           >
             <View style={styles.box}>
-              <Text style={styles.circle}>
-                <Image source={busIcon} style={styles.busIcon} />
-              </Text>
+              <View style={styles.circle}>
+                <Image
+                  source={busIcon}
+                  style={styles.busIcon}
+                  resizeMode="contain"
+                />
+              </View>
+
               <View style={styles.busTextFrom}>
                 <Text style={styles.busText}>스쿨버스 예매</Text>
               </View>
               <Image
                 source={nextButton}
-                style={{ height: 25, width: 40, marginTop: 60 }}
+                style={{
+                  width: '20%',
+                  height: '20%',
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                resizeMode="contain"
               />
             </View>
           </TouchableOpacity>
@@ -58,15 +70,26 @@ class MainScreen extends Component {
             }}
           >
             <View style={styles.box}>
-              <Text style={styles.circle}>
-                <Image source={checkGreen} style={styles.busIcon} />
-              </Text>
+              <View style={styles.circle}>
+                <Image
+                  source={checkGreen}
+                  style={styles.busIcon}
+                  resizeMode="contain"
+                />
+              </View>
               <View style={styles.busTextFrom}>
                 <Text style={styles.busText}>예약확인/변경</Text>
               </View>
               <Image
                 source={nextButton}
-                style={{ height: 25, width: 40, marginTop: 60 }}
+                style={{
+                  width: '20%',
+                  height: '20%',
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                resizeMode="contain"
               />
             </View>
           </TouchableOpacity>
@@ -80,18 +103,26 @@ class MainScreen extends Component {
             }}
           >
             <View style={styles.box}>
-              <Text style={styles.circleInformation}>
+              <View style={styles.circle}>
                 <Image
                   source={questionBlack}
-                  style={styles.busIconInformation}
+                  style={styles.busIcon}
+                  resizeMode="contain"
                 />
-              </Text>
+              </View>
               <View style={styles.busTextFrom}>
                 <Text style={styles.busText}>노선/운행정보</Text>
               </View>
               <Image
                 source={nextButton}
-                style={{ height: 25, width: 40, marginTop: 60 }}
+                style={{
+                  width: '20%',
+                  height: '20%',
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                resizeMode="contain"
               />
             </View>
           </TouchableOpacity>
@@ -105,7 +136,11 @@ class MainScreen extends Component {
                 this.props.navigation.navigate('QuestionsScreen');
               }}
             >
-              <Image source={information} style={styles.TabOneImage} />
+              <Image
+                source={information}
+                style={styles.TabOneImage}
+                resizeMode="contain"
+              />
               <Text style={styles.TabOneText}>이용안내/문의</Text>
             </TouchableOpacity>
           </View>
@@ -117,7 +152,11 @@ class MainScreen extends Component {
                 this.props.navigation.navigate('NoticeScreen');
               }}
             >
-              <Image source={notice} style={styles.TabOneImage} />
+              <Image
+                source={notice}
+                style={styles.TabOneImage}
+                resizeMode="contain"
+              />
               <Text style={styles.TabOneText}>공지사항</Text>
             </TouchableOpacity>
           </View>
@@ -134,7 +173,11 @@ class MainScreen extends Component {
                 });
               }}
             >
-              <Image source={user} style={styles.TabOneImage} />
+              <Image
+                source={user}
+                style={styles.TabOneImage}
+                resizeMode="contain"
+              />
               <Text style={styles.TabOneText}>내 정보</Text>
             </TouchableOpacity>
           </View>
@@ -146,34 +189,39 @@ class MainScreen extends Component {
 
 const styles = StyleSheet.create({
   container: { flex: 1, width: '100%', height: '100%' },
-  reservationFrom: { width: '100%', height: '29%' },
+  reservationFrom: { flex: 2 },
   reservationArea: {
     width: '100%',
     height: '100%',
     backgroundColor: '#768FE4',
   },
-  box: { flexDirection: 'row', alignItems: 'center' },
+  box: { flex: 1, flexDirection: 'row', alignItems: 'center' },
   circle: {
-    // borderWidth: 1,
-    height: 100,
+    marginLeft: '3%',
+    marginRight: '1%',
     width: 100,
-    borderRadius: 50,
+    height: 100,
+    borderRadius: 100,
+    overflow: 'hidden',
     backgroundColor: 'white',
-    marginTop: '14%',
-    marginLeft: '5%',
-    paddingLeft: '2.5%',
   },
-  busIcon: { width: 75, height: 60 },
+  busIcon: {
+    alignSelf: 'center',
+    flex: 1,
+    width: 70,
+    height: 70,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 
   busTextFrom: {
+    flex: 3,
     // borderWidth: 1,
     width: '50%',
-    height: '30%',
-    marginTop: 60,
-    marginLeft: 30,
     justifyContent: 'center',
   },
   busText: {
+    textAlign: 'center',
     color: 'white',
     fontWeight: 'bold',
     fontSize: 25,
@@ -181,39 +229,30 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 
-  cancelForm: { width: '100%', height: '29%' },
+  cancelForm: { flex: 2 },
   cancelArea: {
     width: '100%',
     height: '100%',
     backgroundColor: '#5A7BE6',
   },
 
-  informationFrom: { width: '100%', height: '29%' },
+  informationFrom: { flex: 2 },
   informationArea: {
     width: '100%',
     height: '100%',
     backgroundColor: '#456AED',
   },
-  circleInformation: {
-    height: 100,
-    width: 100,
-    borderRadius: 50,
-    backgroundColor: 'white',
-    marginTop: '14%',
-    marginLeft: '5%',
-    paddingLeft: '6%',
-    paddingTop: '1%',
-  },
-  busIconInformation: { width: 50, height: 50 },
 
-  TabContainer: { width: '100%', height: '100%', flexDirection: 'row' },
+  TabContainer: { flex: 1, flexDirection: 'row' },
   TabAreaOne: { flex: 1, height: '100%' },
   TabBoxOne: { width: '100%', height: '100%', alignItems: 'center' },
-  TabOneImage: { width: 60, height: 60, marginLeft: 0, marginTop: 8 },
+  TabOneImage: {
+    flex: 1,
+    margin: '10%',
+  },
   TabOneText: {
-    marginTop: 3,
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: 12,
   },
 });
 

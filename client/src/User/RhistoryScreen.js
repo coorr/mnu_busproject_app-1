@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, FlatList } from 'react-native';
+import { StyleSheet, View, Text, FlatList, Alert } from 'react-native';
 
 class PolicyScreen extends Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class PolicyScreen extends Component {
             var reserve = JSON.parse(res.reserve);
             this.setState({ data: reserve });
           } else {
-            alert(res.message);
+            Alert.alert('조회결과', res.message);
           }
         })
         .done();

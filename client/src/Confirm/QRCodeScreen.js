@@ -4,51 +4,49 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity, Linking } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
+import moment from 'moment';
+// 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
+import 'moment/locale/ko';
 
 class ScanScreen extends Component {
+  state = {
+    result: true,
+  };
+  today = () => {
+    var d = new Date();
+    const today = moment(d).format('YYYY-MM-DD'); // Today
+    return today;
+  };
+
   ModifySeatData = async () => {
     try {
       const {
         route_type,
         start_data,
         date,
-        seat_number,
         uid,
-        uname,
-        dept,
-        stdnum,
+        // uname,
+        // dept,
+        // stdnum,
       } = this.props.route.params;
 
-      await fetch('http://121.149.180.144:5000/api/reserve_modify', {
+      await fetch('http://121.149.180.144:5000/api/status_modify', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          route_type: route_type,
-          reserve_seat: seat_number,
+          route_type: route_type, // 통학형태
           start_data: start_data, // 노선정보
-          start_date: date,
-          uid: uid,
+          start_date: date, //출발일
+          uid: uid, // 사용자
         }),
       })
         .then(response => response.json())
         .then(res => {
           if (res.success === true) {
-            this.props.navigation.reset({
-              routes: [
-                {
-                  name: 'MainScreenView',
-                  params: {
-                    uid: uid,
-                    uname: uname,
-                    dept: dept,
-                    stdnum: stdnum,
-                  },
-                },
-              ],
-            });
+            this.props.navigation.navigate('ConfirmScreen', { result: true });
           } else {
             alert(res.reserve);
           }
@@ -61,7 +59,21 @@ class ScanScreen extends Component {
   };
 
   onSuccess = e => {
-    this.ModifySeatData();
+    const { route_type, start_data, date } = this.props.route.params;
+    var pdata = JSON.parse(e.data);
+    // if (pdata.start_point === start_data) {
+    //   console.log(start_data);
+    // }
+    // console.log(JSON.parse(e.data));
+
+    // 등교/하교 형식, 노선명, 당일 출발일자 일치해야지 탑승 인증.
+    if (
+      pdata.route_type === route_type &&
+      pdata.start_point === start_data &&
+      this.today() === date
+    ) {
+      this.ModifySeatData();
+    }
   };
   cancle = () => {
     this.props.navigation.pop(); //뒤로 가기

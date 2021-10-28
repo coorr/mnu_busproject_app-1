@@ -477,7 +477,7 @@ async function asyncFunction() {
       var route_type = req.body.route_type;
 
       var rows6 = await conn.query(
-        "SELECT * FROM reserve WHERE uid = ? AND route_type = ? AND start_date >= DATE_ADD(CURDATE(),INTERVAL -7 DAY) AND STATUS < 3", // 오늘 ~ 7일전까지 범위 검색 uid 리턴 or * 리턴
+        "SELECT * FROM reserve WHERE uid = ? AND route_type = ? AND start_date >= DATE_ADD(CURDATE(),INTERVAL -7 DAY) AND STATUS < 4", // 오늘 ~ 7일전까지 범위 검색 uid 리턴 or * 리턴
         [user,route_type]
         );
      
@@ -564,6 +564,32 @@ async function asyncFunction() {
         }
         else {
           res.send({'success':false,'reserve':'예매변경 실패'});  
+        }
+      } catch(err) {
+        console.log(err);
+      }
+    })
+
+    
+    app.post('/api/status_modify',async(req,res) => {
+      try{
+      // 노선정보
+      var start_data =req.body.start_data;
+      var start_date = req.body.start_date;
+      var uid = req.body.uid;
+      var route_type = req.body.route_type;
+
+      var rows5 = await conn.query(
+        "UPDATE reserve SET status = 3 WHERE start_point = ?  AND start_date= ? AND uid= ? AND route_type = ?", // 변경번호 , 경로,예약날, uid
+        [start_data,start_date,uid,route_type]
+        );
+          
+        
+        if(rows5){
+          res.send({'success':true});
+        }
+        else {
+          res.send({'success':false,'reserve':'예매확인 실패'});  
         }
       } catch(err) {
         console.log(err);

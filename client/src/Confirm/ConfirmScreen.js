@@ -8,10 +8,14 @@ import {
   Image,
   Alert,
   Dimensions,
+  ToastAndroid,
+  Platform,
+  AlertIOS,
 } from 'react-native';
 import qr_scanner_128 from '../../assets/image/qr_scanner_128.png';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import QuestionMark from '../../assets/image/question-mark.png';
+import stamp from '../../assets/image/stamp.png';
 
 class ConfirmScreen extends Component {
   constructor(props) {
@@ -23,18 +27,30 @@ class ConfirmScreen extends Component {
       data: [],
       route_type: 1, // 등교 - 0 / 하교 - 1
     };
-    this.reserve_check();
+    this.closeActivityIndicator();
   }
   // componentDidMount(),componentDidUpdate()
+
   componentDidMount() {
-    this.closeActivityIndicator();
+    this.reserve_check();
   }
 
   componentDidUpdate(previousProps, previousState) {
     if (previousState.route_type !== this.state.route_type) {
       this.reserve_check();
     }
+    if (this.props.route.params?.result !== undefined) {
+      this.notifyMessage('인증되었습니다.');
+    }
   }
+
+  notifyMessage = msg => {
+    if (Platform.OS === 'android') {
+      ToastAndroid.show(msg, ToastAndroid.SHORT);
+    } else {
+      AlertIOS.alert(msg);
+    }
+  };
 
   closeActivityIndicator = () =>
     setTimeout(
@@ -64,9 +80,9 @@ class ConfirmScreen extends Component {
         .then(res => {
           if (res.success === true) {
             var reserve = JSON.parse(res.reserve);
+
             this.setState({
               data: reserve[0],
-
               usercheck: true, // 예매 없음 false에서 -> true으로 변환
             });
           }
@@ -205,7 +221,16 @@ class ConfirmScreen extends Component {
             </TouchableOpacity>
           </View>
         </View>
-
+        {/* &&패턴 앞 조건이 참 이면 && 뒤 조건 반환 */}
+        {this.state.data.status === 3 && (
+          <View style={styles.frontimagebox}>
+            <Image
+              source={stamp}
+              resizeMode="contain"
+              style={styles.frontimage}
+            />
+          </View>
+        )}
         {this.state.usercheck === false ? (
           <View style={styles.containers}>
             <View style={styles.ImageArea}>
@@ -270,7 +295,20 @@ class ConfirmScreen extends Component {
                 <View style={styles.qrcodeArea}>
                   <TouchableOpacity
                     onPress={() => {
-                      this.props.navigation.navigate('ScanScreen');
+                      this.props.navigation.navigate('ScanScreen', {
+                        route_type: this.state.data.route_type,
+                        local: this.state.data.local, // 출발 지역 :광주 , 목포
+                        start_data: this.state.data.start_point, // 선택 노선 정보
+                        end_data: this.state.data.end_point, //도착 목적지 정보
+                        start_time: this.state.data.start_time,
+                        date: this.state.data.start_date,
+
+                        //유저정보 전달
+                        uid: uid,
+                        uname: uname,
+                        dept: dept,
+                        stdnum: stdnum,
+                      });
                     }}
                   >
                     <Image source={qr_scanner_128} style={styles.qrcode} />
@@ -306,7 +344,7 @@ class ConfirmScreen extends Component {
             </View>
 
             <View style={styles.BtnContainer}>
-              <View style={styles.BtnCancelArea}>
+              <View style={styles.BtnCancelArea1}>
                 <TouchableOpacity
                   style={styles.touchbox}
                   onPress={() => {
@@ -319,7 +357,7 @@ class ConfirmScreen extends Component {
                 </TouchableOpacity>
               </View>
 
-              <View style={styles.BtnCancelArea}>
+              <View style={styles.BtnCancelArea2}>
                 <TouchableOpacity
                   style={styles.touchbox}
                   onPress={() => {
@@ -378,7 +416,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.2,
   },
   route_ButtonArea_on: {
-    backgroundColor: '#3CB371',
+    backgroundColor: '#00a000',
     width: '50%',
     height: '100%',
     borderRightWidth: 0.2,
@@ -515,14 +553,17 @@ const styles = StyleSheet.create({
   },
 
   middleContainer: {
-    width: '85%',
+    width: '100%',
     height: '20%',
-    marginLeft: '15%',
-    marginTop: '2%',
-    marginBottom: '10%',
+    marginTop: '5%',
+    marginBottom: '5%',
+    paddingLeft: '5%',
+    paddingBottom: '5%',
+    borderBottomWidth: 0.2,
+    borderColor: 'gray',
   },
   middleArea: {
-    width: '100%',
+    width: '80%',
     height: '20%',
     flexDirection: 'row',
   },
@@ -531,13 +572,26 @@ const styles = StyleSheet.create({
   middleTextThree: { marginLeft: '9%', fontWeight: 'bold' },
 
   BtnContainer: { width: '100%', height: '10%', flexDirection: 'row' },
-  BtnCancelArea: {
-    width: '48%',
+  BtnCancelArea1: {
+    width: '44%',
     height: '100%',
-    backgroundColor: '#6495ED',
-    marginRight: '4%',
-    justifyContent: 'space-around',
+    marginLeft: '4%',
+    marginRight: '2%',
+    backgroundColor: '#5B79ED',
+    justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 5,
+  },
+  BtnCancelArea2: {
+    width: '44%',
+    height: '100%',
+    marginRight: '4%',
+    marginLeft: '2%',
+
+    backgroundColor: '#5B79ED',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
   },
   BtnCancelBox: {
     flex: 1,
@@ -552,7 +606,20 @@ const styles = StyleSheet.create({
   BtnCancleText: {
     color: 'white',
     fontSize: 18,
-    fontWeight: 'bold',
+  },
+  frontimagebox: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    zIndex: 3,
+  },
+  frontimage: {
+    marginBottom: Dimensions.get('window').height / 3.5,
+    width: '90%',
+    height: '100%',
   },
 });
 

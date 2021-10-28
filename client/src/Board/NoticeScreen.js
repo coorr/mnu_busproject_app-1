@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
   pid: {
     paddingLeft: 5,
     paddingTop: 5,
+    fontWeight: '600',
   },
   title: {
     margin: 3,

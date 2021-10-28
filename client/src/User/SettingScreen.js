@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     borderColor: '#848484',
     marginTop: '5%',
     paddingLeft: '5%',
-    borderRadius: 15,
+    borderRadius: 10,
     borderWidth: 1,
     width: '95%',
     height: '15%',
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
   usertext_name: {
     color: 'black',
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: '700',
   },
   usertext_uid: {
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   listbox: {
     marginTop: '5%',
     borderColor: '#848484',
-    borderRadius: 15,
+    borderRadius: 10,
     borderWidth: 1,
     width: '95%',
     height: '23%',
@@ -184,12 +184,12 @@ const styles = StyleSheet.create({
   },
   listboxtitle: {
     padding: '2%',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
   },
   listboxtext: {
     paddingLeft: '3%',
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: '400',
   },
   buttonform: {
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     height: '10%',
     width: '95%',
     backgroundColor: '#5B79ED',
-    borderRadius: 15,
+    borderRadius: 10,
   },
   buttonArea: {
     justifyContent: 'center',
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 18,
   },
   // bottom menu 스타일
   bottom_menu: {

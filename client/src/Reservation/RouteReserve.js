@@ -471,18 +471,21 @@ class RouteReserve extends Component {
                       }
                     }}
                   >
-                    <View style={styles.boxl}>
-                      <Text style={styles.lefttext}>{item.local}</Text>
-                      {this.state.scrollleftvalue === item.local ? (
+                    {this.state.scrollleftvalue === item.local ? (
+                      <View style={styles.select_boxl}>
+                        <Text style={styles.select_lefttext}>{item.local}</Text>
                         <Image
                           source={check}
                           style={styles.checklogo}
                           resizeMode="contain"
                         />
-                      ) : (
+                      </View>
+                    ) : (
+                      <View style={styles.boxl}>
+                        <Text style={styles.lefttext}>{item.local}</Text>
                         <View style={styles.backcolor} />
-                      )}
-                    </View>
+                      </View>
+                    )}
                   </TouchableOpacity>
                 )}
               />
@@ -532,7 +535,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.2,
   },
   route_ButtonArea_on: {
-    backgroundColor: '#3CB371',
+    backgroundColor: '#00a000',
     width: '50%',
     height: '100%',
     borderRightWidth: 0.2,
@@ -615,8 +618,8 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   buttonFrom: {
-    backgroundColor: '#5C72E1',
-    borderColor: '#5C72E1',
+    backgroundColor: '#5B79ED',
+    borderColor: '#5B79ED',
     borderWidth: 1,
     borderRadius: 5,
     height: '95%',
@@ -666,32 +669,37 @@ const styles = StyleSheet.create({
 
   scrollarea: { flex: 1, flexDirection: 'row', width: '100%', height: '100%' },
   scrollleft: {
-    borderRightWidth: 1,
-    borderRightColor: '#5C72E1',
+    paddingRight: 20,
+    padding: 10,
     width: '40%',
     height: '100%',
     flexDirection: 'column',
   },
+
   scrollright: {
+    borderLeftWidth: 2,
+    borderColor: '#EBECF0',
+
     width: '60%',
     height: '100%',
     flexDirection: 'column',
   },
   boxl: {
     width: '100%',
-    height: 80,
+    height: 40,
     alignItems: 'flex-start',
     flexDirection: 'row',
     backgroundColor: 'white',
-    paddingBottom: 3,
+    marginBottom: 10,
   },
   boxr: {
+    marginTop: 8,
     width: '100%',
-    height: 80,
+    height: 40,
     alignItems: 'center',
     backgroundColor: 'white',
     borderBottomColor: '#EBECF0',
-    borderBottomWidth: 3,
+    borderBottomWidth: 2,
   },
   backcolor: {
     backgroundColor: '#EBECF0',
@@ -706,23 +714,38 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#EBECF0',
+    backgroundColor: '#5B79ED',
     zIndex: 4,
   },
-
-  lefttext: {
+  select_lefttext: {
+    color: 'white',
     width: '60%',
     height: '100%',
-    fontSize: 18,
-    fontWeight: '200',
+    fontSize: 15,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    backgroundColor: '#5B79ED',
+  },
+  select_boxl: {
+    width: '100%',
+    height: 40,
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    marginBottom: 10,
+    backgroundColor: '#5B79ED',
+  },
+  lefttext: {
+    color: 'black',
+    width: '60%',
+    height: '100%',
+    fontSize: 15,
     textAlign: 'center',
     textAlignVertical: 'center',
     backgroundColor: '#EBECF0',
   },
   righttext1: {
     flex: 1,
-    fontSize: 20,
-    fontWeight: '200',
+    fontSize: 14,
     textAlign: 'center',
     textAlignVertical: 'center',
   },

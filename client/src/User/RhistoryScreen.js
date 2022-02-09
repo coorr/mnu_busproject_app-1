@@ -1,7 +1,7 @@
 /* eslint-disable no-alert */
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, FlatList, Alert } from 'react-native';
-
+import {config} from '../config';
 class PolicyScreen extends Component {
   constructor(props) {
     super(props);
@@ -15,7 +15,7 @@ class PolicyScreen extends Component {
     try {
       const { uid } = this.props.route.params;
       //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-      await fetch('http://121.149.180.144:5000/api/reserve_history', {
+      await fetch(`http://${config.api}/api/reserve_history`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

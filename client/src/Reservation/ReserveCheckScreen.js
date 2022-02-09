@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
+import {config} from '../config';
 class ReserveCheckScreen extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +25,7 @@ class ReserveCheckScreen extends Component {
         stdnum,
       } = this.props.route.params;
 
-      await fetch('http://121.149.180.144:5000/api/reserve_input', {
+      await fetch(`http://${config.api}/api/reserve_input`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -82,7 +82,7 @@ class ReserveCheckScreen extends Component {
         stdnum,
       } = this.props.route.params;
 
-      await fetch('http://121.149.180.144:5000/api/reserve_modify', {
+      await fetch(`http://${config.api}/api/reserve_modify`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

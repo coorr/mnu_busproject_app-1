@@ -7,7 +7,7 @@ import { RNCamera } from 'react-native-camera';
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 import 'moment/locale/ko';
-
+import {config} from '../config';
 class ScanScreen extends Component {
   state = {
     result: true,
@@ -30,7 +30,7 @@ class ScanScreen extends Component {
         // stdnum,
       } = this.props.route.params;
 
-      await fetch('http://121.149.180.144:5000/api/status_modify', {
+      await fetch(`http://${config.api}/api/status_modify`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

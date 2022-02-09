@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, FlatList } from 'react-native';
-
+import {config} from '../config';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
@@ -23,7 +23,7 @@ class NoticeScreen extends Component {
 
   fetchData = async () => {
     try {
-      const response = await fetch('http://121.149.180.144:5000/api/board');
+      const response = await fetch(`http://${config.api}/api/board`);
       const boards = await response.json();
       this.setState({ data: boards });
     } catch (err) {

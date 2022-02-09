@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, FlatList, Alert } from 'react-native';
 import moment from 'moment';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 import 'moment/locale/ko';
-
+import {config} from '../config';
 class PhistoryScreen extends Component {
   constructor(props) {
     super(props);
@@ -24,7 +24,7 @@ class PhistoryScreen extends Component {
     try {
       const { uid } = this.props.route.params;
       //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-      await fetch('http://121.149.180.144:5000/api/penaltylist', {
+      await fetch(`http://${config.api}/api/penaltylist`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

@@ -12,7 +12,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import ArrowIcon from '../../assets/image/arrow.png';
 import BackArrow from '../../assets/image/backicon.png';
 import ReactNativeParallaxHeader from 'react-native-parallax-header';
-
+import {config} from '../config';
 class RoadDetail extends Component {
   constructor(props) {
     super(props);
@@ -24,7 +24,7 @@ class RoadDetail extends Component {
   DetailList = async () => {
     try {
       const { numID } = this.props.route.params;
-      await fetch('http://121.149.180.144:5000/api/route_screen_detail', {
+      await fetch(`http://${config.api}/api/route_screen_detail`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

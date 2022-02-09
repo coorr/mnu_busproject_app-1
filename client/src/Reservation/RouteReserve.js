@@ -7,6 +7,7 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import check from '../../assets/image/check.png';
 import CalendarPicker from 'react-native-calendar-picker';
 import moment from 'moment';
+import {config} from '../config';
 // 안써도 자동으로 한국 시간을 불러온다. 명확하게 하기 위해 import
 import 'moment/locale/ko';
 
@@ -47,7 +48,7 @@ class RouteReserve extends Component {
   fetchDataleft = async () => {
     try {
       const response = await fetch(
-        'http://121.149.180.144:5000/api/route_local',
+        `http://${config.api}/api/route_local`,
       );
       const Ldata = await response.json();
       this.setState({ Ldata: Ldata });
@@ -61,7 +62,7 @@ class RouteReserve extends Component {
       console.log(this.state.selectedStartDate);
       if (this.state.scrollleftvalue !== '') {
         //왼쪽 값 설정값 있을 시에만 오른쪽값 조회
-        await fetch('http://121.149.180.144:5000/api/routes', {
+        await fetch(`http://${config.api}/api/routes`, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -91,7 +92,7 @@ class RouteReserve extends Component {
     try {
       // 예약내역에 유저가 있는지 체크하는 함수.
       const { uid, uname, dept, stdnum } = this.props.route.params;
-      await fetch('http://121.149.180.144:5000/api/reserve_check', {
+      await fetch(`http://${config.api}/api/reserve_check`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

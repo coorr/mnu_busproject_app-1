@@ -9,7 +9,7 @@ import seat_green from '../../assets/image/seat_green.png';
 import bus_door from '../../assets/image/bus_door.png';
 import steering_wheel_icon from '../../assets/image/steering_wheel_icon.png';
 import seat_background from '../../assets/image/seat_background.png';
-
+import {config} from '../config';
 class RouteResult extends Component {
   constructor(props) {
     super(props);
@@ -91,7 +91,7 @@ class RouteResult extends Component {
     try {
       const { start_data, date, uid } = this.props.route.params;
 
-      await fetch('http://121.149.180.144:5000/api/reserve', {
+      await fetch(`http://${config.api}/api/reserve`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

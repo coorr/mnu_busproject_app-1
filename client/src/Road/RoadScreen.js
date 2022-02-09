@@ -11,7 +11,7 @@ import {
 import { SearchBar } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as hangul from 'hangul-js';
-
+import {config} from '../config';
 class RoadScreen extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +31,7 @@ class RoadScreen extends Component {
 
   RoadList = async () => {
     try {
-      await fetch('http://121.149.180.144:5000/api/route_screen', {
+      await fetch(`http://${config.api}/api/route_screen`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

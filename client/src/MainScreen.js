@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import busIcon from '../assets/image/bus.png';
 import nextButton from '../assets/image/nextButton.png';
-import checkGreen from '../assets/image/checkGreen.png';
+import check2 from '../assets/image/check2.png';
 import questionBlack from '../assets/image/question-mark.png';
 import notice from '../assets/image/notice.png';
 import information from '../assets/image/information.png';
@@ -68,11 +68,11 @@ class MainScreen extends Component {
                 stdnum: stdnum,
               });
             }}
-          >
+          > 
             <View style={styles.box}>
               <View style={styles.circle}>
                 <Image
-                  source={checkGreen}
+                  source={check2}
                   style={styles.busIcon}
                   resizeMode="contain"
                 />

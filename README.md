@@ -1,4 +1,4 @@
-![1](http://img.youtube.com/vi/tNcWX9qPcCM/0.jpg)
+![react-express-authentication-jwt-example-feature-image](http://img.youtube.com/vi/tNcWX9qPcCM/0.jpg)
 
 
 <!-- ## React JWT Authentication (without Redux) example

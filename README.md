@@ -2,6 +2,10 @@
 
 ![1](bms/image/1.PNG)
 ![2](bms/image/2.PNG)
+![3](bms/image/3.PNG)
+![4](bms/image/4.PNG)
+![5](bms/image/5.PNG)
+![6](bms/image/6.PNG)
 
 
 <!-- ## React JWT Authentication (without Redux) example

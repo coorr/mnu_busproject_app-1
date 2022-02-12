@@ -1,0 +1,20 @@
+{
+  "name": "react_navigation_01",
+  "version": "1.0.0",
+  "scripts": {
+    "client": "cd client && npx react-native run-android",
+    "server": "node server.js",
+    "dev": "concurrently --kill-others-on-fail \"node server.js\" \"cd client && npx react-native run-android\"",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mariadb": "^2.5.3",
+    "nodemon": "^2.0.7"
+  },
+  "devDependencies": {
+    "concurrently": "^6.0.0"
+  }
+}

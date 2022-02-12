@@ -1,4 +1,4 @@
-![react-jwt-authentication-flow](react-jwt-authentication-flow.PNG)
+![react-jwt-authentication-flow](image/react-jwt-authentication-flow.PNG)
 
 
 <!-- ## React JWT Authentication (without Redux) example

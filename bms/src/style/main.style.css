@@ -1,0 +1,89 @@
+.container-fluid {
+    display: flex;
+    margin-top: 12px;
+    margin-bottom: 20px;
+   width: 100%;
+   height: fit-content;
+   text-align: center;
+    min-width: 600px
+}
+
+.left_tab {
+    min-height: ;
+    min-width: 200px;
+    border-radius: 15px;
+    padding-top: 16px;
+    margin-top: 15px;
+    
+    width: 200px;
+    background-color: rgba(43,46,51,0.9);
+    opacity: 0.95;
+}
+.content {
+    
+    min-width: 450px;
+    margin-left: 20px;
+    border-radius: 15px;
+    height: 100%;
+    text-align: center;
+    display:flex;
+    padding-top: 16px;
+    width: 90%;
+    padding: 20px;
+    margin-top: 15px;
+    background-color: #f3eaea;
+    flex-direction: column;
+}
+.firstbox {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height:40%;
+    border: 1px solid black;
+}
+.fleft {
+    display: flex;
+    width: 30%;
+    z-index: 3;
+
+}  
+.fright {
+    
+    display: flex;
+    z-index: 2;
+    width: 70%;
+}
+.secondbox {
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    flex-direction: row;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+.sleft {
+    min-width: 300px;
+    border-right: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+}
+.sright {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+    
+}
+.titletext {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    font-size: x-large;
+    font-weight: 500;
+}
+.boardbox {
+    text-align: left;
+
+}

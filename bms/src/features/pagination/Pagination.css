@@ -1,0 +1,16 @@
+ .pagination {
+    display: flex;
+    margin-top: 20px;
+    justify-content: center;
+    
+}
+
+.page-item {
+  cursor:pointer;
+    background-color: white;
+}
+
+.page-link {
+  background-color: #f8f9fa;
+} 
+

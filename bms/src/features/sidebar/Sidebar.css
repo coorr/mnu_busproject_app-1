@@ -1,0 +1,26 @@
+.sidebar {
+    font-size: larger;
+    font-weight: 500;
+}
+.sidebar-item-active {
+    font-size: larger;
+    font-weight: 500;
+    color: black;
+}
+.sidebar-item {
+    font-size: larger;
+    font-weight: 500;
+    color: white;
+}
+.logoutbutton {
+    background-color: beige;
+    margin-top: 50%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: larger;
+    font-weight: 500;
+    color: rgb(26, 199, 10);
+    cursor: pointer;
+
+}

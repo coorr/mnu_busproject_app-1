@@ -1,0 +1,15 @@
+.headerbox {
+    display: flex;
+    flex-direction: row;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    border-bottom: 1px gray solid;
+    padding-bottom: 15px;
+}
+.box {
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+    font-weight: 400;
+}

@@ -1,3 +1,6 @@
+![1](image/1.png)
+
+
 <!-- ## React JWT Authentication (without Redux) example
 
 In this tutorial, we’re gonna build a React JWT Authentication example with LocalStorage, React Router, Axios and Bootstrap (without Redux). I will show you:
@@ -16,7 +19,7 @@ For JWT Authentication, we’re gonna call 2 endpoints:
 
 The following flow shows you an overview of Requests and Responses that React Client will make or receive. This React Client must add a JWT to HTTP Header before sending request to protected resources.
 
-![react-jwt-authentication-flow](react-jwt-authentication-flow.png)
+
 
 ## Demo Video
 This is full React + Node.js Express JWT Authentication & Authorization demo (with form validation, check signup username/email duplicates, test authorization with 3 roles: Admin, Moderator, User):

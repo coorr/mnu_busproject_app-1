@@ -1,11 +1,51 @@
 ## 💡 Topic
 
+- **목포대학교 스쿨버스예약시스템 (재학 당시, 출시 X)**
+- 예매, 탑승까지 한번에! 버스 기다리지 않아도 돼요!
+
+## 📝 Summary
+
+매일 통학하는 학생들에게 필수 어플로, 등교 및 하교를 예매를 통해 스쿨버스를 이용할 수 있는 
+어플입니다. 기존에는 스쿨 버스를 타기 위해 무작정 기다리는 시간을 없애주는 이점이 있습니다. 
+또한 언택트 시대를 고려한 QR-Code 통해 탑승을 편리하게 이용할 수 있습니다.
+
+## ⭐️ Key Function
+
+- 예매 및 탑승
+    - 재학생만 예매 가능
+    - 출발지/도착지 지역 조회 및 좌석 조회
+    - 매표 창구를 거치지 않고 셀프 체크 QR-Code 서비스
+- 예매 확인 및 취소
+    - 간편 취소 및 간편 확인
+    - 예매 확인 시 명확한 차이를 파악할 수 있도록 아이콘을 통해 확인
+- 버스 노선 조회
+    - 각 노선마다 상세 경로 조회
+    - 검색을 통한 노선 조회
+- 자동 로그인
+    - 편리함 증가
+
+## ****🛠**** Tool
+
+- MariaDB
+- Express
+- React Native
+- QR code
+- Calendar
+
+## 💁🏻 Team
+
+- 김진성
+- 남정혁
+
+## 📷 Screenshot
 ![1](bms/image/1.PNG)
 ![2](bms/image/2.PNG)
 ![3](bms/image/3.PNG)
 ![4](bms/image/4.PNG)
 ![5](bms/image/5.PNG)
 ![6](bms/image/6.PNG)
+
+
 
 
 <!-- ## React JWT Authentication (without Redux) example

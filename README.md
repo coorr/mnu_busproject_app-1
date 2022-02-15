@@ -38,7 +38,7 @@
 - 남정혁
 
 ## ERD
-![7](bms/image/7.PNG)
+![7](bms/image/7.png)
 
 ## 📷 Screenshot
 ![1](bms/image/1.PNG)

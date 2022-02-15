@@ -44,6 +44,7 @@
 ![4](bms/image/4.PNG)
 ![5](bms/image/5.PNG)
 ![6](bms/image/6.PNG)
+![7](bms/image/7.PNG)
 
 
 
